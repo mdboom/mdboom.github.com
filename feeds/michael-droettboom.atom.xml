@@ -1,5 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="/" rel="alternate"></link><link href="http://mdboom.github.io/feeds/matplotlib.atom.xml" rel="self"></link><id>/</id><updated>2013-03-25T09:47:00-04:00</updated><entry><title>matplotlib lessons learned</title><link href="/blog/2013/03/25/matplotlib-lessons-learned/" rel="alternate"></link><updated>2013-03-25T09:47:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2013-03-25:blog/2013/03/25/matplotlib-lessons-learned/</id><summary type="html">&lt;p&gt;Jake Vanderplass has a very thought-provoking essay about the &lt;a class="reference external" href="http://jakevdp.github.com/blog/2013/03/23/matplotlib-and-the-future-of-visualization-in-python/"&gt;future
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="/" rel="alternate"></link><link href="http://mdboom.github.io/feeds/michael-droettboom.atom.xml" rel="self"></link><id>/</id><updated>2013-08-29T09:33:00-04:00</updated><entry><title>VirtualBox on Mac OS X</title><link href="/blog/2013/08/29/virtualbox-on-mac-os-x/" rel="alternate"></link><updated>2013-08-29T09:33:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2013-08-29:blog/2013/08/29/virtualbox-on-mac-os-x/</id><summary type="html">&lt;p&gt;I recently got a Mac Mini so I can start working on Macintosh-specific
+issues with matplotlib.  Thanks again to Hans Petter Langtangen, the
+Director of the Center for Biomedical Computing at &lt;a class="reference external" href="http://home.simula.no/~hpl"&gt;Simula&lt;/a&gt; for his gracious donation that
+supported the purchase.&lt;/p&gt;
+&lt;p&gt;One of the things I'd like to use this machine for is to test
+installers in various environments -- a fresh install, or with
+MacPorts, or Fink etc. -- to make sure the installers include
+everything they need.  So I want to run Mac OS X in a virtual machine
+that I can reset on a regular basis to a known state.  This is now
+allowed by the licensing of OS X, as long as it's running on top of
+genuine Apple hardware, and you create no more than 5 instances.&lt;/p&gt;
+&lt;p&gt;It's surprisingly hard to find information on installing Mac OS X in a
+virtual machine.  Most of what Google finds is various hacks to run on
+non-Apple hardware.  I, instead, want to do this legally.&lt;/p&gt;
+&lt;p&gt;Unfortunately, the Mac Mini came with no installation media, so you
+can't just plug it in and install it in a virtual machine.  I thought,
+ok, no problem -- I'll just pop over to the App Store and download it.
+Unfortunately, to do that, Apple wanted to charge me $29.99 for
+something I already own.&lt;/p&gt;
+&lt;p&gt;So next I looked at the recovery partition.  Parallels is reportedly
+able to use the recovery partition directly to install in the virtual
+machine.  However, I want to use VirtualBox, since it is open source,
+what I'm familiar with on Linux, and, most importantly, because it can
+be automated by vagrant.  After trying in vain to point VirtualBox at
+the magic stuff in the recovery partition, I came upon a working
+solution.  The following steps were done with Mountain Lion, and I
+have no idea whether they are applicable to other releases.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Grab an external USB drive and plug it in.  I think it needs to be
+at least the size of a double-layer DVD, or 8.5 GB.  This process
+will erase everything on it.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Reboot into recovery mode, by holding down Command+R during boot.  (A word
+of advice to those new to Macs: wait until you hear the startup sound until
+you press the keys down, and hold them until the Apple logo disappears.
+Timing seems to be important here).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;I list of utilities will appear.  Open &amp;quot;Disk Manager&amp;quot; and
+repartition the external disk to have a &amp;quot;GUID&amp;quot; partition table with
+a single &amp;quot;HFS+&amp;quot; partition.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Exit &amp;quot;Disk Manager&amp;quot; and then go to &amp;quot;Install OS X&amp;quot;.  Install it to the
+external drive.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;When the installation is done, the system will reboot back into your &amp;quot;host&amp;quot;
+installation on the internal drive.  (I was surprised by this -- you may
+need to remove the USB drive to boot into the internal drive, but I didn't
+need to).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The result is a folder on the external drive called &amp;quot;OS X Install
+Data&amp;quot;.  Inside that folder is a disk image of the installer,
+&lt;cite&gt;InstallESD.dmg&lt;/cite&gt;.  Copy this to your internal hard disk.  You can
+then remove the external USB drive, we're done with it.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Unfortunately, there is still a small incompatibility with power
+management inside of VirtualBox that will cause the installer to
+hang during boot.  The kernel extension that handles CPU power
+management needs to be replaced.  I found the instructions for that
+&lt;a class="reference external" href="http://ntk.me/2012/09/07/os-x-on-os-x/"&gt;here&lt;/a&gt;.  I'm paraphrasing
+it here, and only including instructions for Mountain Lion.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Download &lt;a class="reference external" href="https://github.com/ntkme/InstallESD.dmg.tool"&gt;InstallESD.dmg.tool&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Download NullCPUPowerManagement.kext&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Run the following command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+./InstallESD.dmg.tool -i InstallESD.dmg -o Output.dmg -- NullCPUPowerManagement.kext
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The &lt;cite&gt;Output.dmg&lt;/cite&gt; is now a patched installer image that can be used
+to install OS X in VirtualBox.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;In VirtualBox, create a new virtual machine and use its default
+settings for an OS X guest.  Then, open the settings for the machine
+and go to the Storage tab.  Add a new CD/DVD device to the IDE bus
+(it must be IDE: SATA did not work for me), and select the
+Output.dmg from the file dialog.  Check the &amp;quot;Live CD/DVD&amp;quot; box.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;You now should be able to boot into the installer and install OS X
+within VirtualBox.  When the installer is ready to reboot, go back
+to VirtualBox settings and &amp;quot;eject&amp;quot; the virtual DVD before restarting.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Hopefully this will help others out.&lt;/p&gt;
+</summary></entry><entry><title>matplotlib lessons learned</title><link href="/blog/2013/03/25/matplotlib-lessons-learned/" rel="alternate"></link><updated>2013-03-25T09:47:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2013-03-25:blog/2013/03/25/matplotlib-lessons-learned/</id><summary type="html">&lt;p&gt;Jake Vanderplass has a very thought-provoking essay about the &lt;a class="reference external" href="http://jakevdp.github.com/blog/2013/03/23/matplotlib-and-the-future-of-visualization-in-python/"&gt;future
 of visualization in Python&lt;/a&gt;.
 It's an exciting time for visualization in Python with so many new
 options exploding onto the scene, and Jake has provided a nice
@@ -381,6 +468,43 @@ peer to the existing backends.&lt;/p&gt;
 &lt;p&gt;Watch the matplotlib and IPython projects -- pull requests will be
 coming soon.&lt;/p&gt;
 &lt;/div&gt;
+</summary></entry><entry><title>Amazon MP3 ends their support for Linux</title><link href="/blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/" rel="alternate"></link><updated>2012-09-11T11:40:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2012-09-11:blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/</id><summary type="html">&lt;p&gt;I've bought digital music from Amazon for almost as long as they've
+been in that business.  Their prices are very competitive, the MP3's
+are dog-standard and DRM-free so they work on every device imaginable,
+and, until recently, they have supported Linux.&lt;/p&gt;
+&lt;p&gt;Admittedly, they haven't supported Linux well for some time.  Their
+own downloading app (when it was available) had fallen into disrepair
+and didn't work on most modern Linux distributions.  However, the
+simple, yet effective, &lt;a class="reference external" href="http://code.google.com/p/clamz/"&gt;clamz&lt;/a&gt;
+filled that void quite nicely.&lt;/p&gt;
+&lt;p&gt;Now, however, when you try to download more than one file at a time,
+you're greeted with this message:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+On Linux systems, Cloud Player only supports downloading songs one
+at a time. To download your music, deselect all checkboxes, select
+the checkbox for the song you want to download, then click the
+&amp;quot;Download&amp;quot; button.
+&lt;/pre&gt;
+&lt;p&gt;Changing the User Agent string and/or deleting cookies doesn't seem to
+get over the wall.  Other clamz users don't appear to have &lt;a class="reference external" href="http://code.google.com/p/clamz/issues/detail?id=35"&gt;any
+solutions&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;When I contacted Amazon customer support to confirm that there was
+truly no workaround, the reply was:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+I am sorry to know that you are not able to download multiple
+songs from the cloud player. To download multiple songs you will
+need the Amazon MP3 downloader. However since you are using a
+Linux operating system, you will need to download one song at a
+time from the cloud player.
+&lt;/pre&gt;
+&lt;p&gt;Indeed, we have always been at war with Eastasia.  And you've never
+been able to purchase and download MP3's from Amazon on a Linux box.
+The hundreds of dollars I've spent doing just that certainly don't
+mean anything.  Thankfully, since it's all DRM-free they can't take
+away what I already have.&lt;/p&gt;
+&lt;p&gt;Sorry, Amazon, but I'm not a clicking monkey.  I'll need to go
+elsewhere.  Can anyone else recommend another DRM-free service that
+doesn't require jumping through so many hoops to download purchases?&lt;/p&gt;
 </summary></entry><entry><title>John Hunter</title><link href="/blog/2012/08/31/john-hunter/" rel="alternate"></link><updated>2012-08-31T10:22:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2012-08-31:blog/2012/08/31/john-hunter/</id><summary type="html">&lt;p&gt;We have lost one of the greats of our community.&lt;/p&gt;
 &lt;p&gt;I first met John Hunter when he came to give a presentation about
 matplotlib at the Space Telescope Science Institute in 2004 (or
