@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>VirtualBox on Mac OS X - Boom!  Michael Droettboom's blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link href="/images/favicon.png" rel="icon">
+
+<link rel="canonical" href="/blog/2013/08/29/virtualbox-on-mac-os-x/">
+
+        <meta name="author" content="Michael Droettboom" />
+        <meta name="description" content="I recently got a Mac Mini so I can start working on Macintosh-specific issues with matplotlib. Thanks again to Hans Petter Langtangen, the Director of the Center for Biomedical Computing at Simula for his gracious donation that supported the purchase. One of the things I&#39;d like to use this ..." />
+
+        <meta property="og:site_name" content="Boom!  Michael Droettboom's blog" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="VirtualBox on Mac OS X"/>
+        <meta property="og:url" content="/blog/2013/08/29/virtualbox-on-mac-os-x/"/>
+        <meta property="og:description" content="I recently got a Mac Mini so I can start working on Macintosh-specific issues with matplotlib. Thanks again to Hans Petter Langtangen, the Director of the Center for Biomedical Computing at Simula for his gracious donation that supported the purchase. One of the things I&#39;d like to use this ..."/>
+        <meta property="article:published_time" content="2013-08-29" />
+            <meta property="article:section" content="mac" />
+            <meta property="article:author" content="Michael Droettboom" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.darkly.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+        <link href="/static/custom.css" rel="stylesheet">
+
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Boom!  Michael Droettboom's blog ATOM Feed"/>
+
+
+
+        <link href="/feeds/mac.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Boom!  Michael Droettboom's blog mac ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+Boom!  Michael Droettboom's blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="/pages/music.html">
+                             Music
+                          </a></li>
+                         <li><a href="/pages/papers.html">
+                             Papers
+                          </a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/blog/2013/08/29/virtualbox-on-mac-os-x/"
+                       rel="bookmark"
+                       title="Permalink to VirtualBox on Mac OS X">
+                        VirtualBox on Mac OS X
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2013-08-29T09:33:00-04:00"> Thu 29 August 2013</time>
+    </span>
+
+
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>I recently got a Mac Mini so I can start working on Macintosh-specific
+issues with matplotlib.  Thanks again to Hans Petter Langtangen, the
+Director of the Center for Biomedical Computing at <a class="reference external" href="http://home.simula.no/~hpl">Simula</a> for his gracious donation that
+supported the purchase.</p>
+<p>One of the things I'd like to use this machine for is to test
+installers in various environments -- a fresh install, or with
+MacPorts, or Fink etc. -- to make sure the installers include
+everything they need.  So I want to run Mac OS X in a virtual machine
+that I can reset on a regular basis to a known state.  This is now
+allowed by the licensing of OS X, as long as it's running on top of
+genuine Apple hardware, and you create no more than 5 instances.</p>
+<p>It's surprisingly hard to find information on installing Mac OS X in a
+virtual machine.  Most of what Google finds is various hacks to run on
+non-Apple hardware.  I, instead, want to do this legally.</p>
+<p>Unfortunately, the Mac Mini came with no installation media, so you
+can't just plug it in and install it in a virtual machine.  I thought,
+ok, no problem -- I'll just pop over to the App Store and download it.
+Unfortunately, to do that, Apple wanted to charge me $29.99 for
+something I already own.</p>
+<p>So next I looked at the recovery partition.  Parallels is reportedly
+able to use the recovery partition directly to install in the virtual
+machine.  However, I want to use VirtualBox, since it is open source,
+what I'm familiar with on Linux, and, most importantly, because it can
+be automated by vagrant.  After trying in vain to point VirtualBox at
+the magic stuff in the recovery partition, I came upon a working
+solution.  The following steps were done with Mountain Lion, and I
+have no idea whether they are applicable to other releases.</p>
+<ul>
+<li><p class="first">Grab an external USB drive and plug it in.  I think it needs to be
+at least the size of a double-layer DVD, or 8.5 GB.  This process
+will erase everything on it.</p>
+</li>
+<li><p class="first">Reboot into recovery mode, by holding down Command+R during boot.  (A word
+of advice to those new to Macs: wait until you hear the startup sound until
+you press the keys down, and hold them until the Apple logo disappears.
+Timing seems to be important here).</p>
+</li>
+<li><p class="first">I list of utilities will appear.  Open &quot;Disk Manager&quot; and
+repartition the external disk to have a &quot;GUID&quot; partition table with
+a single &quot;HFS+&quot; partition.</p>
+</li>
+<li><p class="first">Exit &quot;Disk Manager&quot; and then go to &quot;Install OS X&quot;.  Install it to the
+external drive.</p>
+</li>
+<li><p class="first">When the installation is done, the system will reboot back into your &quot;host&quot;
+installation on the internal drive.  (I was surprised by this -- you may
+need to remove the USB drive to boot into the internal drive, but I didn't
+need to).</p>
+</li>
+<li><p class="first">The result is a folder on the external drive called &quot;OS X Install
+Data&quot;.  Inside that folder is a disk image of the installer,
+<cite>InstallESD.dmg</cite>.  Copy this to your internal hard disk.  You can
+then remove the external USB drive, we're done with it.</p>
+</li>
+<li><p class="first">Unfortunately, there is still a small incompatibility with power
+management inside of VirtualBox that will cause the installer to
+hang during boot.  The kernel extension that handles CPU power
+management needs to be replaced.  I found the instructions for that
+<a class="reference external" href="http://ntk.me/2012/09/07/os-x-on-os-x/">here</a>.  I'm paraphrasing
+it here, and only including instructions for Mountain Lion.</p>
+<ul>
+<li><p class="first">Download <a class="reference external" href="https://github.com/ntkme/InstallESD.dmg.tool">InstallESD.dmg.tool</a>.</p>
+</li>
+<li><p class="first">Download NullCPUPowerManagement.kext</p>
+</li>
+<li><p class="first">Run the following command:</p>
+<pre class="literal-block">
+./InstallESD.dmg.tool -i InstallESD.dmg -o Output.dmg -- NullCPUPowerManagement.kext
+</pre>
+</li>
+</ul>
+</li>
+<li><p class="first">The <cite>Output.dmg</cite> is now a patched installer image that can be used
+to install OS X in VirtualBox.</p>
+</li>
+<li><p class="first">In VirtualBox, create a new virtual machine and use its default
+settings for an OS X guest.  Then, open the settings for the machine
+and go to the Storage tab.  Add a new CD/DVD device to the IDE bus
+(it must be IDE: SATA did not work for me), and select the
+Output.dmg from the file dialog.  Check the &quot;Live CD/DVD&quot; box.</p>
+</li>
+<li><p class="first">You now should be able to boot into the installer and install OS X
+within VirtualBox.  When the installer is ready to reboot, go back
+to VirtualBox settings and &quot;eject&quot; the virtual DVD before restarting.</p>
+</li>
+</ul>
+<p>Hopefully this will help others out.</p>
+
+            </div>
+            <!-- /.entry-content -->
+    <hr/>
+    <section class="comments" id="comments">
+        <h2>Comments</h2>
+
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'mdboom'; // required: replace example with your forum shortname
+
+                var disqus_identifier = '/blog/2013/08/29/virtualbox-on-mac-os-x/';
+                var disqus_url = '/blog/2013/08/29/virtualbox-on-mac-os-x/';
+
+            var disqus_config = function () {
+                this.language = "en";
+            };
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </section>
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+
+
+
+
+
+
+    <li class="list-group-item"><h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
+        <div id="gh_repos">
+            <p class="list-group-item">Status updating...</p>
+        </div>
+    </li>
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://python.org" target="_blank">
+                Python
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://jupyter.org" target="_blank">
+                Jupyter
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://astropy.org" target="_blank">
+                Astropy
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://numpy.org" target="_blank">
+                Numpy
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://valgrind.org" target="_blank">
+                Valgrind
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://www.gnu.org/software/emacs/" target="_blank">
+                Emacs
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://i3wm.org/" target="_blank">
+                i3 window manager
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://tmux.sf.net/" target="_blank">
+                tmux
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://sphinx.pocoo.org/" target="_blank">
+                Sphinx
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://fedoraproject.org" target="_blank">
+                Fedora Linux
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2013 Michael Droettboom
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+    <!-- GitHub JS -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (!window.jXHR) {
+                var jxhr = document.createElement('script');
+                jxhr.type = 'text/javascript';
+                jxhr.src = '/theme/js/jXHR.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(jxhr, s);
+            }
+
+            github.showRepos({
+                user: 'mdboom',
+                count: 5,
+                skip_forks: false,
+                target: '#gh_repos'
+            });
+        });
+    </script>
+    <script src="/theme/js/github.js" type="text/javascript"></script>
+    <!-- End GitHub JS Code -->
+    <!-- Disqus -->
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'mdboom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <!-- End Disqus Code -->
+
+</body>
+</html>

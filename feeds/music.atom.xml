@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="/" rel="alternate"></link><link href="/feeds/music.atom.xml" rel="self"></link><id>/</id><updated>2012-09-11T11:40:00-04:00</updated><entry><title>Amazon MP3 ends their support for Linux</title><link href="/blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/" rel="alternate"></link><updated>2012-09-11T11:40:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2012-09-11:blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/</id><summary type="html">&lt;p&gt;I've bought digital music from Amazon for almost as long as they've
+been in that business.  Their prices are very competitive, the MP3's
+are dog-standard and DRM-free so they work on every device imaginable,
+and, until recently, they have supported Linux.&lt;/p&gt;
+&lt;p&gt;Admittedly, they haven't supported Linux well for some time.  Their
+own downloading app (when it was available) had fallen into disrepair
+and didn't work on most modern Linux distributions.  However, the
+simple, yet effective, &lt;a class="reference external" href="http://code.google.com/p/clamz/"&gt;clamz&lt;/a&gt;
+filled that void quite nicely.&lt;/p&gt;
+&lt;p&gt;Now, however, when you try to download more than one file at a time,
+you're greeted with this message:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+On Linux systems, Cloud Player only supports downloading songs one
+at a time. To download your music, deselect all checkboxes, select
+the checkbox for the song you want to download, then click the
+&amp;quot;Download&amp;quot; button.
+&lt;/pre&gt;
+&lt;p&gt;Changing the User Agent string and/or deleting cookies doesn't seem to
+get over the wall.  Other clamz users don't appear to have &lt;a class="reference external" href="http://code.google.com/p/clamz/issues/detail?id=35"&gt;any
+solutions&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;When I contacted Amazon customer support to confirm that there was
+truly no workaround, the reply was:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+I am sorry to know that you are not able to download multiple
+songs from the cloud player. To download multiple songs you will
+need the Amazon MP3 downloader. However since you are using a
+Linux operating system, you will need to download one song at a
+time from the cloud player.
+&lt;/pre&gt;
+&lt;p&gt;Indeed, we have always been at war with Eastasia.  And you've never
+been able to purchase and download MP3's from Amazon on a Linux box.
+The hundreds of dollars I've spent doing just that certainly don't
+mean anything.  Thankfully, since it's all DRM-free they can't take
+away what I already have.&lt;/p&gt;
+&lt;p&gt;Sorry, Amazon, but I'm not a clicking monkey.  I'll need to go
+elsewhere.  Can anyone else recommend another DRM-free service that
+doesn't require jumping through so many hoops to download purchases?&lt;/p&gt;
+</summary></entry></feed>

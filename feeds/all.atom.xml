@@ -1,0 +1,803 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2013-08-29T09:33:00-04:00</updated><entry><title>VirtualBox on Mac OS X</title><link href="/blog/2013/08/29/virtualbox-on-mac-os-x/" rel="alternate"></link><updated>2013-08-29T09:33:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2013-08-29:blog/2013/08/29/virtualbox-on-mac-os-x/</id><summary type="html">&lt;p&gt;I recently got a Mac Mini so I can start working on Macintosh-specific
+issues with matplotlib.  Thanks again to Hans Petter Langtangen, the
+Director of the Center for Biomedical Computing at &lt;a class="reference external" href="http://home.simula.no/~hpl"&gt;Simula&lt;/a&gt; for his gracious donation that
+supported the purchase.&lt;/p&gt;
+&lt;p&gt;One of the things I'd like to use this machine for is to test
+installers in various environments -- a fresh install, or with
+MacPorts, or Fink etc. -- to make sure the installers include
+everything they need.  So I want to run Mac OS X in a virtual machine
+that I can reset on a regular basis to a known state.  This is now
+allowed by the licensing of OS X, as long as it's running on top of
+genuine Apple hardware, and you create no more than 5 instances.&lt;/p&gt;
+&lt;p&gt;It's surprisingly hard to find information on installing Mac OS X in a
+virtual machine.  Most of what Google finds is various hacks to run on
+non-Apple hardware.  I, instead, want to do this legally.&lt;/p&gt;
+&lt;p&gt;Unfortunately, the Mac Mini came with no installation media, so you
+can't just plug it in and install it in a virtual machine.  I thought,
+ok, no problem -- I'll just pop over to the App Store and download it.
+Unfortunately, to do that, Apple wanted to charge me $29.99 for
+something I already own.&lt;/p&gt;
+&lt;p&gt;So next I looked at the recovery partition.  Parallels is reportedly
+able to use the recovery partition directly to install in the virtual
+machine.  However, I want to use VirtualBox, since it is open source,
+what I'm familiar with on Linux, and, most importantly, because it can
+be automated by vagrant.  After trying in vain to point VirtualBox at
+the magic stuff in the recovery partition, I came upon a working
+solution.  The following steps were done with Mountain Lion, and I
+have no idea whether they are applicable to other releases.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Grab an external USB drive and plug it in.  I think it needs to be
+at least the size of a double-layer DVD, or 8.5 GB.  This process
+will erase everything on it.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Reboot into recovery mode, by holding down Command+R during boot.  (A word
+of advice to those new to Macs: wait until you hear the startup sound until
+you press the keys down, and hold them until the Apple logo disappears.
+Timing seems to be important here).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;I list of utilities will appear.  Open &amp;quot;Disk Manager&amp;quot; and
+repartition the external disk to have a &amp;quot;GUID&amp;quot; partition table with
+a single &amp;quot;HFS+&amp;quot; partition.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Exit &amp;quot;Disk Manager&amp;quot; and then go to &amp;quot;Install OS X&amp;quot;.  Install it to the
+external drive.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;When the installation is done, the system will reboot back into your &amp;quot;host&amp;quot;
+installation on the internal drive.  (I was surprised by this -- you may
+need to remove the USB drive to boot into the internal drive, but I didn't
+need to).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The result is a folder on the external drive called &amp;quot;OS X Install
+Data&amp;quot;.  Inside that folder is a disk image of the installer,
+&lt;cite&gt;InstallESD.dmg&lt;/cite&gt;.  Copy this to your internal hard disk.  You can
+then remove the external USB drive, we're done with it.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Unfortunately, there is still a small incompatibility with power
+management inside of VirtualBox that will cause the installer to
+hang during boot.  The kernel extension that handles CPU power
+management needs to be replaced.  I found the instructions for that
+&lt;a class="reference external" href="http://ntk.me/2012/09/07/os-x-on-os-x/"&gt;here&lt;/a&gt;.  I'm paraphrasing
+it here, and only including instructions for Mountain Lion.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Download &lt;a class="reference external" href="https://github.com/ntkme/InstallESD.dmg.tool"&gt;InstallESD.dmg.tool&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Download NullCPUPowerManagement.kext&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Run the following command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+./InstallESD.dmg.tool -i InstallESD.dmg -o Output.dmg -- NullCPUPowerManagement.kext
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The &lt;cite&gt;Output.dmg&lt;/cite&gt; is now a patched installer image that can be used
+to install OS X in VirtualBox.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;In VirtualBox, create a new virtual machine and use its default
+settings for an OS X guest.  Then, open the settings for the machine
+and go to the Storage tab.  Add a new CD/DVD device to the IDE bus
+(it must be IDE: SATA did not work for me), and select the
+Output.dmg from the file dialog.  Check the &amp;quot;Live CD/DVD&amp;quot; box.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;You now should be able to boot into the installer and install OS X
+within VirtualBox.  When the installer is ready to reboot, go back
+to VirtualBox settings and &amp;quot;eject&amp;quot; the virtual DVD before restarting.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Hopefully this will help others out.&lt;/p&gt;
+</summary></entry><entry><title>matplotlib lessons learned</title><link href="/blog/2013/03/25/matplotlib-lessons-learned/" rel="alternate"></link><updated>2013-03-25T09:47:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2013-03-25:blog/2013/03/25/matplotlib-lessons-learned/</id><summary type="html">&lt;p&gt;Jake Vanderplass has a very thought-provoking essay about the &lt;a class="reference external" href="http://jakevdp.github.com/blog/2013/03/23/matplotlib-and-the-future-of-visualization-in-python/"&gt;future
+of visualization in Python&lt;/a&gt;.
+It's an exciting time for visualization in Python with so many new
+options exploding onto the scene, and Jake has provided a nice
+summary.  However, I don't think it presents a very current view of
+matplotlib, which is still alive and well with funding sources, and
+moving to &amp;quot;modern&amp;quot; things like web frontends and web services, and has
+nascent ongoing project related to &lt;a class="reference external" href="https://github.com/rougier/gl-agg"&gt;hardware acceleration&lt;/a&gt;.  Importantly, it has thousands
+of person hours of investment in all of the large to tiny problems
+that have been found along the way.&lt;/p&gt;
+&lt;div class="section" id="in-the-browser"&gt;
+&lt;h2&gt;In the browser&lt;/h2&gt;
+&lt;p&gt;One of the directions that new plotting projects are taking is to be
+more integrated in the web browser.  This has all of the advantages of
+cloud computing (zero install, distributed data), and integrates well
+with great projects like the IPython notebook.&lt;/p&gt;
+&lt;p&gt;matplotlib is already most of the way there.  matplotlib's git master
+has completely interactive and full featured plotting in the browser
+-- meaning it can do everything any of the other matplotlib backends
+can do -- by basically running something very similar to a VNC
+protocol between the server and the client. You can try it out today
+by building from git and using the WebAgg backend. Shortly, it will
+also be available as part of Google App Engine -- so we'll get some
+real experience running these things remotely in a real
+&amp;quot;Internet-enabled&amp;quot; mode. The integration work with IPython still needs
+to be done -- and I hope this can be a major focus of discussion at
+SciPy when I'm there.&lt;/p&gt;
+&lt;p&gt;The VNC-like approach was ultimately arrived at after many months of
+experimenting with approaches more based on JS and HTML5 and/or
+SVG. The main problem one runs into with those approaches is working
+with large datasets -- matplotlib has some very sophisticated designs
+to make working working with large data sets zippy and interactive
+(specifically path simplification, blitting of markers, dynamic down
+sampling of images) all of which are just really hard to implement
+efficiently in a browser. D3's Javascript demos feel very zippy and
+efficient, until you realize how canned they are, or how much they
+rely on very specific means to shuttle reduced data and from the
+browser.  There's a place for interactive canned graphics as part of
+web publishing, but it's much less useful for doing science on data
+for the first time.  But in general from these experiments, I've become
+rather skeptical of approaches that try to do too much in the
+browser. Even though matplotlib is on the &amp;quot;old&amp;quot; paradigm of running on
+a server (or a local desktop), the advantage of that approach is that
+we control the whole stack and can optimize the heck out of the places
+that need to be optimized. Browsers are much more of a black box in
+that regard.&lt;/p&gt;
+&lt;p&gt;I don't know if WebGL will offer some improvements here.  It's enough
+of a moving target that it should probably be re-examined on a regular
+basis.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="on-the-gpu"&gt;
+&lt;h2&gt;On the GPU&lt;/h2&gt;
+&lt;p&gt;And in the diametrically opposite direction, we have projects moving
+plotting onto the GPU.  Particularly interesting to me here is the
+&lt;a class="reference external" href="https://github.com/rougier/gl-agg"&gt;glagg&lt;/a&gt; project by Nicolas
+Rougier and others.  It's important to note for those not in the
+trenches that for high-quality 2D plotting on the GPU, things are much
+less straightforward than for 3D.  Graphics cards don't &amp;quot;just do&amp;quot;
+high-quality 2D rendering out of the box.  It requires the use of
+custom vertex shaders (which are frankly works of extreme brilliance
+and also an exercise somewhat in putting round pegs in square holes
+and living to tell about it).  Unfortunately, these things require
+rather recent graphics hardware and drivers and a fair bit of patience
+to get up and running.  Things will get easier over time, but at the
+moment, a 100% software implementation still can't be beat for
+portability and maximum accessibility for less technically-inclined
+users.  But I look forward to where all of this is going.&lt;/p&gt;
+&lt;p&gt;Real benchmarking on real data needs to be performed to determine just
+how much faster these approaches will be for 2D plotting.  (For 3D,
+which I discuss below, I think the advantages of hardware are more
+apparent).&lt;/p&gt;
+&lt;div class="note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;As a public service announcement, anyone looking for performance out
+of matplotlib should be using the Agg backend -- it's the only one
+with all optimizations available.  The Mac OS-X Quartz backend is
+built on a closed source rendering library with some puzzling and
+surprising performance characteristics.  Many of the attempts to
+speed up that backend involve workarounds for a black box that is
+not well understood.  For the Agg-based backends, however, we
+control the stack from top-to-bottom and are able to optimize for
+real-world scientific plotting scenarios.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="in-3-dimensions"&gt;
+&lt;h2&gt;In 3-dimensions&lt;/h2&gt;
+&lt;p&gt;matplotlib's original focus has always been on 2D.  Despite this,
+notably Benjamin Root and others continue to put a lot of effort into
+matplotlib's 3D extensions, and they fill a niche for many users who
+want clean and crisp vector 3D for print, and it's improving all the
+time.  There are, of course, fundamental architectural problems with
+3D in matplotlib (most importantly the lack of a proper z-ordering)
+that limit what can be done.  That should be fixable with a few
+well-placed C/C++ extensions -- I'm not certain that we need go whole
+hog to the GPU to fix that, but that's certainly the obvious and
+well-trodden solution.  I am concerned that too many of the new 3D
+projects seem to prioritize interactivity and hardware tricks at the
+expense of static quality.  For this reason, matplotlib may continue
+to serve for some time as a high-quality print &amp;quot;backend&amp;quot; for some of
+these other 3-D based projects.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="interfaces"&gt;
+&lt;h2&gt;Interfaces&lt;/h2&gt;
+&lt;p&gt;Another interesting direction of experimentation is in the area of
+user interface and API.&lt;/p&gt;
+&lt;p&gt;I think matplotlib owes a lot of its success to its shameless
+&amp;quot;embracing and extending&amp;quot; of the Matlab graphing API.  Having taught
+matplotlib a few times to new users, I'm always impressed by how
+quickly new users pick it up.&lt;/p&gt;
+&lt;p&gt;The thing that's a but cruftier and full of inconsistencies is
+matplotlib's Object-Oriented interface.  Things there often follow the
+pattern that was most easy to implement rather than what would be the
+most clean from the outside.  It's probably due time to start
+re-evaluating some of those API's and breaking backward compatibility
+for the sake of more consistency going forward.&lt;/p&gt;
+&lt;p&gt;The &lt;a class="reference external" href="http://www.cs.uic.edu/~wilkinson/TheGrammarOfGraphics/GOG.html"&gt;Grammar of Graphics&lt;/a&gt;
+syntax from the R world is really interesting, and I think fills a
+middle ground.  It's more powerful (and I think a little more complex
+to learn at first) than the Matlab interface, but it has the nice
+property of self-consistency that once you learn a few things you can
+easily guess at how to do many others.&lt;/p&gt;
+&lt;p&gt;Peter Wang's &lt;a class="reference external" href="https://github.com/continuumio/bokeh"&gt;Bokeh&lt;/a&gt; project
+aims to bring Grammar of Graphics to Python, which I think is very
+cool.  Note however, that even there, Bokeh includes a matlab-like
+interface, as does another plotting project &lt;a class="reference external" href="https://github.com/rossant/galry"&gt;Galry&lt;/a&gt;, so mlab is by no means dead.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="doomed-to-repeat"&gt;
+&lt;h2&gt;Doomed to repeat&lt;/h2&gt;
+&lt;p&gt;There are a lot of ways in which matplotlib can be improved.  I
+encourage everyone to look at our &lt;a class="reference external" href="https://github.com/matplotlib/matplotlib/wiki"&gt;MEPS&lt;/a&gt; to see some ongoing
+projects that are being discussed or worked on.  There are some large,
+heroic and important projects there to bring matplotlib forward.&lt;/p&gt;
+&lt;p&gt;But I think more interestingly for this blog post is to focus on some
+of the really low-level early architectural decisions that have
+limited or made it difficult to move matplotlib forward.  Importantly,
+these aren't issues that I'm seeing discussed very often, but they are
+things I would try to tackle up front if I ever get a case of
+&amp;quot;2.0-itis&amp;quot; and were starting fresh today.  Hopefully these injuries of
+experience can inform new projects -- or they may inspire someone with
+loads of time to take on refactoring matplotlib.  It would not be
+impossible to make these changes to matplotlib, but it would take a
+concerted long-term effort and the ability to break some backward
+compatibility for the common good.&lt;/p&gt;
+&lt;div class="section" id="generic-tree-manipulations"&gt;
+&lt;h3&gt;Generic tree manipulations&lt;/h3&gt;
+&lt;p&gt;matplotlib plots are more-or-less tree structures of objects that are
+&amp;quot;run&amp;quot; to draw things on the screen.  (It isn't strictly a tree, as
+some cross-referencing is required for things like referring to clip
+paths etc.)  For example, the figure has any number of axes, each of
+which have lines plotted on them.  Drawing involves starting at the
+figure and visiting each of its axes and each of its lines.  All very
+straightforward.  But there is no way to traverse that tree in a
+generic way to perform manipulations on it.&lt;/p&gt;
+&lt;p&gt;For example, you might want to have a plot with a number of
+different-colored lines that you want to make ready for
+black-and-white publication by changing the lines to have different
+dash patterns.  Or, you might want to go through all of the text and
+change the font.  Or, as much as it personally wouldn't fit my
+workflow, many people would like a graphical editor that would allow
+one to traverse the tree of objects in the plot and change properties
+on them.  There's currently no way to do this in a generic way that
+would work on any plot with any kind of object in it.&lt;/p&gt;
+&lt;p&gt;I'm thinking what is needed is something like the much-maligned
+&amp;quot;Document Object Model (DOM)&amp;quot; is needed (if I say &amp;quot;ElementTree&amp;quot;
+instead, is that more appealing to Pythonistas?)  That way, one could
+traverse this tree in a generic fashion and do all kinds of things
+without needing to be aware of what specifically is in the plot.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="type-checking-styles-properties-traits"&gt;
+&lt;h3&gt;Type-checking, styles, properties, traits&lt;/h3&gt;
+&lt;p&gt;matplotlib predates properties and traits and other things of that
+ilk, so it, not unreasonably, uses &lt;cite&gt;get_&lt;/cite&gt; and &lt;cite&gt;set_&lt;/cite&gt; methods for most
+things.  Beyond the syntactic implications of this (which don't bother
+me as much as some), they are rather inconsistent.  Some are available
+as keyword arguments to constructors and plotting methods, but it's
+inconsistent because some must be manually handled by the code while
+others are handled automatically.  Some type-check their arguments
+immediately, whereas others will blow up on invalid input much later
+in some deeply nested backtrace.  Some are mutable and cause an update
+of the plot when changed.  Some seem mutable, but changing them has no
+effect.  Traits (such as Enthought Traits or something else in that
+space) would be a great fit for this.  It's been examined a few times,
+and while the idea seems to be a good fit, the implementation was
+always the stumbling block.  But it's high time to look at this again.&lt;/p&gt;
+&lt;p&gt;Combining this with the tree manipulation suggestion above, we'd be
+able to do really powerful things like CSS-style styling of plots.&lt;/p&gt;
+&lt;p&gt;(Didn't I just say above that web browsers weren't well suited, yet
+I'm stealing some fundamentals of their design here...?)&lt;/p&gt;
+&lt;p&gt;Related to the above, matplotlib's handling of colors and
+alpha-blending is all over the map.  There needs to be a cleanup
+effort to make handling consistent throughout.  Once that's done, the
+way forward should be clear to manage CMYK colors internally for
+formats that support them (e.g. PDF).  Ditto on other properties like
+line styles and marker styles.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="projections-and-ticking"&gt;
+&lt;h3&gt;Projections and ticking&lt;/h3&gt;
+&lt;p&gt;Ticking is the process by which the positions of the grid lines, ticks
+and labels are determined.  There are a number of third-party projects
+that build new projections on top of matplotlib (&lt;a class="reference external" href="http://matplotlib.org/basemap/"&gt;basemap&lt;/a&gt;, &lt;a class="reference external" href="http://leejjoon.github.com/pywcsgrid2/"&gt;pywcsgrid2&lt;/a&gt;, &lt;a class="reference external" href="http://scitools.org.uk/cartopy/"&gt;cartopy&lt;/a&gt; to name a few).  Unfortunately,
+they can't really take advantage of the many (and subtly difficult)
+ticking algorithms in matplotlib because matplotlib's tickers are so
+firmly grounded in the rectilinear world.  matplotlib needs to improve
+its tickers to be more generic and more usable when the grid is
+rotated or warped in a myriad of ways so that all of this duplication
+of effort can be reduced.&lt;/p&gt;
+&lt;p&gt;Related to this, matplotlib have transformations (which determine how
+the data is mapped to the Cartesian space on screen), tickers (which
+determine the positions of grid lines), formatters (which determine
+how the tick's text label is rendered) and locators (which choose
+pleasant-looking bounds for the data), all of which work in tandem to
+produce the labels, ticks and gridlines, but which have no
+relationship to each other.  It should be easier to relate these
+things together, because you usually want a set that works well
+together.  Phil Elson has done some work in this direction, but
+there's still more that could be done.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="higher-dimensionality"&gt;
+&lt;h3&gt;Higher dimensionality&lt;/h3&gt;
+&lt;p&gt;matplotlib's 3D support feels tacked on structurally.  It would be
+better if more parts were agnostic to the dimensionality of the data.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="may-you-live-in-interesting-times"&gt;
+&lt;h2&gt;May you live in interesting times&lt;/h2&gt;
+&lt;p&gt;It's really exciting to watch all that's going on, and thanks to Jake
+Vanderplass for getting this discussion rolling.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="matplotlib"></category></entry><entry><title>Matplotlib in the browser: It's coming</title><link href="/blog/2012/10/11/matplotlib-in-the-browser-its-coming/" rel="alternate"></link><updated>2012-10-11T14:35:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2012-10-11:blog/2012/10/11/matplotlib-in-the-browser-its-coming/</id><summary type="html">&lt;blockquote class="pull-quote"&gt;
+UPDATE: I am now sharing my code in the
+&lt;a class="reference external" href="https://github.com/mdboom/mpl_browser_experiments"&gt;mdboom/mpl_browser_experiments&lt;/a&gt; github
+repository, rather than in a gist.&lt;/blockquote&gt;
+&lt;p&gt;It's occurred to me recently that in my previous blog posts &lt;a class="reference external" href="http://mdboom.github.com/blog/2012/08/07/client-side-rendering-in-matplotlib/"&gt;Part II&lt;/a&gt;
+and &lt;a class="reference external" href="http://mdboom.github.com/blog/2012/08/06/matplotlib-client-side/"&gt;Part I&lt;/a&gt;,
+I was going about the problem all wrong.  Getting the plotting logic
+running in the browser, while perhaps ideal, was full of pitfalls.
+The browsers all render things in different ways and have different
+performance characteristics.  Large data structures in Javascript just
+start to fall over after a certain point.&lt;/p&gt;
+&lt;p&gt;One effective way to deal with the large data structure problem is to
+just not send them to the browser at all, but instead, send rendered
+images.  While the size of the data scientists will want to process
+with Numpy and matplotlib is growing all the time, the size of the
+images being rendered have natural limits based on the resolution of
+our displays. (Retina displays have recently bumped this up, but even
+then, display resolution increases slowly relative to RAM and disk
+space).  So while for simple plots, sending and using the data wins,
+for anything beyond a reasonable amount of complexity, sending
+rendering images beats it (in terms of bandwidth) every time.&lt;/p&gt;
+&lt;p&gt;The other advantage of this approach is that it will work &lt;em&gt;exactly&lt;/em&gt;
+like regular matplotlib.  All of the effort and work that has already
+gone into matplotlib to make it as feature-rich and pixel-perfect as
+it is will apply immediately.&lt;/p&gt;
+&lt;p&gt;So I started to look at how we could just pipe what we already have --
+a high-quality, fast, and extensive rendering framework based on &lt;a class="reference external" href="www.antigrain.com"&gt;Agg&lt;/a&gt; -- into the browser.&lt;/p&gt;
+&lt;div class="section" id="experiments-with-vnc"&gt;
+&lt;h2&gt;Experiments with VNC&lt;/h2&gt;
+&lt;p&gt;An obvious pre-existing hammer on the shelf was &lt;cite&gt;VNC
+&amp;lt;www.realvnc.com&amp;gt;&lt;/cite&gt;.  There are free servers available for all of the
+big platforms, and there is, believe it or not, a client written
+entirely in Javascript that runs in the browser: &lt;a class="reference external" href="http://kanaka.github.com/noVNC/"&gt;noVNC&lt;/a&gt;.  After a little tinkering (I'll
+spare you the details), it's possible to share a single GUI window in
+the matplotlib kernel with a browser.  And it works, more or less,
+although a little slowly.&lt;/p&gt;
+&lt;p&gt;There are few problems with using VNC (and this mostly applies to its
+competitor NX as well):&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;VNC servers hook directly into the GUI technology of your
+platform, so each platform handles setting up a server rather
+differently.  I'm always loathe to reach for solutions that
+involve a lot of platform-specific differences -- it becomes a
+nightmare to support.&lt;/li&gt;
+&lt;li&gt;There's a lot of unnecessary moving pieces.  On X11, for
+example, the VNC wants to be an entire X server, with a window
+manager etc.  The window being shared, of course, has to be
+implemented in some GUI framework or other.  That's a lot of
+extra stuff to install on a headless server that we don't really
+need.&lt;/li&gt;
+&lt;li&gt;The &lt;cite&gt;noVNC&lt;/cite&gt; client has to interpret the binary VNC protocol &lt;em&gt;in
+Javascript&lt;/em&gt;.  Joel Martin and the rest of the team are total
+rockstars and they've pulled off something very impressive.  But
+at the end of the day, it's not a great fit, and it wastes a lot
+of cycles.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So VNC almost gets us there, and the fact that it works &amp;quot;almost well
+enough&amp;quot; gave me confidence that a more &amp;quot;conduit&amp;quot;-based approach would
+work.  So I got to thinking about what the bare minimum thing is that
+could work.&lt;/p&gt;
+&lt;p&gt;The fact is that VNC, at least as it was being used in the above
+context, is just sending events from the keyboard and mouse from the
+client, and getting delta images from the server.  It has a rather
+sophisticated way of compressing those delta images, but at the end of
+the day, that's all it really does for us, and all we really need.&lt;/p&gt;
+&lt;p&gt;It turns out that creating delta images in PNG doesn't work too badly.
+The empty pixels compress away rather well, and the compression and
+decompression can be handled in C at both ends of the pipe.  That is,
+browsers know how to decompress PNGs inherently -- they don't need to
+run slow and complex Javascript to do so, so while it may not be the
+optimal protocol, it's a good choice in a practical sense.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="a-proof-of-concept"&gt;
+&lt;h2&gt;A proof of concept&lt;/h2&gt;
+&lt;p&gt;So &lt;a class="reference external" href="https://github.com/mdboom/mpl_browser_experiments"&gt;in this repository&lt;/a&gt;, I present a
+proof-of-concept for this approach.  I have some hideously rough and
+undocumented code that, given a matplotlib figure, serves it
+interactively to a web browser.  It requires only matplotlib and
+&lt;a class="reference external" href="http://www.tornadoweb.org/"&gt;Tornado&lt;/a&gt; (which you probably already
+have if you already have a recent IPython).  It's obviously a long way
+from here to something that's a true matplotlib backend and
+well-integrated with IPython notebook.  This code in no way represents
+the final API.  I also don't do a lot of network programming, so I may
+be handling the AJAXy things suboptimally.  However, I'd appreciate
+testing of this approach on different platforms and browsers to just
+prove its feasibility before putting in too much of that follow-on
+work.&lt;/p&gt;
+&lt;p&gt;To use it, just create a matplotlib figure, with whatever you want,
+and pass it to &lt;tt class="docutils literal"&gt;serve_figure.serve_figure()&lt;/tt&gt;.  For example, take the
+quadmesh example (something that would be really hard to implement in
+HTML5 canvas) and serve it:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+import serve_figure
+
+import numpy as np
+from numpy import ma
+from matplotlib import pyplot as plt
+
+n = 12
+x = np.linspace(-1.5,1.5,n)
+y = np.linspace(-1.5,1.5,n*2)
+X,Y = np.meshgrid(x,y);
+Qx = np.cos(Y) - np.cos(X)
+Qz = np.sin(Y) + np.sin(X)
+Qx = (Qx + 1.1)
+Z = np.sqrt(X**2 + Y**2)/5;
+Z = (Z - Z.min()) / (Z.max() - Z.min())
+
+# The color array can include masked values:
+Zm = ma.masked_where(np.fabs(Qz) &amp;lt; 0.5*np.amax(Qz), Z)
+
+fig = plt.figure()
+ax = fig.add_subplot(121)
+ax.set_axis_bgcolor(&amp;quot;#bdb76b&amp;quot;)
+ax.pcolormesh(Qx,Qz,Z, shading='gouraud')
+ax.set_title('Without masked values')
+
+ax = fig.add_subplot(122)
+ax.set_axis_bgcolor(&amp;quot;#bdb76b&amp;quot;)
+col = ax.pcolormesh(Qx,Qz,Zm,shading='gouraud')
+ax.set_title('With masked values')
+
+serve_figure.serve_figure(fig, port=8888)
+&lt;/pre&gt;
+&lt;p&gt;Open up your webbrowser to &lt;cite&gt;http://127.0.0.1:8888&lt;/cite&gt; and you should
+(hopefully) be in business.  Open up a second browser window (whether
+locally or on another machine) and note that the two plots are
+automatically synchronized.  The &amp;quot;data cursor&amp;quot; (that displays the
+current location of the mouse cursor in data coordinates) also works.&lt;/p&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="" src="http://mdboom.github.com/images/firefox.png" /&gt;
+&lt;p class="caption"&gt;Matplotlib running in Firefox&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Some back-of-the-napkin thoughts about performance: The average size
+of each frame at the default resolution is around 16 kbytes.  On a
+standard 1MB DSL connection, we should be able to pipe 7000 of those
+per second, so it should be fine in terms of bandwidth.  Of course,
+there are other factors, such as the latency of the network and the
+CPU time necessary to decompress the PNG files etc. that are harder to
+take account of.  This will require some real-world testing to really
+get a sense of how well it works.&lt;/p&gt;
+&lt;p&gt;There's a lot of finesse to follow.  For example, we should be able to
+shrink the bandwidth by another 20% by using a 1-bit alpha channel.
+The cursor shape doesn't ever change like it does in a regular
+matplotlib window.  It should be possible (though not yet) to support
+the interactive callbacks in matplotlib to handle the mouse events in
+arbitrary ways inside of the server.  In principle, there are very few
+limitations to this approach, and it has the potential to be a true
+peer to the existing backends.&lt;/p&gt;
+&lt;p&gt;Watch the matplotlib and IPython projects -- pull requests will be
+coming soon.&lt;/p&gt;
+&lt;/div&gt;
+</summary></entry><entry><title>Amazon MP3 ends their support for Linux</title><link href="/blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/" rel="alternate"></link><updated>2012-09-11T11:40:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2012-09-11:blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/</id><summary type="html">&lt;p&gt;I've bought digital music from Amazon for almost as long as they've
+been in that business.  Their prices are very competitive, the MP3's
+are dog-standard and DRM-free so they work on every device imaginable,
+and, until recently, they have supported Linux.&lt;/p&gt;
+&lt;p&gt;Admittedly, they haven't supported Linux well for some time.  Their
+own downloading app (when it was available) had fallen into disrepair
+and didn't work on most modern Linux distributions.  However, the
+simple, yet effective, &lt;a class="reference external" href="http://code.google.com/p/clamz/"&gt;clamz&lt;/a&gt;
+filled that void quite nicely.&lt;/p&gt;
+&lt;p&gt;Now, however, when you try to download more than one file at a time,
+you're greeted with this message:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+On Linux systems, Cloud Player only supports downloading songs one
+at a time. To download your music, deselect all checkboxes, select
+the checkbox for the song you want to download, then click the
+&amp;quot;Download&amp;quot; button.
+&lt;/pre&gt;
+&lt;p&gt;Changing the User Agent string and/or deleting cookies doesn't seem to
+get over the wall.  Other clamz users don't appear to have &lt;a class="reference external" href="http://code.google.com/p/clamz/issues/detail?id=35"&gt;any
+solutions&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;When I contacted Amazon customer support to confirm that there was
+truly no workaround, the reply was:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+I am sorry to know that you are not able to download multiple
+songs from the cloud player. To download multiple songs you will
+need the Amazon MP3 downloader. However since you are using a
+Linux operating system, you will need to download one song at a
+time from the cloud player.
+&lt;/pre&gt;
+&lt;p&gt;Indeed, we have always been at war with Eastasia.  And you've never
+been able to purchase and download MP3's from Amazon on a Linux box.
+The hundreds of dollars I've spent doing just that certainly don't
+mean anything.  Thankfully, since it's all DRM-free they can't take
+away what I already have.&lt;/p&gt;
+&lt;p&gt;Sorry, Amazon, but I'm not a clicking monkey.  I'll need to go
+elsewhere.  Can anyone else recommend another DRM-free service that
+doesn't require jumping through so many hoops to download purchases?&lt;/p&gt;
+</summary></entry><entry><title>John Hunter</title><link href="/blog/2012/08/31/john-hunter/" rel="alternate"></link><updated>2012-08-31T10:22:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2012-08-31:blog/2012/08/31/john-hunter/</id><summary type="html">&lt;p&gt;We have lost one of the greats of our community.&lt;/p&gt;
+&lt;p&gt;I first met John Hunter when he came to give a presentation about
+matplotlib at the Space Telescope Science Institute in 2004 (or
+thereabouts).  I remember being blown away by how capable matplotlib
+was (even then), and stunned by John's drive to build it completely
+outside of what was paying the bills.&lt;/p&gt;
+&lt;p&gt;Years later, when I started working at STScI in 2007, one of my first
+tasks was to add some new features to matplotlib.  Little did I know,
+it would become my passion as well.  I was a little intimidated to be
+working on something so entrenched and widely used.  But John somehow
+instilled confidence in me with his support of what I was doing, even
+as I was ripping apart old assumptions in the code and turning it over
+anew.  Through all the e-mails, conference calls and chance conference
+meetings with John since, he has been the most encouraging mentor and
+a prime example of open source stewardship.  I should be lucky to find
+even a fraction of the enthusiasm, skill and leadership that John had.&lt;/p&gt;
+&lt;p&gt;Equally impressive has been watching so many of us Scientific Python
+types, separated by geography and institutional affiliations, come
+together in supporting each other at a time like this.  Sometimes it
+really is more than just code.&lt;/p&gt;
+&lt;p&gt;If matplotlib has been useful to you in any way, please give
+generously to the &lt;a class="reference external" href="http://numfocus.org/johnhunter/"&gt;John Hunter Memorial Fund&lt;/a&gt;.&lt;/p&gt;
+</summary></entry><entry><title>Client-side Rendering in Matplotlib, Part II: The language blender</title><link href="/blog/2012/08/07/client-side-rendering-in-matplotlib/" rel="alternate"></link><updated>2012-08-07T13:56:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2012-08-07:blog/2012/08/07/client-side-rendering-in-matplotlib/</id><summary type="html">&lt;div class="note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;EDIT 2012-08-08: Added benchmarks in Firefox in addition to Chrome&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;In the &lt;a class="reference external" href="http://mdboom.github.com/blog/2012/08/06/matplotlib-client-side/"&gt;last post&lt;/a&gt;,
+I outlined some of the architectural difficulties bringing
+matplotlib's interactivity to the browser.  In short, there's a big
+chunk of code that lies between building the tree of artists and
+rendering them to the screen that needs to run either in the Python
+interpreter, as it does now, or inside of the web browser to support
+interactive web applications.  It would be great to avoid having two
+code bases, one in Python and one in Javascript, that would need to be
+kept in sync.  Writing code for both contexts from a single code base
+may turn out to be a pipe dream, but bear with me as I explore tools
+that might help.&lt;/p&gt;
+&lt;p&gt;Also, when trying to grok the discussion here and understanding the
+architectural challenges of matplotlib, it may be helpful to read the
+matplotlib chapter by John Hunter and yours truly from &lt;a class="reference external" href="http://www.aosabook.org/en/index.html"&gt;Architecture
+of Open Source Applications, Volume II&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="section" id="tools"&gt;
+&lt;h2&gt;Tools&lt;/h2&gt;
+&lt;p&gt;There are a few interesting projects that help bridge the gap between
+Python and Javascript.&lt;/p&gt;
+&lt;div class="section" id="pyjs"&gt;
+&lt;h3&gt;PyJs&lt;/h3&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://www.pyjs.org"&gt;PyJs&lt;/a&gt; (formerly called Pyjamas) is a
+Python-to-Javascript converter.  It also includes an environment much
+like Google Web Toolkits for developing rich client-side applications
+in Python, but those features are probably not useful here.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="skulpt"&gt;
+&lt;h3&gt;Skulpt&lt;/h3&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://www.skulpt.org"&gt;Skulpt&lt;/a&gt; is a Python interpreter written in
+Javascript.  It can compile and run Python code entirely within the
+web browser.  In terms of language features, it doesn't seem as mature
+as PyJs, but the fact that it has no dependencies other than a couple
+of Javascript files may be an advantage in terms of deployment.  An
+obvious shortcoming of both Skulpt and PyJs is the lack of support for
+Numpy -- none of the existing matplotlib Python code, which depends so
+heavily on Numpy, would work in that context.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="pyv8"&gt;
+&lt;h3&gt;PyV8&lt;/h3&gt;
+&lt;p&gt;Unlike the other two, which allow Python to run in the browser, &lt;a class="reference external" href="http://code.google.com/p/pyv8/"&gt;PyV8&lt;/a&gt; allows Javascript to run inside of
+the Python interpreter.  It is a wrapper around Google's open source
+V8 Javascript engine and allows sharing objects between Python and
+Javascript somewhat transparently.  If the drawing code were to be
+rewritten in Javascript, it could then, theoretically, be used both
+from Python on the desktop and inside the web browser.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="playing-around"&gt;
+&lt;h2&gt;Playing around&lt;/h2&gt;
+&lt;p&gt;As a first pass playing with these tools, I've created a new project
+on github &lt;a class="reference external" href="https://github.com/mdboom/py-js-blending-experiments"&gt;py-js-blending-experiments&lt;/a&gt;.  I've
+started by writing a very simple benchmark that does a simple 2D
+affine transformation, in pure Python, Python with Numpy, Javascript
+and C.  This test, while a real-world bottleneck from the real-world
+matplotlib, is probably too simple to read too much into the results.
+A real test would involve classes with complex interactions between
+them, to show how the same flexible system of transformations,
+tickers, formatters etc. would work, and would take into account the
+penalty of stepping over the gap between Python and Javascript.  But
+all that will have to wait for a future blog post.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-benchmarks"&gt;
+&lt;h2&gt;The benchmarks&lt;/h2&gt;
+&lt;p&gt;The benchmarks compare a number of different possible approaches.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;Pure Python&lt;/strong&gt;: This is just a simple pure Python implementation.
+&lt;a class="reference external" href="https://raw.github.com/mdboom/py-js-blending-experiments/master/transform.py"&gt;transform.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pure Javascript&lt;/strong&gt;: A hand-written JavaScript implementation.
+&lt;a class="reference external" href="https://raw.github.com/mdboom/py-js-blending-experiments/master/transform.js"&gt;transform.js&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Numpy&lt;/strong&gt;: An implementation using vectorized Numpy operations.
+&lt;a class="reference external" href="https://raw.github.com/mdboom/py-js-blending-experiments/master/transform_numpy.py"&gt;transform_numpy.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;C extension&lt;/strong&gt;: A hand-written C extension.
+&lt;a class="reference external" href="https://raw.github.com/mdboom/py-js-blending-experiments/master/transform.c"&gt;transform.c&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Skulpt&lt;/strong&gt;: Taking the pure Python implementation above, but running through
+Skulpt to get it to run inside of the browser.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PyJs&lt;/strong&gt;: Compiling the pure Python implementation above to
+Javascipt using PyJs, and then running the result in the browser.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PyV8&lt;/strong&gt;: Running the hand-written Javascript implementation above
+inside of PyV8.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="results"&gt;
+&lt;h3&gt;Results&lt;/h3&gt;
+&lt;p&gt;The following results are on a quad-core Intel Core i5-2520M CPU &amp;#64;
+2.50GHz running Fedora Linux 17.  Python 2.7.3, Numpy 1.6.1, Google
+Chrome 21.0.1180.57 beta and Firefox 14.0.1 were used.  The benchmark
+is performing a 2D affine transformation on 128,000 points.  Note that
+the timings in the web browser are quite variable.  I've included the
+average and independent results of 5 runs.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+=========================== ================== ==================================
+Benchmark                   avg. time (in ms)  times
+=========================== ================== ==================================
+Pure Python                 94                 95, 96, 93, 96, 92
+Pure Javascript Chrome      40                 41, 29, 59, 33, 42
+Pure Javascript Firefox     15                 8, 7, 25, 20, 16
+Numpy                       6                  7, 6, 6, 6, 6
+C                           2                  2, 2, 2, 2, 2
+Skulpt Chrome               686                700, 691, 676, 691, 676
+Skulpt Firefox              1052               1027, 1052, 1062, 1060, 1061
+PyJs Chrome                 2197               2156, 2218, 2176, 2187, 2251
+PyJs Firefox                658                644, 687, 630, 680, 674
+PyV8                        38                 38, 38, 38, 37, 37
+=========================== ================== ==================================
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;So what can we conclude?  Remember what I said about not reading too
+much into these results?  Well, I'm going to do it anyway with an
+enormous caveat.&lt;/p&gt;
+&lt;p&gt;There is considerable overhead when trying to shoehorn Python into the
+browser (comparing Skulpt and PyJs to Pure Javascript).  I personally
+am surprised by how much more successful the Python interpreter
+approach is vs. the Python to Javascript conversion approach, though
+that may be due to the relative incompleteness of Skulpt.  (&lt;em&gt;EDIT:
+Though the Firefox results tell the opposite story&lt;/em&gt;). It's pretty
+clear where the overhead of PyJs comes from.  The line:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+X = a*x + c*y + e
+&lt;/pre&gt;
+&lt;p&gt;converts to:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+X = $p['__op_add']($add3=$p['__op_add']($add1=(typeof ($mul1=a)==typeof ($mul2=x) &amp;amp;&amp;amp; typeof $mul1=='number'?
+    $mul1*$mul2:
+    $p['op_mul']($mul1,$mul2)),$add2=(typeof ($mul3=c)==typeof ($mul4=y) &amp;amp;&amp;amp; typeof $mul3=='number'?
+    $mul3*$mul4:
+    $p['op_mul']($mul3,$mul4))),$add4=e);
+&lt;/pre&gt;
+&lt;p&gt;You can see how basic numeric operators in Python don't translate
+directly to those in Javascript, so it's forced to do something a
+whole lot more dynamic, including typechecking within every loop
+iteration.  I pity the fool Javascript engine that tries to optimize
+that.&lt;/p&gt;
+&lt;p&gt;Not surprisingly, the PyV8 engine performs comparably to the V8 engine
+embedded in Google Chrome, which also beats pure Python by at least a
+factor of 2.  We could do rather well implementing this core in
+Javascript.&lt;/p&gt;
+&lt;p&gt;Numpy and C extensions, of course, beat everything handily for this
+very numerically-biased benchmark.&lt;/p&gt;
+&lt;p&gt;Where does that leave us?  Who knows...  Interesting ride, though.
+Stay tuned and leave comments...  There's more to hack away at.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="matplotlib"></category></entry><entry><title>Client-side rendering in matplotlib, Part I: Defining the problem</title><link href="/blog/2012/08/06/matplotlib-client-side/" rel="alternate"></link><updated>2012-08-06T16:16:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2012-08-06:blog/2012/08/06/matplotlib-client-side/</id><summary type="html">&lt;p&gt;One of the big challenges that matplotlib faces as it enters its
+second decade is moving from a desktop app to the web browser
+client/server paradigm.  This need has been known for a few years at
+least: SAGE and the IPython notebook are rich web clients and powerful
+ways to interact with Python, however, their plotting is still
+necessarily limited by matplotlib's design to rendering a static
+image.  John Hunter concluded his keynote at SciPy 2012 arguing that
+this was the single biggest challenge to matplotlib's relevance today.&lt;/p&gt;
+{% video http://veyepar.nextdayvideo.com/site_media/static/veyepar//enthought/scipy_2012/mp4/matplotlib_lessons_middle_age.mp4 %}&lt;p&gt;The performance of JavaScript and graphics in web browsers is no
+longer an issue.  At least on a gut level, it appears to compete well
+with anything matplotlib is able to do with its Python bindings to
+traditional desktop GUI toolkits.  See &lt;a class="reference external" href="http://d3js.org/"&gt;d3&lt;/a&gt; and
+&lt;a class="reference external" href="http://code.google.com/p/webgl-surface-plot/"&gt;webgl-surface-plot&lt;/a&gt;
+for some examples of great, high-performance plotting coming out of
+the JavaScript community.  The problem with those libraries is they
+don't integrate well with Python data processing, they are harder to
+modify and extend and, let's be honest, just generally lack the
+Pythonic features that have made matplotlib so popular.&lt;/p&gt;
+&lt;p&gt;When trying to determine how to pull matplotlib kicking and screaming
+into this Brave New World, let's assume that the network bottleneck
+between the server (e.g. an IPython kernel) and the client (i.e. the
+web browser) is too high to simply send images over repeatedly.  It
+would be awfully nice, if we're going to do all this work anyway, to
+allow for interacting with a server that may be over a slow and
+high-latency internet connection on the other side of the globe.  The
+only way to make interactivity bearable in that scenario is to put
+some actual plotting smarts into the client.&lt;/p&gt;
+&lt;p&gt;For the purposes of this discussion, we should define what
+interactivity means.  I think it basically amounts to:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;data cursor (i.e. getting the current position of the mouse in
+data coordinates)&lt;/li&gt;
+&lt;li&gt;panning and zooming&lt;/li&gt;
+&lt;li&gt;adjusting the edges of the axes within the figure&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Other interactive features, such as a &amp;quot;back&amp;quot; button or &amp;quot;apply tight
+layout&amp;quot; button have an &amp;quot;activate and return&amp;quot; interaction, rather than
+real time interaction, so can probably be handled with a round-trip to
+the server and thus aren't really considered here.&lt;/p&gt;
+&lt;p&gt;It's well known that matplotlib has a number of backends that handle
+drawing to specific GUI frameworks or file formats.  The matplotlib
+&amp;quot;core&amp;quot; understands how to build and generate plots, and then sends
+low-level drawing commands to the currently selected backend.  In
+order to reduce code duplication, there is a solid wall between the
+core and the backends, and we're constantly trying to minimize the
+amount of code required to write a backend.  The advantage of this is
+not just to reduce the number of lines of code, but to ensure
+consistency between the backends, so that when you render a streamplot
+with hatching and custom markers to a PDF file, it looks the same as
+when you render it to an SVG.&lt;/p&gt;
+&lt;p&gt;So why can't we just add a new &amp;quot;webbrowser&amp;quot; backend?  The problem is
+that the backends are too low-level.  They know where the shapes and
+the text are, but they know nothing how they relate to one another,
+how the data scales from its native data coordinates to the
+coordinates of the screen, and how to best add ticks and other
+annotations to the graph.  All of that information would be required
+for any sort of interactivity.&lt;/p&gt;
+&lt;p&gt;To even begin to tackle this, we need to move from the current two-way
+split of the plotting core and rendering backends to a three-way split
+into the phases of outputting a plot:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;&lt;strong&gt;Build&lt;/strong&gt;: This phase is where the various Artist objects that
+make up the plot are created and related to one another.  This is
+where most of the domain-specific code about particular types of
+plots lives.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Drawing&lt;/strong&gt;: Given those Artists and view limits for the axes,
+figures out how to scale them, and where to place the ticks,
+labels and other pieces of text.  This phase also includes
+decimating or downscaling the data for display, since how to do
+so is dependent on the limits.  Newer features such as &amp;quot;tight
+limits&amp;quot; also need to happen during this phase.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Rendering&lt;/strong&gt;: Converts a series of simple commands from the drawing
+phase into the native commands understood by a particular GUI
+framework or file format.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In normal interactive use, the &lt;strong&gt;Build&lt;/strong&gt; phase happens once, but the
+&lt;strong&gt;Drawing&lt;/strong&gt; and &lt;strong&gt;Rendering&lt;/strong&gt; phases happen in a continuous loop as
+the figure is panned, zoomed and resized.&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;Drawing&lt;/strong&gt; phase comprises a great deal of Python and C++ code
+&lt;a class="footnote-reference" href="#id2" id="id1"&gt;[1]&lt;/a&gt;, much of it at the heart of what matplotlib is.  The big pieces
+are:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Ticking (i.e. deciding where the numeric values and gridlines
+should go) is a surprisingly involved task, and matplotlib's
+ticking is very flexible, supporting many different scales (such
+as log scale) and formats (controlling the precision of the
+values, for example).  Because of this, the &lt;strong&gt;Drawing&lt;/strong&gt; phase
+is dependent on matplotlib's transformation infrastructure.&lt;/li&gt;
+&lt;li&gt;Simplification and downsampling is performed on-the-fly as the
+data is zoomed to reduce unnecessary drawing and make the
+interactivity much snappier.  Of course, when it comes to large
+data there are other issues about the network bandwidth and the
+memory efficiency of the data representation within the browser
+that may be limiting relative to what matplotlib can do now.&lt;/li&gt;
+&lt;li&gt;Text layout, including math text layout, is done at this stage,
+because the size of the text relative to other items can not
+be known until draw time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It's obvious that the &lt;strong&gt;Build&lt;/strong&gt; phase can remain on the server.  And
+the &lt;strong&gt;Rendering&lt;/strong&gt; phase can remain on the server for the native GUI
+backends and the file formats.  We may need to write a &amp;quot;web browser&amp;quot;
+backend, but that could be written in pure JavaScript if necessary.
+It's that big &lt;strong&gt;Drawing&lt;/strong&gt; piece in the middle that has to exist
+sometimes on the server and sometimes on the client.  Ideally, this
+code would not be duplicated, run both in CPython and in the web
+browser (depending on usage) and remain as flexible and easy to read
+as the Python code we already have.  Are you starting to understand
+why this is a hard problem yet?&lt;/p&gt;
+&lt;p&gt;I hope to follow this blog post up with some experiments into various
+possible solutions over the upcoming days and weeks.  In the meantime,
+I encourage all the comments and help on this I can get.&lt;/p&gt;
+&lt;hr class="docutils" /&gt;
+&lt;table class="docutils footnote" frame="void" id="id2" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;It's easy enough to see what code is required for the drawing
+phase by using &lt;cite&gt;coverage.py&lt;/cite&gt; and turning it on at the start of
+&lt;cite&gt;Figure.draw&lt;/cite&gt; and turning it off again at the end.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</summary><category term="matplotlib"></category></entry></feed>

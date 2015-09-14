@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Client-side Rendering in Matplotlib, Part II: The language blender - Boom!  Michael Droettboom's blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link href="/images/favicon.png" rel="icon">
+
+<link rel="canonical" href="/blog/2012/08/07/client-side-rendering-in-matplotlib/">
+
+        <meta name="author" content="Michael Droettboom" />
+        <meta name="keywords" content="matplotlib" />
+        <meta name="description" content="Note EDIT 2012-08-08: Added benchmarks in Firefox in addition to Chrome In the last post, I outlined some of the architectural difficulties bringing matplotlib&#39;s interactivity to the browser. In short, there&#39;s a big chunk of code that lies between building the tree of artists and rendering them to ..." />
+
+        <meta property="og:site_name" content="Boom!  Michael Droettboom's blog" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Client-side Rendering in Matplotlib, Part II: The language blender"/>
+        <meta property="og:url" content="/blog/2012/08/07/client-side-rendering-in-matplotlib/"/>
+        <meta property="og:description" content="Note EDIT 2012-08-08: Added benchmarks in Firefox in addition to Chrome In the last post, I outlined some of the architectural difficulties bringing matplotlib&#39;s interactivity to the browser. In short, there&#39;s a big chunk of code that lies between building the tree of artists and rendering them to ..."/>
+        <meta property="article:published_time" content="2012-08-07" />
+            <meta property="article:section" content="matplotlib" />
+            <meta property="article:tag" content="matplotlib" />
+            <meta property="article:author" content="Michael Droettboom" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.darkly.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+        <link href="/static/custom.css" rel="stylesheet">
+
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Boom!  Michael Droettboom's blog ATOM Feed"/>
+
+
+
+        <link href="/feeds/matplotlib.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Boom!  Michael Droettboom's blog matplotlib ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+Boom!  Michael Droettboom's blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="/pages/music.html">
+                             Music
+                          </a></li>
+                         <li><a href="/pages/papers.html">
+                             Papers
+                          </a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/blog/2012/08/07/client-side-rendering-in-matplotlib/"
+                       rel="bookmark"
+                       title="Permalink to Client-side Rendering in Matplotlib, Part II: The language blender">
+                        Client-side Rendering in Matplotlib, Part II: The language blender
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2012-08-07T13:56:00-04:00"> Tue 07 August 2012</time>
+    </span>
+
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="/tag/matplotlib.html">matplotlib</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">EDIT 2012-08-08: Added benchmarks in Firefox in addition to Chrome</p>
+</div>
+<p>In the <a class="reference external" href="http://mdboom.github.com/blog/2012/08/06/matplotlib-client-side/">last post</a>,
+I outlined some of the architectural difficulties bringing
+matplotlib's interactivity to the browser.  In short, there's a big
+chunk of code that lies between building the tree of artists and
+rendering them to the screen that needs to run either in the Python
+interpreter, as it does now, or inside of the web browser to support
+interactive web applications.  It would be great to avoid having two
+code bases, one in Python and one in Javascript, that would need to be
+kept in sync.  Writing code for both contexts from a single code base
+may turn out to be a pipe dream, but bear with me as I explore tools
+that might help.</p>
+<p>Also, when trying to grok the discussion here and understanding the
+architectural challenges of matplotlib, it may be helpful to read the
+matplotlib chapter by John Hunter and yours truly from <a class="reference external" href="http://www.aosabook.org/en/index.html">Architecture
+of Open Source Applications, Volume II</a>.</p>
+<div class="section" id="tools">
+<h2>Tools</h2>
+<p>There are a few interesting projects that help bridge the gap between
+Python and Javascript.</p>
+<div class="section" id="pyjs">
+<h3>PyJs</h3>
+<p><a class="reference external" href="http://www.pyjs.org">PyJs</a> (formerly called Pyjamas) is a
+Python-to-Javascript converter.  It also includes an environment much
+like Google Web Toolkits for developing rich client-side applications
+in Python, but those features are probably not useful here.</p>
+</div>
+<div class="section" id="skulpt">
+<h3>Skulpt</h3>
+<p><a class="reference external" href="http://www.skulpt.org">Skulpt</a> is a Python interpreter written in
+Javascript.  It can compile and run Python code entirely within the
+web browser.  In terms of language features, it doesn't seem as mature
+as PyJs, but the fact that it has no dependencies other than a couple
+of Javascript files may be an advantage in terms of deployment.  An
+obvious shortcoming of both Skulpt and PyJs is the lack of support for
+Numpy -- none of the existing matplotlib Python code, which depends so
+heavily on Numpy, would work in that context.</p>
+</div>
+<div class="section" id="pyv8">
+<h3>PyV8</h3>
+<p>Unlike the other two, which allow Python to run in the browser, <a class="reference external" href="http://code.google.com/p/pyv8/">PyV8</a> allows Javascript to run inside of
+the Python interpreter.  It is a wrapper around Google's open source
+V8 Javascript engine and allows sharing objects between Python and
+Javascript somewhat transparently.  If the drawing code were to be
+rewritten in Javascript, it could then, theoretically, be used both
+from Python on the desktop and inside the web browser.</p>
+</div>
+</div>
+<div class="section" id="playing-around">
+<h2>Playing around</h2>
+<p>As a first pass playing with these tools, I've created a new project
+on github <a class="reference external" href="https://github.com/mdboom/py-js-blending-experiments">py-js-blending-experiments</a>.  I've
+started by writing a very simple benchmark that does a simple 2D
+affine transformation, in pure Python, Python with Numpy, Javascript
+and C.  This test, while a real-world bottleneck from the real-world
+matplotlib, is probably too simple to read too much into the results.
+A real test would involve classes with complex interactions between
+them, to show how the same flexible system of transformations,
+tickers, formatters etc. would work, and would take into account the
+penalty of stepping over the gap between Python and Javascript.  But
+all that will have to wait for a future blog post.</p>
+</div>
+<div class="section" id="the-benchmarks">
+<h2>The benchmarks</h2>
+<p>The benchmarks compare a number of different possible approaches.</p>
+<ul class="simple">
+<li><strong>Pure Python</strong>: This is just a simple pure Python implementation.
+<a class="reference external" href="https://raw.github.com/mdboom/py-js-blending-experiments/master/transform.py">transform.py</a></li>
+<li><strong>Pure Javascript</strong>: A hand-written JavaScript implementation.
+<a class="reference external" href="https://raw.github.com/mdboom/py-js-blending-experiments/master/transform.js">transform.js</a></li>
+<li><strong>Numpy</strong>: An implementation using vectorized Numpy operations.
+<a class="reference external" href="https://raw.github.com/mdboom/py-js-blending-experiments/master/transform_numpy.py">transform_numpy.py</a></li>
+<li><strong>C extension</strong>: A hand-written C extension.
+<a class="reference external" href="https://raw.github.com/mdboom/py-js-blending-experiments/master/transform.c">transform.c</a></li>
+<li><strong>Skulpt</strong>: Taking the pure Python implementation above, but running through
+Skulpt to get it to run inside of the browser.</li>
+<li><strong>PyJs</strong>: Compiling the pure Python implementation above to
+Javascipt using PyJs, and then running the result in the browser.</li>
+<li><strong>PyV8</strong>: Running the hand-written Javascript implementation above
+inside of PyV8.</li>
+</ul>
+<div class="section" id="results">
+<h3>Results</h3>
+<p>The following results are on a quad-core Intel Core i5-2520M CPU &#64;
+2.50GHz running Fedora Linux 17.  Python 2.7.3, Numpy 1.6.1, Google
+Chrome 21.0.1180.57 beta and Firefox 14.0.1 were used.  The benchmark
+is performing a 2D affine transformation on 128,000 points.  Note that
+the timings in the web browser are quite variable.  I've included the
+average and independent results of 5 runs.</p>
+<pre class="literal-block">
+=========================== ================== ==================================
+Benchmark                   avg. time (in ms)  times
+=========================== ================== ==================================
+Pure Python                 94                 95, 96, 93, 96, 92
+Pure Javascript Chrome      40                 41, 29, 59, 33, 42
+Pure Javascript Firefox     15                 8, 7, 25, 20, 16
+Numpy                       6                  7, 6, 6, 6, 6
+C                           2                  2, 2, 2, 2, 2
+Skulpt Chrome               686                700, 691, 676, 691, 676
+Skulpt Firefox              1052               1027, 1052, 1062, 1060, 1061
+PyJs Chrome                 2197               2156, 2218, 2176, 2187, 2251
+PyJs Firefox                658                644, 687, 630, 680, 674
+PyV8                        38                 38, 38, 38, 37, 37
+=========================== ================== ==================================
+</pre>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>So what can we conclude?  Remember what I said about not reading too
+much into these results?  Well, I'm going to do it anyway with an
+enormous caveat.</p>
+<p>There is considerable overhead when trying to shoehorn Python into the
+browser (comparing Skulpt and PyJs to Pure Javascript).  I personally
+am surprised by how much more successful the Python interpreter
+approach is vs. the Python to Javascript conversion approach, though
+that may be due to the relative incompleteness of Skulpt.  (<em>EDIT:
+Though the Firefox results tell the opposite story</em>). It's pretty
+clear where the overhead of PyJs comes from.  The line:</p>
+<pre class="literal-block">
+X = a*x + c*y + e
+</pre>
+<p>converts to:</p>
+<pre class="literal-block">
+X = $p['__op_add']($add3=$p['__op_add']($add1=(typeof ($mul1=a)==typeof ($mul2=x) &amp;&amp; typeof $mul1=='number'?
+    $mul1*$mul2:
+    $p['op_mul']($mul1,$mul2)),$add2=(typeof ($mul3=c)==typeof ($mul4=y) &amp;&amp; typeof $mul3=='number'?
+    $mul3*$mul4:
+    $p['op_mul']($mul3,$mul4))),$add4=e);
+</pre>
+<p>You can see how basic numeric operators in Python don't translate
+directly to those in Javascript, so it's forced to do something a
+whole lot more dynamic, including typechecking within every loop
+iteration.  I pity the fool Javascript engine that tries to optimize
+that.</p>
+<p>Not surprisingly, the PyV8 engine performs comparably to the V8 engine
+embedded in Google Chrome, which also beats pure Python by at least a
+factor of 2.  We could do rather well implementing this core in
+Javascript.</p>
+<p>Numpy and C extensions, of course, beat everything handily for this
+very numerically-biased benchmark.</p>
+<p>Where does that leave us?  Who knows...  Interesting ride, though.
+Stay tuned and leave comments...  There's more to hack away at.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+    <hr/>
+    <section class="comments" id="comments">
+        <h2>Comments</h2>
+
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'mdboom'; // required: replace example with your forum shortname
+
+                var disqus_identifier = '/blog/2012/08/07/client-side-rendering-in-matplotlib/';
+                var disqus_url = '/blog/2012/08/07/client-side-rendering-in-matplotlib/';
+
+            var disqus_config = function () {
+                this.language = "en";
+            };
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </section>
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+
+
+
+
+
+
+    <li class="list-group-item"><h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
+        <div id="gh_repos">
+            <p class="list-group-item">Status updating...</p>
+        </div>
+    </li>
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://python.org" target="_blank">
+                Python
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://jupyter.org" target="_blank">
+                Jupyter
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://astropy.org" target="_blank">
+                Astropy
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://numpy.org" target="_blank">
+                Numpy
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://valgrind.org" target="_blank">
+                Valgrind
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://www.gnu.org/software/emacs/" target="_blank">
+                Emacs
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://i3wm.org/" target="_blank">
+                i3 window manager
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://tmux.sf.net/" target="_blank">
+                tmux
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://sphinx.pocoo.org/" target="_blank">
+                Sphinx
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://fedoraproject.org" target="_blank">
+                Fedora Linux
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2013 Michael Droettboom
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+    <!-- GitHub JS -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (!window.jXHR) {
+                var jxhr = document.createElement('script');
+                jxhr.type = 'text/javascript';
+                jxhr.src = '/theme/js/jXHR.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(jxhr, s);
+            }
+
+            github.showRepos({
+                user: 'mdboom',
+                count: 5,
+                skip_forks: false,
+                target: '#gh_repos'
+            });
+        });
+    </script>
+    <script src="/theme/js/github.js" type="text/javascript"></script>
+    <!-- End GitHub JS Code -->
+    <!-- Disqus -->
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'mdboom'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <!-- End Disqus Code -->
+
+</body>
+</html>

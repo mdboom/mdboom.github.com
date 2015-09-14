@@ -1,0 +1,6 @@
+@import url(https://fonts.googleapis.com/css?family=Oleo+Script:400,700);
+
+h1, h2, h3, h4, h5, a.navbar-brand
+{
+    font-family: Oleo Script
+}
