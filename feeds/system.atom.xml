@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="/" rel="alternate"></link><link href="/feeds/system.atom.xml" rel="self"></link><id>/</id><updated>2015-10-08T08:00:00-04:00</updated><entry><title>Migrating to a Mac from Linux</title><link href="/blog/2015/10/08/migrating-to-a-mac-from-linux/" rel="alternate"></link><updated>2015-10-08T08:00:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2015-10-08:blog/2015/10/08/migrating-to-a-mac-from-linux/</id><summary type="html">&lt;p&gt;I've used Linux as my primary driver 20 years now, and have arrived at
+a software development workflow I'm very happy with, based primarily
+around &lt;a class="reference external" href="https://www.gnu.org/software/emacs/"&gt;emacs&lt;/a&gt;, &lt;a class="reference external" href="https://tmux.github.io/"&gt;tmux&lt;/a&gt;, &lt;a class="reference external" href="https://i3wm.org/"&gt;i3&lt;/a&gt;, &lt;a class="reference external" href="http://www.zsh.org/"&gt;zsh&lt;/a&gt; and [insert webbrowser here].  I need to write
+more about that some day, but in short, the things I like about it is:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The ability to do everything without leaving the keyboard.&lt;/li&gt;
+&lt;li&gt;The ability to customize, integrate and automate all of these tools
+so I'm not repeating the same rote tasks multiple times a day.&lt;/li&gt;
+&lt;li&gt;The ability to put all of the configuration in a Git repo so I can
+track changes to it over time and it's easy to set up new machines.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When I recently started at &lt;a class="reference external" href="http://continuum.io"&gt;Continuum&lt;/a&gt;, I was
+provided with a shiny new MacBook Pro.  While Continuum doesn't
+require I use it for my day-to-day development work, I thought I'd try
+to get it working as close as possible to what I'm used to.&lt;/p&gt;
+&lt;div class="note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;Some of this may sound like the rantings of a grumpy old man.
+It's not really about objectively better---well, ok, the poor
+integration between Unix and GUI apps sucks, let's just get that
+out of the way---but most of what's below is just about
+expectations and muscle memory.  My goal here is just to make
+things easier for others making the switch and as a call for help
+for better solutions where things are still lacking.  Please leave
+suggestions for ways I can do things better in the comments.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="software-packages"&gt;
+&lt;h2&gt;Software Packages&lt;/h2&gt;
+&lt;p&gt;Macs don't have a built-in package manager (no, the App Store doesn't
+count), but there are a few third party ones: Fink, MacPorts, Nix, and
+homebrew (and Anaconda increasingly belongs on that list, though it
+remains less of a generalist).  &lt;a class="reference external" href="http://brew.sh"&gt;Homebrew&lt;/a&gt; seems to
+be the one with the most momentum behind it.  It also has the ability
+to install native Mac apps (through &lt;a class="reference external" href="http://caskroom.io"&gt;Cask&lt;/a&gt;)
+which turns out to be very handy to set up software without a lot of
+clicking through websites and installers.&lt;/p&gt;
+&lt;p&gt;I won't reproduce installation instructions for Homebrew and Cask
+here, but it suffices to say that with these tools I can fully
+automate the installation of most of the software I needed from the
+command line, very much like a Linux package manager.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="terminal"&gt;
+&lt;h2&gt;Terminal&lt;/h2&gt;
+&lt;p&gt;Use &lt;a class="reference external" href="https://www.iterm2.com/"&gt;iTerm2&lt;/a&gt;.  It behaves more like Linux
+terminals out-of-the-box and is eminently configurable.  It even
+supports middle-click-to-paste.  Awesome.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="emacs"&gt;
+&lt;h2&gt;Emacs&lt;/h2&gt;
+&lt;p&gt;There are a bunch of ways to get Emacs on a Mac.  In keeping with
+trying to do everything through Homebrew, I opted to install the
+Homebrew emacs with native Cocoa bindings, so I pass the
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--with-cocoa&lt;/span&gt;&lt;/tt&gt; option to &lt;tt class="docutils literal"&gt;brew&lt;/tt&gt;.  Also note that HTTPS requests
+from Emacs seem to fail from emacs if I don't use the GNU TLS library,
+so I also pass &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--with-gnutls&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
+&lt;pre class="code sh literal-block"&gt;
+brew install emacs --with-cocoa --with-gnutls
+&lt;/pre&gt;
+&lt;p&gt;You can then add this Emacs to the Applications menu using:&lt;/p&gt;
+&lt;pre class="code sh literal-block"&gt;
+brew linkapps emacs
+&lt;/pre&gt;
+&lt;div class="section" id="emacsclient"&gt;
+&lt;h3&gt;emacsclient&lt;/h3&gt;
+&lt;p&gt;I use &lt;tt class="docutils literal"&gt;emacsclient&lt;/tt&gt; a lot to easily open buffers from the command
+line (I have it aliased to &lt;tt class="docutils literal"&gt;e&lt;/tt&gt;), and it's my default &lt;tt class="docutils literal"&gt;EDITOR&lt;/tt&gt; for
+&lt;tt class="docutils literal"&gt;git&lt;/tt&gt; and such. If you start an Emacs server from within Emacs
+using:&lt;/p&gt;
+&lt;pre class="code lisp literal-block"&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;edit-server-start&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;server-start&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;then the &lt;tt class="docutils literal"&gt;emacsclient&lt;/tt&gt; binary that Homebrew installed just works.&lt;/p&gt;
+&lt;p&gt;However, I also use &lt;tt class="docutils literal"&gt;emacsclient&lt;/tt&gt; to automatically paste links from
+my web browser into &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;org-mode&lt;/span&gt;&lt;/tt&gt; task lists.  This uses a special URL
+scheme, &lt;a class="reference external" href="http://orgmode.org/worg/org-contrib/org-protocol.html"&gt;org-protocol&lt;/a&gt; to tell the
+operating system which application to use to open the link.  On the
+web browser side, you set up a bookmarklet that passes the URL of the
+current page to the application handler for the custom URL.  The
+bookmarklet looks like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+javascript:location.href='org-protocol://capture://'+encodeURIComponent(location.href)+'/'+encodeURIComponent(document.title)+'/'+encodeURIComponent(window.getSelection())
+&lt;/pre&gt;
+&lt;p&gt;To get this to call emacs on Linux, it's simply a matter of telling
+your desktop environment which command to run for a particular custom
+URL scheme.  On a Mac, you need to create a full Framework application
+to associate itself with the custom URL scheme, with a script inside
+it to delegate to the commandline &lt;tt class="docutils literal"&gt;emacsclient&lt;/tt&gt; application.&lt;/p&gt;
+&lt;p&gt;Fortunately, I did find such a pre-made Framework app in
+&lt;a class="reference external" href="https://github.com/neil-smithline-elisp/EmacsClient.app"&gt;EmacsClient.app&lt;/a&gt;. Unfortunately,
+it's designed for use with AquaMacs, not a Homebrew-built emacs.  But
+that turns out to be fixable.&lt;/p&gt;
+&lt;p&gt;Download the &lt;a class="reference external" href="https://github.com/neil-smithline-elisp/EmacsClient.app/raw/master/EmacsClient.zip"&gt;EmacsClient.app&lt;/a&gt;
+zip file and expand it in your &lt;tt class="docutils literal"&gt;/Applications&lt;/tt&gt; directory.
+Right-click on it and choose &lt;cite&gt;Show Package Contents&lt;/cite&gt;, then navigate to
+&lt;tt class="docutils literal"&gt;Contents/Resources/Scripts/main.scpt&lt;/tt&gt;.  Open the script in &lt;cite&gt;Script
+Editor&lt;/cite&gt; and replace the path to the AquaMacs &lt;tt class="docutils literal"&gt;emacsclient&lt;/tt&gt; with the
+Homebrew one (which is normally &lt;tt class="docutils literal"&gt;/usr/local/bin/emacsclient&lt;/tt&gt;).  Save
+the script, and now you have something that associates the
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;org-protocol://&lt;/span&gt;&lt;/tt&gt; URL scheme with &lt;tt class="docutils literal"&gt;emacsclient&lt;/tt&gt;.  Now it's one
+click to add a link to a webpage or webmail to your &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;org-mode&lt;/span&gt;&lt;/tt&gt; notes
+file.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="environment-variables"&gt;
+&lt;h2&gt;Environment variables&lt;/h2&gt;
+&lt;p&gt;By default, wmacs, or other native GUI applications, won't pick up any
+of the environment variables defined for the command line in files
+like &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.profile&lt;/span&gt;&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.bashrc&lt;/span&gt;&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.zshrc&lt;/span&gt;&lt;/tt&gt;, and friends.  This
+means that the &amp;quot;inferior&amp;quot; applications that emacs launches may not
+match what you would expect in your commandline environment.&lt;/p&gt;
+&lt;p&gt;Searching for a solution to this problem isn't straightforward, since
+Apple has changed how environment variables work with seemingly every
+release of OS-X.  The only reliable solution for Yosemite that I found
+is a set of scripts called &lt;a class="reference external" href="https://github.com/ersiner/osx-env-sync"&gt;osx-env-sync&lt;/a&gt;.  To quote its author,
+Ersin Er:&lt;/p&gt;
+&lt;blockquote&gt;
+On OS X, command line applications and GUI applications are treated
+differently. (Well this can be put in a more technically correct
+manner but this is what you experience from a user's point of view.)
+One fundamental difference is that although it's straightforward to
+feed command line applications with environment variables, it's not
+so for GUI applications. It's even harder to feed both types of
+applications from a single source of definitions. (Well, one
+particular workaround is launching GUI applications from command
+line.) Moreover, OS X's relevant means for setting up environment
+variables (or initializing programs in general) have been changing
+over time in consecutive releases which makes the situation
+worse. Hundreds of topics at Stack Overflow is the living proof of
+this mess.&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div class="section" id="keyboard"&gt;
+&lt;h2&gt;Keyboard&lt;/h2&gt;
+&lt;div class="section" id="modifier-keys"&gt;
+&lt;h3&gt;Modifier keys&lt;/h3&gt;
+&lt;p&gt;Native Mac apps tend to put common keyboard shortcuts on the &lt;tt class="docutils literal"&gt;⌘&lt;/tt&gt;
+key, rather than the &lt;tt class="docutils literal"&gt;Ctrl&lt;/tt&gt; key used on Windows and Linux.  I tried
+to adjust to this for a few days, but ultimately, I decided I can't
+fight a lifetime on muscle memory on this one.&lt;/p&gt;
+&lt;p&gt;Thankfully, Mac OS-X makes it easy to adjust the modifier keys.  Go to
+&lt;cite&gt;System Preferences&lt;/cite&gt; -&amp;gt; &lt;cite&gt;Keyboard&lt;/cite&gt; -&amp;gt; &lt;cite&gt;Keyboard&lt;/cite&gt; -&amp;gt; &lt;cite&gt;Modifier Keys&lt;/cite&gt;.
+In order to put &lt;cite&gt;⌘&lt;/cite&gt; in the place I'm used to (on the far left) I had
+to remap the modifiers differently for my external PC
+(i.e. Windows-style) keyboard and for the built-in laptop keyboard.&lt;/p&gt;
+&lt;p&gt;For the external keyboard:&lt;/p&gt;
+&lt;img alt="" src="/images/usb-keyboard-remap.png" /&gt;
+&lt;p&gt;For the internal keyboard:&lt;/p&gt;
+&lt;img alt="" src="/images/builtin-keyboard-remap.png" /&gt;
+&lt;p&gt;So, now we've made most native Mac apps more familiar.  However, now
+Unixy apps, such as Emacs and the Terminal are backward!  Fortunately,
+both Emacs and iTerm2 have facilities to swap the &lt;tt class="docutils literal"&gt;⌘&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;Ctrl&lt;/tt&gt;
+keys back.&lt;/p&gt;
+&lt;p&gt;For Emacs, add the following to your &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.emacs.d/init.el&lt;/span&gt;&lt;/tt&gt; file:&lt;/p&gt;
+&lt;pre class="code lisp literal-block"&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;setq&lt;/span&gt; &lt;span class="nv"&gt;mac-command-modifier&lt;/span&gt; &lt;span class="ss"&gt;'control&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;setq&lt;/span&gt; &lt;span class="nv"&gt;mac-control-modifier&lt;/span&gt; &lt;span class="ss"&gt;'super&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;For iTerm2, go to &lt;cite&gt;Preferences&lt;/cite&gt; -&amp;gt; &lt;cite&gt;Keys&lt;/cite&gt;, and remap the modifier
+keys:&lt;/p&gt;
+&lt;img alt="" src="/images/iterm2-remap.png" /&gt;
+&lt;p&gt;Overall, I'm much more comfortable with this layout.  It does have a
+few downsides:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The keybindings displayed on drop-down menus no longer match the
+symbols on the built-in keyboard.  Not much of a problem when this
+is all muscle-memory anyway.&lt;/li&gt;
+&lt;li&gt;Letting someone else use my Mac (which happens occasionally when
+giving team presentations) is likely to make things explode.  Note
+to self: don't share.&lt;/li&gt;
+&lt;li&gt;Other Unix or X11 apps that don't have the ability to remap keys may
+be a problem.  I haven't run into any of these that I use yet, but
+it's something to be aware of.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="other-emacs-keys"&gt;
+&lt;h3&gt;Other Emacs keys&lt;/h3&gt;
+&lt;p&gt;Emacs also has some other keys that are mapped differently by default
+on Macs.&lt;/p&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;Home&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;End&lt;/tt&gt; keys move to the beginning and end of the
+buffer, respectively, to match the behavior in native Mac apps.  Let's
+change them to move to the beginning and end of the line like they do
+on Linux (a much more common operation):&lt;/p&gt;
+&lt;pre class="code lisp literal-block"&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;define-key&lt;/span&gt; &lt;span class="nv"&gt;global-map&lt;/span&gt; &lt;span class="nv"&gt;[home]&lt;/span&gt; &lt;span class="ss"&gt;'beginning-of-line&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;define-key&lt;/span&gt; &lt;span class="nv"&gt;global-map&lt;/span&gt; &lt;span class="nv"&gt;[end]&lt;/span&gt; &lt;span class="ss"&gt;'end-of-line&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;Menu&lt;/tt&gt; key (present on many Windows keyboards, but not on the
+built-in Mac keyboard) emits &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;C-p&lt;/span&gt;&lt;/tt&gt;, so it moves the cursor up one
+line.  I never use &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;C-p&lt;/span&gt;&lt;/tt&gt; in Emacs, so I can just remap it to do what
+&lt;tt class="docutils literal"&gt;Menu&lt;/tt&gt; does on Linux:&lt;/p&gt;
+&lt;pre class="code lisp literal-block"&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;global-set-key&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;kbd&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C-p&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ss"&gt;'smex&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;If you wanted to keep &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;C-p&lt;/span&gt;&lt;/tt&gt; working in Emacs, you'll probably need
+to use a third-party tool such as &lt;a class="reference external" href="https://pqrs.org/osx/karabiner/seil.html.en"&gt;Seil&lt;/a&gt; to remap &lt;tt class="docutils literal"&gt;Menu&lt;/tt&gt; to
+an unused key and then make that work in Emacs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="tiling-window-manager"&gt;
+&lt;h2&gt;Tiling window manager&lt;/h2&gt;
+&lt;p&gt;Perhaps the single most important productivity tool I use on Linux was
+a tiling window manager.  It's very freeing to always be able to move
+between applications without leaving the keyboard, and to never worry
+about carefully rearranging windows so they aren't partially obscured.
+I've used various tiling window managers over the years, but the one
+that ultimately best fit my brain and I've really stuck with is &lt;a class="reference external" href="http://i3wm.org"&gt;i3&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The built-in window management tools on the Mac always leave me
+reaching for the Dramamine, what with all whizzing around and zooming
+in and out.  There are a few &lt;a class="reference external" href="https://alternativeto.net/software/slate/?platform=mac"&gt;alternative window management &amp;quot;tools&amp;quot;&lt;/a&gt; for the
+Mac.  I ended up trying most of the free or free-to-try ones, most of
+them only handle the window placement part of the problem.  Only one,
+&lt;a class="reference external" href="https://github.com/jigish/slate"&gt;Slate&lt;/a&gt; also supports moving focus
+with directional keys.&lt;/p&gt;
+&lt;p&gt;It's a little tricky to set up as the default keybindings aren't very
+intuitive, but it's very customizable and digging into its config file
+is well worth the effort.  Even still, the end result is a far cry
+from i3.  Windows aren't automatically arranged: you have to manually
+place each one as they open.  There's no tabbed stacked windows, so
+when windows are stacked you have to flip through each of them in
+order to find the one you want (or fall back on &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;⌘-Tab&lt;/span&gt;&lt;/tt&gt;).  And when
+the screen locks, everything becomes misplaced and you have to
+rearrange the windows again, though that seems to be a problem in
+general on a Mac.&lt;/p&gt;
+&lt;p&gt;Tiling managers are a polarizing technology.  As one who is in the
+&amp;quot;love it&amp;quot; camp, I feel that may be the one pain point that sends me
+running back.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="mac"></category><category term="linux"></category><category term="emacs"></category></entry></feed>
