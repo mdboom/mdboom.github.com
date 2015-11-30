@@ -52,7 +52,7 @@ THEME = os.path.join(os.path.dirname(__file__), '..', 'pelican-bootstrap3')
 DISQUS_SITENAME = "mdboom"
 DISQUS_NO_ID = True
 
-BOOTSTRAP_THEME = "darkly"
+BOOTSTRAP_THEME = "journal"
 
 CUSTOM_CSS = 'static/custom.css'
 
