@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>system - Boom!  Michael Droettboom's blog</title>
+    <title>python debugging gdb - Boom!  Michael Droettboom's blog</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -12,7 +12,7 @@
 
 
     <meta name="author" content="Michael Droettboom" />
-    <meta name="keywords" content="system" />
+    <meta name="keywords" content="python debugging gdb" />
 
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Boom!  Michael Droettboom's blog" />
@@ -23,7 +23,7 @@
 
 
     <!-- Bootstrap -->
-        <link rel="stylesheet" href="/theme/css/bootstrap.darkly.min.css" type="text/css"/>
+        <link rel="stylesheet" href="/theme/css/bootstrap.journal.min.css" type="text/css"/>
     <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
 
     <link href="/theme/css/pygments/native.css" rel="stylesheet">
@@ -35,8 +35,6 @@
 
 
 
-        <link href="/feeds/system.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Boom!  Michael Droettboom's blog system ATOM Feed"/>
 
 </head>
 <body>
@@ -75,12 +73,15 @@ Boom!  Michael Droettboom's blog            </a>
     <div class="row">
         <div class="col-sm-9">
             <article>
-                <h2><a href="/blog/2015/10/08/migrating-to-a-mac-from-linux/">Migrating to a Mac from Linux</a></h2>
-                <div class="summary"><p>I've used Linux as my primary driver 20 years now, and have arrived at
-a software development workflow I'm very happy with, based primarily
-around <a class="reference external" href="https://www.gnu.org/software/emacs/">emacs</a>, <a class="reference external" href="https://tmux.github.io/">tmux</a>, <a class="reference external" href="https://i3wm.org/">i3</a>, <a class="reference external" href="http://www.zsh.org/">zsh</a> and [insert webbrowser here].  I need to write
-more about that some day, but in short, the things I ...</p>
-                    <a class="btn btn-default btn-xs" href="/blog/2015/10/08/migrating-to-a-mac-from-linux/">more ...</a>
+                <h2><a href="/blog/2015/11/20/gdb-python-extensions/">Debugging Python C/C++ extensions in gdb</a></h2>
+                <div class="summary"><p><tt class="docutils literal">gdb</tt> has fantastic support for debugging Python/C extensions.  It
+understands how to print the contents of <cite>PyObject *</cite> variables using
+their Python-side representation, and can even print Python
+tracebacks.</p>
+<p>These features are described <a class="reference external" href="https://fedoraproject.org/wiki/Features/EasierPythonDebugging">elsewhere</a>.  I
+suggest visiting that link to see why this is so cool.  This blog
+posting is ...</p>
+                    <a class="btn btn-default btn-xs" href="/blog/2015/11/20/gdb-python-extensions/">more ...</a>
                 </div>
             </article>
             <hr/>

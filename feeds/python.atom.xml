@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="/" rel="alternate"></link><link href="/feeds/python.atom.xml" rel="self"></link><id>/</id><updated>2015-11-20T16:16:00-05:00</updated><entry><title>Debugging Python C/C++ extensions in gdb</title><link href="/blog/2015/11/20/gdb-python-extensions/" rel="alternate"></link><updated>2015-11-20T16:16:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2015-11-20:blog/2015/11/20/gdb-python-extensions/</id><summary type="html">&lt;p&gt;&lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; has fantastic support for debugging Python/C extensions.  It
+understands how to print the contents of &lt;cite&gt;PyObject *&lt;/cite&gt; variables using
+their Python-side representation, and can even print Python
+tracebacks.&lt;/p&gt;
+&lt;p&gt;These features are described &lt;a class="reference external" href="https://fedoraproject.org/wiki/Features/EasierPythonDebugging"&gt;elsewhere&lt;/a&gt;.  I
+suggest visiting that link to see why this is so cool.  This blog
+posting is just about how to get those features set up everywhere for
+any Python you may have on your system, on any Linux and Mac OS-X, and
+some additional tips to help make debugging Python/C extensions in
+&lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; more effective.&lt;/p&gt;
+&lt;div class="section" id="install-the-gdb-python-debugging-extension"&gt;
+&lt;h2&gt;Install the GDB Python-debugging extension&lt;/h2&gt;
+&lt;p&gt;Since version 7.0, &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; includes an embedded Python interpreter
+that can be used to write &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; extensions, changing how variables
+and backtraces are displayed.  &lt;tt class="docutils literal"&gt;CPython&lt;/tt&gt; includes one such extension
+in its source tree that is useful for debugging Python itself and
+Python/C extensions, in &lt;tt class="docutils literal"&gt;Tools/gdb/libpython.py&lt;/tt&gt;.&lt;/p&gt;
+&lt;div class="note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;First make sure you have a working copy of &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt;.  If you're on a
+Mac, this process is fairly involved because &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; must be
+codesigned.  These &lt;a class="reference external" href="http://ntraft.com/installing-gdb-on-os-x-mavericks/"&gt;instructions&lt;/a&gt; may be
+useful.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The usual way for this extension to be used is to install it alongside
+the &lt;tt class="docutils literal"&gt;libpythonX.Y.so&lt;/tt&gt; shared object with the special name
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;libpythonX.Y.so-gdb.py&lt;/span&gt;&lt;/tt&gt;.  When &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; loads &lt;tt class="docutils literal"&gt;libpython&lt;/tt&gt; it
+should then automatically load the extension and start using the
+special display hooks for Python.  There are a couple of problems with
+this approach: The extension needs to be installed alongside each
+&lt;tt class="docutils literal"&gt;libpython.so&lt;/tt&gt; you want to debug, and if you're like me, you
+probably have a bunch of different Python versions installed using
+&lt;a class="reference external" href="http://github.com/yyuu/pyenv"&gt;pyenv&lt;/a&gt;, &lt;a class="reference external" href="http://www.continuum.io/downloads"&gt;anaconda&lt;/a&gt;, &lt;a class="reference external" href="http://brew.sh/"&gt;homebrew&lt;/a&gt;
+and the like.  Most of these tools don't install the &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; extension
+-- the only installation method I know of that actually does this is
+Fedora Linux, but even there it only works with the system Python.
+Even if we did install this extension alongside each &lt;tt class="docutils literal"&gt;libpython.so&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; will only autoload extensions from an explicit whitelist.&lt;/p&gt;
+&lt;p&gt;To get around this, we can bypass &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt;'s automatic extension
+loading mechanism and have &lt;tt class="docutils literal"&gt;libpython.py&lt;/tt&gt; loaded for any
+&lt;tt class="docutils literal"&gt;libpython.so&lt;/tt&gt; you may want to debug.&lt;/p&gt;
+&lt;p&gt;The first thing to do is to obtain the correct version of
+&lt;tt class="docutils literal"&gt;libpython.py&lt;/tt&gt; that matches the embedded Python interpreter inside
+of &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt;.  This version of Python has &lt;strong&gt;absolutely nothing to do
+with&lt;/strong&gt; the version of Python you want to debug -- it is merely the
+embedded interpreter that runs &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; extensions.  To see which
+version of Python is embedded inside your &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt;, do the following:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;gt; gdb
+GNU gdb (GDB) Fedora 7.10-29.fc23
+Copyright (C) 2015 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &amp;lt;http://gnu.org/licenses/gpl.html&amp;gt;
+...
+(gdb) python
+&amp;gt;import sys
+&amp;gt;print(sys.version_info)
+&amp;gt;end
+sys.version_info(major=3, minor=4, micro=3, releaselevel='final', serial=0)
+(gdb)
+&lt;/pre&gt;
+&lt;p&gt;In this case, my embedded Python interpreter is version 3.4.  When I
+installed &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; through &lt;tt class="docutils literal"&gt;homebrew&lt;/tt&gt; on my Mac, it had version 2.7.
+In both cases, I was able to use this to debug any version of Python.&lt;/p&gt;
+&lt;p&gt;Download the version of &lt;tt class="docutils literal"&gt;libpython.py&lt;/tt&gt; corresponding to the embedded
+Python interpreter, and save it somewhere in your home directory.  (I
+put it in &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.config/gdb/libpython.py&lt;/span&gt;&lt;/tt&gt;, but you may want to put it
+somewhere else depending on how you organize your configuration
+files).&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Python 2.7: &lt;a class="reference external" href="https://hg.python.org/cpython/file/raw/2.7/Tools/gdb/libpython.py"&gt;libpython.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Python 3.3: &lt;a class="reference external" href="https://hg.python.org/cpython/file/raw/3.3/Tools/gdb/libpython.py"&gt;libpython.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Python 3.4: &lt;a class="reference external" href="https://hg.python.org/cpython/file/raw/3.4/Tools/gdb/libpython.py"&gt;libpython.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Python 3.5: &lt;a class="reference external" href="https://hg.python.org/cpython/file/raw/3.5/Tools/gdb/libpython.py"&gt;libpython.py&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Then we'll set up &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.gdbinit&lt;/span&gt;&lt;/tt&gt; to load this extension by adding the
+following:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+python
+import gdb
+import sys
+sys.path.insert(0, os.path.expanduser(&amp;quot;~/.config/gdb&amp;quot;)
+
+def setup_python(event):
+    import libpython
+gdb.events.new_objfile.connect(setup_python)
+end
+&lt;/pre&gt;
+&lt;p&gt;You will need to update the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.config/gdb&lt;/span&gt;&lt;/tt&gt; directory to be the same
+directory where you saved &lt;tt class="docutils literal"&gt;libpython.py&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Now you should get nice Python-aware debugging features no matter
+which Python you are debugging!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="rebuild-your-extensions-without-optimization"&gt;
+&lt;h2&gt;Rebuild your extensions without optimization&lt;/h2&gt;
+&lt;p&gt;If, when debugging, you are seeing missing stack frames or variables
+being displayed as &amp;quot;value optimized out&amp;quot;, you'll probably want to
+recompile your extension with optimizations turned off.  In the source
+directory for your project:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# Completely clear the build directory for good measure
+&amp;gt; rm -rf build
+&amp;gt; CFLAGS=&amp;quot;-O0 -g&amp;quot; CXXFLAGS=&amp;quot;-O0 -g&amp;quot; python setup.py install
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="use-a-debug-build-of-python"&gt;
+&lt;h2&gt;Use a debug build of Python&lt;/h2&gt;
+&lt;p&gt;I've found the above steps to be sufficient for diagnosing most
+problems with my own C and C++ Python extensions.  However, in the
+rare case where there is some tight interaction between the Python
+interpreter and the extension that is causing a problem, it can be
+helpful to run the extension in a &lt;a class="reference external" href="https://docs.python.org/devguide/setup.html#compiling-for-debugging"&gt;debug build of Python&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://github.com/yyuu/pyenv"&gt;pyenv&lt;/a&gt; provides a convenient way to
+build a debug Python.  Just install the version with the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-debug&lt;/span&gt;&lt;/tt&gt;
+suffix:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;gt; pyenv install 3.5.0-debug
+&lt;/pre&gt;
+&lt;p&gt;Unfortunately, extensions built for a regular Python are incompatible
+with a debug Python, so your extensions (and its entire stack of
+dependencies) will need to be rebuilt, which is why I only suggest
+this as a last resort.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="python debugging gdb"></category></entry></feed>
