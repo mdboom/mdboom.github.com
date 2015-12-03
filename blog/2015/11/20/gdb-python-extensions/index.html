@@ -177,10 +177,10 @@ put it in <tt class="docutils literal"><span class="pre">~/.config/gdb/libpython
 somewhere else depending on how you organize your configuration
 files).</p>
 <ul class="simple">
-<li>Python 2.7: <a class="reference external" href="https://hg.python.org/cpython/file/raw/2.7/Tools/gdb/libpython.py">libpython.py</a></li>
-<li>Python 3.3: <a class="reference external" href="https://hg.python.org/cpython/file/raw/3.3/Tools/gdb/libpython.py">libpython.py</a></li>
-<li>Python 3.4: <a class="reference external" href="https://hg.python.org/cpython/file/raw/3.4/Tools/gdb/libpython.py">libpython.py</a></li>
-<li>Python 3.5: <a class="reference external" href="https://hg.python.org/cpython/file/raw/3.5/Tools/gdb/libpython.py">libpython.py</a></li>
+<li>Python 2.7: <a class="reference external" href="https://hg.python.org/cpython/rawfile/2.7/Tools/gdb/libpython.py">libpython.py</a></li>
+<li>Python 3.3: <a class="reference external" href="https://hg.python.org/cpython/rawfile/3.3/Tools/gdb/libpython.py">libpython.py</a></li>
+<li>Python 3.4: <a class="reference external" href="https://hg.python.org/cpython/rawfile/3.4/Tools/gdb/libpython.py">libpython.py</a></li>
+<li>Python 3.5: <a class="reference external" href="https://hg.python.org/cpython/rawfile/3.5/Tools/gdb/libpython.py">libpython.py</a></li>
 </ul>
 <p>Then we'll set up <tt class="docutils literal"><span class="pre">~/.gdbinit</span></tt> to load this extension by adding the
 following:</p>
@@ -188,8 +188,8 @@ following:</p>
 python
 import gdb
 import sys
-sys.path.insert(0, os.path.expanduser(&quot;~/.config/gdb&quot;)
-
+import os
+sys.path.insert(0, os.path.expanduser(&quot;~/.emacs.d/gdb&quot;))
 def setup_python(event):
     import libpython
 gdb.events.new_objfile.connect(setup_python)
@@ -229,6 +229,10 @@ suffix:</p>
 with a debug Python, so your extensions (and its entire stack of
 dependencies) will need to be rebuilt, which is why I only suggest
 this as a last resort.</p>
+</div>
+<div class="section" id="edits">
+<h2>Edits</h2>
+<p>2015-12-03: Fixed errors in gdbinit script.  Fixed links to libpython.py</p>
 </div>
 
             </div>

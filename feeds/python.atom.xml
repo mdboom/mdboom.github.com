@@ -68,10 +68,10 @@ put it in &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.config/g
 somewhere else depending on how you organize your configuration
 files).&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;Python 2.7: &lt;a class="reference external" href="https://hg.python.org/cpython/file/raw/2.7/Tools/gdb/libpython.py"&gt;libpython.py&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Python 3.3: &lt;a class="reference external" href="https://hg.python.org/cpython/file/raw/3.3/Tools/gdb/libpython.py"&gt;libpython.py&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Python 3.4: &lt;a class="reference external" href="https://hg.python.org/cpython/file/raw/3.4/Tools/gdb/libpython.py"&gt;libpython.py&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Python 3.5: &lt;a class="reference external" href="https://hg.python.org/cpython/file/raw/3.5/Tools/gdb/libpython.py"&gt;libpython.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Python 2.7: &lt;a class="reference external" href="https://hg.python.org/cpython/rawfile/2.7/Tools/gdb/libpython.py"&gt;libpython.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Python 3.3: &lt;a class="reference external" href="https://hg.python.org/cpython/rawfile/3.3/Tools/gdb/libpython.py"&gt;libpython.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Python 3.4: &lt;a class="reference external" href="https://hg.python.org/cpython/rawfile/3.4/Tools/gdb/libpython.py"&gt;libpython.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Python 3.5: &lt;a class="reference external" href="https://hg.python.org/cpython/rawfile/3.5/Tools/gdb/libpython.py"&gt;libpython.py&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Then we'll set up &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.gdbinit&lt;/span&gt;&lt;/tt&gt; to load this extension by adding the
 following:&lt;/p&gt;
@@ -79,8 +79,8 @@ following:&lt;/p&gt;
 python
 import gdb
 import sys
-sys.path.insert(0, os.path.expanduser(&amp;quot;~/.config/gdb&amp;quot;)
-
+import os
+sys.path.insert(0, os.path.expanduser(&amp;quot;~/.emacs.d/gdb&amp;quot;))
 def setup_python(event):
     import libpython
 gdb.events.new_objfile.connect(setup_python)
@@ -120,5 +120,9 @@ suffix:&lt;/p&gt;
 with a debug Python, so your extensions (and its entire stack of
 dependencies) will need to be rebuilt, which is why I only suggest
 this as a last resort.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="edits"&gt;
+&lt;h2&gt;Edits&lt;/h2&gt;
+&lt;p&gt;2015-12-03: Fixed errors in gdbinit script.  Fixed links to libpython.py&lt;/p&gt;
 &lt;/div&gt;
 </summary><category term="python debugging gdb"></category></entry></feed>
