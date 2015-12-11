@@ -85,10 +85,10 @@ put it in ``~/.config/gdb/libpython.py``, but you may want to put it
 somewhere else depending on how you organize your configuration
 files).
 
-- Python 2.7: `libpython.py <https://hg.python.org/cpython/file/raw/2.7/Tools/gdb/libpython.py>`__
-- Python 3.3: `libpython.py <https://hg.python.org/cpython/file/raw/3.3/Tools/gdb/libpython.py>`__
-- Python 3.4: `libpython.py <https://hg.python.org/cpython/file/raw/3.4/Tools/gdb/libpython.py>`__
-- Python 3.5: `libpython.py <https://hg.python.org/cpython/file/raw/3.5/Tools/gdb/libpython.py>`__
+- Python 2.7: `libpython.py <https://hg.python.org/cpython/rawfile/2.7/Tools/gdb/libpython.py>`__
+- Python 3.3: `libpython.py <https://hg.python.org/cpython/rawfile/3.3/Tools/gdb/libpython.py>`__
+- Python 3.4: `libpython.py <https://hg.python.org/cpython/rawfile/3.4/Tools/gdb/libpython.py>`__
+- Python 3.5: `libpython.py <https://hg.python.org/cpython/rawfile/3.5/Tools/gdb/libpython.py>`__
 
 Then we'll set up ``~/.gdbinit`` to load this extension by adding the
 following::
@@ -96,8 +96,8 @@ following::
   python
   import gdb
   import sys
-  sys.path.insert(0, os.path.expanduser("~/.config/gdb")
-
+  import os
+  sys.path.insert(0, os.path.expanduser("~/.emacs.d/gdb"))
   def setup_python(event):
       import libpython
   gdb.events.new_objfile.connect(setup_python)
@@ -141,3 +141,8 @@ Unfortunately, extensions built for a regular Python are incompatible
 with a debug Python, so your extensions (and its entire stack of
 dependencies) will need to be rebuilt, which is why I only suggest
 this as a last resort.
+
+Edits
+-----
+
+2015-12-03: Fixed errors in gdbinit script.  Fixed links to libpython.py
