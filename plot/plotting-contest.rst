@@ -1,8 +1,12 @@
 .. |nbsp| unicode:: 0xA0
    :trim:
 
-The 2016 SciPy John Hunter Excellence in Plotting Contest
+2016 SciPy John Hunter Excellence in Plotting Contest
 =========================================================
+
+-
+
+-
 
 - Michael Droettboom, Space Telescope Science Institute, chair
 
