@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="/" rel="alternate"></link><link href="/feeds/matplotlib.atom.xml" rel="self"></link><id>/</id><updated>2013-03-25T09:47:00-04:00</updated><entry><title>matplotlib lessons learned</title><link href="/blog/2013/03/25/matplotlib-lessons-learned/" rel="alternate"></link><updated>2013-03-25T09:47:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2013-03-25:blog/2013/03/25/matplotlib-lessons-learned/</id><summary type="html">&lt;p&gt;Jake Vanderplass has a very thought-provoking essay about the &lt;a class="reference external" href="http://jakevdp.github.com/blog/2013/03/23/matplotlib-and-the-future-of-visualization-in-python/"&gt;future
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog - matplotlib</title><link href="/" rel="alternate"></link><link href="/feeds/matplotlib.atom.xml" rel="self"></link><id>/</id><updated>2013-03-25T09:47:00-04:00</updated><entry><title>matplotlib lessons learned</title><link href="/blog/2013/03/25/matplotlib-lessons-learned/" rel="alternate"></link><published>2013-03-25T09:47:00-04:00</published><updated>2013-03-25T09:47:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:None,2013-03-25:/blog/2013/03/25/matplotlib-lessons-learned/</id><summary type="html">&lt;p&gt;Jake Vanderplass has a very thought-provoking essay about the &lt;a class="reference external" href="http://jakevdp.github.com/blog/2013/03/23/matplotlib-and-the-future-of-visualization-in-python/"&gt;future
+of visualization in Python&lt;/a&gt;.
+It's an exciting time for visualization in Python with so many new
+options exploding onto the scene, and Jake has provided a nice
+summary.  However, I don't think it presents a very current view of
+matplotlib …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Jake Vanderplass has a very thought-provoking essay about the &lt;a class="reference external" href="http://jakevdp.github.com/blog/2013/03/23/matplotlib-and-the-future-of-visualization-in-python/"&gt;future
 of visualization in Python&lt;/a&gt;.
 It's an exciting time for visualization in Python with so many new
 options exploding onto the scene, and Jake has provided a nice
@@ -70,7 +75,7 @@ users.  But I look forward to where all of this is going.&lt;/p&gt;
 how much faster these approaches will be for 2D plotting.  (For 3D,
 which I discuss below, I think the advantages of hardware are more
 apparent).&lt;/p&gt;
-&lt;div class="note"&gt;
+&lt;div class="admonition note"&gt;
 &lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
 &lt;p class="last"&gt;As a public service announcement, anyone looking for performance out
 of matplotlib should be using the Agg backend -- it's the only one
@@ -227,7 +232,14 @@ better if more parts were agnostic to the dimensionality of the data.&lt;/p&gt;
 &lt;p&gt;It's really exciting to watch all that's going on, and thanks to Jake
 Vanderplass for getting this discussion rolling.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="matplotlib"></category></entry><entry><title>Matplotlib in the browser: It's coming</title><link href="/blog/2012/10/11/matplotlib-in-the-browser-its-coming/" rel="alternate"></link><updated>2012-10-11T14:35:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2012-10-11:blog/2012/10/11/matplotlib-in-the-browser-its-coming/</id><summary type="html">&lt;blockquote class="pull-quote"&gt;
+</content><category term="matplotlib"></category></entry><entry><title>Matplotlib in the browser: It's coming</title><link href="/blog/2012/10/11/matplotlib-in-the-browser-its-coming/" rel="alternate"></link><published>2012-10-11T14:35:00-04:00</published><updated>2012-10-11T14:35:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:None,2012-10-11:/blog/2012/10/11/matplotlib-in-the-browser-its-coming/</id><summary type="html">&lt;blockquote class="pull-quote"&gt;
+UPDATE: I am now sharing my code in the
+&lt;a class="reference external" href="https://github.com/mdboom/mpl_browser_experiments"&gt;mdboom/mpl_browser_experiments&lt;/a&gt; github
+repository, rather than in a gist.&lt;/blockquote&gt;
+&lt;p&gt;It's occurred to me recently that in my previous blog posts &lt;a class="reference external" href="http://mdboom.github.com/blog/2012/08/07/client-side-rendering-in-matplotlib/"&gt;Part II&lt;/a&gt;
+and &lt;a class="reference external" href="http://mdboom.github.com/blog/2012/08/06/matplotlib-client-side/"&gt;Part I&lt;/a&gt;,
+I was going about the problem all wrong.  Getting the plotting logic
+running in the browser …&lt;/p&gt;</summary><content type="html">&lt;blockquote class="pull-quote"&gt;
 UPDATE: I am now sharing my code in the
 &lt;a class="reference external" href="https://github.com/mdboom/mpl_browser_experiments"&gt;mdboom/mpl_browser_experiments&lt;/a&gt; github
 repository, rather than in a gist.&lt;/blockquote&gt;
@@ -381,7 +393,11 @@ peer to the existing backends.&lt;/p&gt;
 &lt;p&gt;Watch the matplotlib and IPython projects -- pull requests will be
 coming soon.&lt;/p&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>John Hunter</title><link href="/blog/2012/08/31/john-hunter/" rel="alternate"></link><updated>2012-08-31T10:22:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2012-08-31:blog/2012/08/31/john-hunter/</id><summary type="html">&lt;p&gt;We have lost one of the greats of our community.&lt;/p&gt;
+</content></entry><entry><title>John Hunter</title><link href="/blog/2012/08/31/john-hunter/" rel="alternate"></link><published>2012-08-31T10:22:00-04:00</published><updated>2012-08-31T10:22:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:None,2012-08-31:/blog/2012/08/31/john-hunter/</id><summary type="html">&lt;p&gt;We have lost one of the greats of our community.&lt;/p&gt;
+&lt;p&gt;I first met John Hunter when he came to give a presentation about
+matplotlib at the Space Telescope Science Institute in 2004 (or
+thereabouts).  I remember being blown away by how capable matplotlib
+was (even then), and stunned by John's …&lt;/p&gt;</summary><content type="html">&lt;p&gt;We have lost one of the greats of our community.&lt;/p&gt;
 &lt;p&gt;I first met John Hunter when he came to give a presentation about
 matplotlib at the Space Telescope Science Institute in 2004 (or
 thereabouts).  I remember being blown away by how capable matplotlib
@@ -403,7 +419,15 @@ together in supporting each other at a time like this.  Sometimes it
 really is more than just code.&lt;/p&gt;
 &lt;p&gt;If matplotlib has been useful to you in any way, please give
 generously to the &lt;a class="reference external" href="http://numfocus.org/johnhunter/"&gt;John Hunter Memorial Fund&lt;/a&gt;.&lt;/p&gt;
-</summary></entry><entry><title>Client-side Rendering in Matplotlib, Part II: The language blender</title><link href="/blog/2012/08/07/client-side-rendering-in-matplotlib/" rel="alternate"></link><updated>2012-08-07T13:56:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2012-08-07:blog/2012/08/07/client-side-rendering-in-matplotlib/</id><summary type="html">&lt;div class="note"&gt;
+</content></entry><entry><title>Client-side Rendering in Matplotlib, Part II: The language blender</title><link href="/blog/2012/08/07/client-side-rendering-in-matplotlib/" rel="alternate"></link><published>2012-08-07T13:56:00-04:00</published><updated>2012-08-07T13:56:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:None,2012-08-07:/blog/2012/08/07/client-side-rendering-in-matplotlib/</id><summary type="html">&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;EDIT 2012-08-08: Added benchmarks in Firefox in addition to Chrome&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;In the &lt;a class="reference external" href="http://mdboom.github.com/blog/2012/08/06/matplotlib-client-side/"&gt;last post&lt;/a&gt;,
+I outlined some of the architectural difficulties bringing
+matplotlib's interactivity to the browser.  In short, there's a big
+chunk of code that lies between building the tree of artists and
+rendering them to the screen …&lt;/p&gt;</summary><content type="html">&lt;div class="admonition note"&gt;
 &lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
 &lt;p class="last"&gt;EDIT 2012-08-08: Added benchmarks in Firefox in addition to Chrome&lt;/p&gt;
 &lt;/div&gt;
@@ -550,7 +574,11 @@ very numerically-biased benchmark.&lt;/p&gt;
 &lt;p&gt;Where does that leave us?  Who knows...  Interesting ride, though.
 Stay tuned and leave comments...  There's more to hack away at.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="matplotlib"></category></entry><entry><title>Client-side rendering in matplotlib, Part I: Defining the problem</title><link href="/blog/2012/08/06/matplotlib-client-side/" rel="alternate"></link><updated>2012-08-06T16:16:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2012-08-06:blog/2012/08/06/matplotlib-client-side/</id><summary type="html">&lt;p&gt;One of the big challenges that matplotlib faces as it enters its
+</content><category term="matplotlib"></category></entry><entry><title>Client-side rendering in matplotlib, Part I: Defining the problem</title><link href="/blog/2012/08/06/matplotlib-client-side/" rel="alternate"></link><published>2012-08-06T16:16:00-04:00</published><updated>2012-08-06T16:16:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:None,2012-08-06:/blog/2012/08/06/matplotlib-client-side/</id><summary type="html">&lt;p&gt;One of the big challenges that matplotlib faces as it enters its
+second decade is moving from a desktop app to the web browser
+client/server paradigm.  This need has been known for a few years at
+least: SAGE and the IPython notebook are rich web clients and powerful
+ways …&lt;/p&gt;</summary><content type="html">&lt;p&gt;One of the big challenges that matplotlib faces as it enters its
 second decade is moving from a desktop app to the web browser
 client/server paradigm.  This need has been known for a few years at
 least: SAGE and the IPython notebook are rich web clients and powerful
@@ -676,4 +704,4 @@ phase by using &lt;cite&gt;coverage.py&lt;/cite&gt; and turning it on at the sta
 &lt;cite&gt;Figure.draw&lt;/cite&gt; and turning it off again at the end.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-</summary><category term="matplotlib"></category></entry></feed>
+</content><category term="matplotlib"></category></entry></feed>

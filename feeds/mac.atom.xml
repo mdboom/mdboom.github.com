@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="/" rel="alternate"></link><link href="/feeds/mac.atom.xml" rel="self"></link><id>/</id><updated>2013-08-29T09:33:00-04:00</updated><entry><title>VirtualBox on Mac OS X</title><link href="/blog/2013/08/29/virtualbox-on-mac-os-x/" rel="alternate"></link><updated>2013-08-29T09:33:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:,2013-08-29:blog/2013/08/29/virtualbox-on-mac-os-x/</id><summary type="html">&lt;p&gt;I recently got a Mac Mini so I can start working on Macintosh-specific
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog - mac</title><link href="/" rel="alternate"></link><link href="/feeds/mac.atom.xml" rel="self"></link><id>/</id><updated>2013-08-29T09:33:00-04:00</updated><entry><title>VirtualBox on Mac OS X</title><link href="/blog/2013/08/29/virtualbox-on-mac-os-x/" rel="alternate"></link><published>2013-08-29T09:33:00-04:00</published><updated>2013-08-29T09:33:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:None,2013-08-29:/blog/2013/08/29/virtualbox-on-mac-os-x/</id><summary type="html">&lt;p&gt;I recently got a Mac Mini so I can start working on Macintosh-specific
+issues with matplotlib.  Thanks again to Hans Petter Langtangen, the
+Director of the Center for Biomedical Computing at &lt;a class="reference external" href="http://home.simula.no/~hpl"&gt;Simula&lt;/a&gt; for his gracious donation that
+supported the purchase.&lt;/p&gt;
+&lt;p&gt;One of the things I'd like to use this machine …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I recently got a Mac Mini so I can start working on Macintosh-specific
 issues with matplotlib.  Thanks again to Hans Petter Langtangen, the
 Director of the Center for Biomedical Computing at &lt;a class="reference external" href="http://home.simula.no/~hpl"&gt;Simula&lt;/a&gt; for his gracious donation that
 supported the purchase.&lt;/p&gt;
@@ -86,4 +90,4 @@ to VirtualBox settings and &amp;quot;eject&amp;quot; the virtual DVD before rest
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Hopefully this will help others out.&lt;/p&gt;
-</summary></entry></feed>
+</content></entry></feed>

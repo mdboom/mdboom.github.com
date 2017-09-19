@@ -1,5 +1,0 @@
-> pip install landslide
-
-> ./make.sh
-
-> xdg-open presentation.html
