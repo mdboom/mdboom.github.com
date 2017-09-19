@@ -17,6 +17,10 @@ Express. doi:x10.1364/BOE.8.004348
 Data formats
 ------------
 
+Droettboom, M. (2013). `Understanding JSON Schema
+<https://spacetelescope.github.io/understanding-json-schema/>`_.
+Self-published.
+
 Greenfield, P., Droettboom, M., & Bray, E. (2015). `ASDF: A new data
 format for Astronomy. </papers/asdf.pdf>`_ Astronomy and
 Computing. (In press). doi:10.1016/j.ascom.2015.06.004
