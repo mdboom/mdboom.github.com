@@ -47,7 +47,8 @@ DEFAULT_PAGINATION = 3
 ARTICLE_URL = 'blog/{date:%Y}/{date:%m}/{date:%d}/{slug}/'
 ARTICLE_SAVE_AS = 'blog/{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html'
 
-THEME = os.path.join(os.path.dirname(__file__), '..', 'pelican-bootstrap3')
+THEME = os.path.join(os.path.dirname(__file__), '..',
+                     'pelican-themes', 'pelican-bootstrap3')
 
 DISQUS_SITENAME = "mdboom"
 DISQUS_NO_ID = True
@@ -58,4 +59,9 @@ CUSTOM_CSS = 'static/custom.css'
 
 FAVICON = 'images/favicon.png'
 
-GITHUB_USER = "mdboom"
+JINJA_ENVIRONMENT = {'extensions': ['jinja2.ext.i18n']}
+
+PLUGIN_PATHS = ['../pelican-plugins']
+PLUGINS = ['i18n_subsites']
+
+BOOTSTRAP_NAVBAR_INVERSE = True
