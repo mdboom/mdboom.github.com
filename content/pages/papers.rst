@@ -5,6 +5,15 @@ Papers
 :comments: false
 :date: September 14, 2015
 
+Adaptive Optics
+---------------
+
+Liu, T., Jung, H., Liu, J., Droettboom, M. and Tam, J. (2017)
+`Noninvasive near infrared autofluorescence imaging of retinal pigment
+epithelial cells in the human retina using adaptive
+optics. </papers/boe-8-10-4348.pdf>`_ Biomedical Optics
+Express. doi:x10.1364/BOE.8.004348
+       
 Data formats
 ------------
 
