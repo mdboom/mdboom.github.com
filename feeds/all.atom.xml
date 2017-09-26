@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2015-11-20T16:16:00-05:00</updated><entry><title>Debugging Python C/C++ extensions in gdb</title><link href="/blog/2015/11/20/gdb-python-extensions/" rel="alternate"></link><published>2015-11-20T16:16:00-05:00</published><updated>2015-11-20T16:16:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:None,2015-11-20:/blog/2015/11/20/gdb-python-extensions/</id><summary type="html">&lt;p&gt;&lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; has fantastic support for debugging Python/C extensions.  It
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="http://droettboom.com/" rel="alternate"></link><link href="http://droettboom.com/feeds/all.atom.xml" rel="self"></link><id>http://droettboom.com/</id><updated>2015-11-20T16:16:00-05:00</updated><entry><title>Debugging Python C/C++ extensions in gdb</title><link href="http://droettboom.com/blog/2015/11/20/gdb-python-extensions/" rel="alternate"></link><published>2015-11-20T16:16:00-05:00</published><updated>2015-11-20T16:16:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2015-11-20:/blog/2015/11/20/gdb-python-extensions/</id><summary type="html">&lt;p&gt;&lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; has fantastic support for debugging Python/C extensions.  It
 understands how to print the contents of &lt;cite&gt;PyObject *&lt;/cite&gt; variables using
 their Python-side representation, and can even print Python
 tracebacks.&lt;/p&gt;
@@ -131,7 +131,7 @@ this as a last resort.&lt;/p&gt;
 &lt;h2&gt;Edits&lt;/h2&gt;
 &lt;p&gt;2015-12-03: Fixed errors in gdbinit script.  Fixed links to libpython.py&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="python debugging gdb"></category></entry><entry><title>VirtualBox on Mac OS X</title><link href="/blog/2013/08/29/virtualbox-on-mac-os-x/" rel="alternate"></link><published>2013-08-29T09:33:00-04:00</published><updated>2013-08-29T09:33:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:None,2013-08-29:/blog/2013/08/29/virtualbox-on-mac-os-x/</id><summary type="html">&lt;p&gt;I recently got a Mac Mini so I can start working on Macintosh-specific
+</content><category term="python debugging gdb"></category></entry><entry><title>VirtualBox on Mac OS X</title><link href="http://droettboom.com/blog/2013/08/29/virtualbox-on-mac-os-x/" rel="alternate"></link><published>2013-08-29T09:33:00-04:00</published><updated>2013-08-29T09:33:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2013-08-29:/blog/2013/08/29/virtualbox-on-mac-os-x/</id><summary type="html">&lt;p&gt;I recently got a Mac Mini so I can start working on Macintosh-specific
 issues with matplotlib.  Thanks again to Hans Petter Langtangen, the
 Director of the Center for Biomedical Computing at &lt;a class="reference external" href="http://home.simula.no/~hpl"&gt;Simula&lt;/a&gt; for his gracious donation that
 supported the purchase.&lt;/p&gt;
@@ -222,7 +222,7 @@ to VirtualBox settings and &amp;quot;eject&amp;quot; the virtual DVD before rest
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Hopefully this will help others out.&lt;/p&gt;
-</content></entry><entry><title>matplotlib lessons learned</title><link href="/blog/2013/03/25/matplotlib-lessons-learned/" rel="alternate"></link><published>2013-03-25T09:47:00-04:00</published><updated>2013-03-25T09:47:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:None,2013-03-25:/blog/2013/03/25/matplotlib-lessons-learned/</id><summary type="html">&lt;p&gt;Jake Vanderplass has a very thought-provoking essay about the &lt;a class="reference external" href="http://jakevdp.github.com/blog/2013/03/23/matplotlib-and-the-future-of-visualization-in-python/"&gt;future
+</content></entry><entry><title>matplotlib lessons learned</title><link href="http://droettboom.com/blog/2013/03/25/matplotlib-lessons-learned/" rel="alternate"></link><published>2013-03-25T09:47:00-04:00</published><updated>2013-03-25T09:47:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2013-03-25:/blog/2013/03/25/matplotlib-lessons-learned/</id><summary type="html">&lt;p&gt;Jake Vanderplass has a very thought-provoking essay about the &lt;a class="reference external" href="http://jakevdp.github.com/blog/2013/03/23/matplotlib-and-the-future-of-visualization-in-python/"&gt;future
 of visualization in Python&lt;/a&gt;.
 It's an exciting time for visualization in Python with so many new
 options exploding onto the scene, and Jake has provided a nice
@@ -455,7 +455,7 @@ better if more parts were agnostic to the dimensionality of the data.&lt;/p&gt;
 &lt;p&gt;It's really exciting to watch all that's going on, and thanks to Jake
 Vanderplass for getting this discussion rolling.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="matplotlib"></category></entry><entry><title>Matplotlib in the browser: It's coming</title><link href="/blog/2012/10/11/matplotlib-in-the-browser-its-coming/" rel="alternate"></link><published>2012-10-11T14:35:00-04:00</published><updated>2012-10-11T14:35:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:None,2012-10-11:/blog/2012/10/11/matplotlib-in-the-browser-its-coming/</id><summary type="html">&lt;blockquote class="pull-quote"&gt;
+</content><category term="matplotlib"></category></entry><entry><title>Matplotlib in the browser: It's coming</title><link href="http://droettboom.com/blog/2012/10/11/matplotlib-in-the-browser-its-coming/" rel="alternate"></link><published>2012-10-11T14:35:00-04:00</published><updated>2012-10-11T14:35:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-10-11:/blog/2012/10/11/matplotlib-in-the-browser-its-coming/</id><summary type="html">&lt;blockquote class="pull-quote"&gt;
 UPDATE: I am now sharing my code in the
 &lt;a class="reference external" href="https://github.com/mdboom/mpl_browser_experiments"&gt;mdboom/mpl_browser_experiments&lt;/a&gt; github
 repository, rather than in a gist.&lt;/blockquote&gt;
@@ -616,7 +616,7 @@ peer to the existing backends.&lt;/p&gt;
 &lt;p&gt;Watch the matplotlib and IPython projects -- pull requests will be
 coming soon.&lt;/p&gt;
 &lt;/div&gt;
-</content></entry><entry><title>Amazon MP3 ends their support for Linux</title><link href="/blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/" rel="alternate"></link><published>2012-09-11T11:40:00-04:00</published><updated>2012-09-11T11:40:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:None,2012-09-11:/blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/</id><summary type="html">&lt;p&gt;I've bought digital music from Amazon for almost as long as they've
+</content></entry><entry><title>Amazon MP3 ends their support for Linux</title><link href="http://droettboom.com/blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/" rel="alternate"></link><published>2012-09-11T11:40:00-04:00</published><updated>2012-09-11T11:40:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-09-11:/blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/</id><summary type="html">&lt;p&gt;I've bought digital music from Amazon for almost as long as they've
 been in that business.  Their prices are very competitive, the MP3's
 are dog-standard and DRM-free so they work on every device imaginable,
 and, until recently, they have supported Linux.&lt;/p&gt;
@@ -657,7 +657,7 @@ away what I already have.&lt;/p&gt;
 &lt;p&gt;Sorry, Amazon, but I'm not a clicking monkey.  I'll need to go
 elsewhere.  Can anyone else recommend another DRM-free service that
 doesn't require jumping through so many hoops to download purchases?&lt;/p&gt;
-</content></entry><entry><title>John Hunter</title><link href="/blog/2012/08/31/john-hunter/" rel="alternate"></link><published>2012-08-31T10:22:00-04:00</published><updated>2012-08-31T10:22:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:None,2012-08-31:/blog/2012/08/31/john-hunter/</id><summary type="html">&lt;p&gt;We have lost one of the greats of our community.&lt;/p&gt;
+</content></entry><entry><title>John Hunter</title><link href="http://droettboom.com/blog/2012/08/31/john-hunter/" rel="alternate"></link><published>2012-08-31T10:22:00-04:00</published><updated>2012-08-31T10:22:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-31:/blog/2012/08/31/john-hunter/</id><summary type="html">&lt;p&gt;We have lost one of the greats of our community.&lt;/p&gt;
 &lt;p&gt;I first met John Hunter when he came to give a presentation about
 matplotlib at the Space Telescope Science Institute in 2004 (or
 thereabouts).  I remember being blown away by how capable matplotlib
@@ -683,7 +683,7 @@ together in supporting each other at a time like this.  Sometimes it
 really is more than just code.&lt;/p&gt;
 &lt;p&gt;If matplotlib has been useful to you in any way, please give
 generously to the &lt;a class="reference external" href="http://numfocus.org/johnhunter/"&gt;John Hunter Memorial Fund&lt;/a&gt;.&lt;/p&gt;
-</content></entry><entry><title>Client-side Rendering in Matplotlib, Part II: The language blender</title><link href="/blog/2012/08/07/client-side-rendering-in-matplotlib/" rel="alternate"></link><published>2012-08-07T13:56:00-04:00</published><updated>2012-08-07T13:56:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:None,2012-08-07:/blog/2012/08/07/client-side-rendering-in-matplotlib/</id><summary type="html">&lt;div class="admonition note"&gt;
+</content></entry><entry><title>Client-side Rendering in Matplotlib, Part II: The language blender</title><link href="http://droettboom.com/blog/2012/08/07/client-side-rendering-in-matplotlib/" rel="alternate"></link><published>2012-08-07T13:56:00-04:00</published><updated>2012-08-07T13:56:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-07:/blog/2012/08/07/client-side-rendering-in-matplotlib/</id><summary type="html">&lt;div class="admonition note"&gt;
 &lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
 &lt;p class="last"&gt;EDIT 2012-08-08: Added benchmarks in Firefox in addition to Chrome&lt;/p&gt;
 &lt;/div&gt;
@@ -838,7 +838,7 @@ very numerically-biased benchmark.&lt;/p&gt;
 &lt;p&gt;Where does that leave us?  Who knows...  Interesting ride, though.
 Stay tuned and leave comments...  There's more to hack away at.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="matplotlib"></category></entry><entry><title>Client-side rendering in matplotlib, Part I: Defining the problem</title><link href="/blog/2012/08/06/matplotlib-client-side/" rel="alternate"></link><published>2012-08-06T16:16:00-04:00</published><updated>2012-08-06T16:16:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:None,2012-08-06:/blog/2012/08/06/matplotlib-client-side/</id><summary type="html">&lt;p&gt;One of the big challenges that matplotlib faces as it enters its
+</content><category term="matplotlib"></category></entry><entry><title>Client-side rendering in matplotlib, Part I: Defining the problem</title><link href="http://droettboom.com/blog/2012/08/06/matplotlib-client-side/" rel="alternate"></link><published>2012-08-06T16:16:00-04:00</published><updated>2012-08-06T16:16:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-06:/blog/2012/08/06/matplotlib-client-side/</id><summary type="html">&lt;p&gt;One of the big challenges that matplotlib faces as it enters its
 second decade is moving from a desktop app to the web browser
 client/server paradigm.  This need has been known for a few years at
 least: SAGE and the IPython notebook are rich web clients and powerful
