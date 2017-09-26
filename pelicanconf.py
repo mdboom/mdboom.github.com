@@ -6,7 +6,7 @@ import os
 
 AUTHOR = u'Michael Droettboom'
 SITENAME = u'Boom!  Michael Droettboom\'s blog'
-SITEURL = 'http://droettboom.com'
+SITEURL = ''
 
 PATH = 'content'
 
@@ -54,7 +54,7 @@ THEME = os.path.join(os.path.dirname(__file__), '..',
 DISQUS_SITENAME = "mdboom"
 DISQUS_NO_ID = True
 
-BOOTSTRAP_THEME = "journal"
+BOOTSTRAP_THEME = "flatly"
 
 CUSTOM_CSS = 'static/custom.css'
 
@@ -65,4 +65,12 @@ JINJA_ENVIRONMENT = {'extensions': ['jinja2.ext.i18n']}
 PLUGIN_PATHS = ['../pelican-plugins']
 PLUGINS = ['i18n_subsites']
 
-BOOTSTRAP_NAVBAR_INVERSE = True
+SITELOGO = 'images/favicon.png'
+
+AVATAR = 'images/headshot.jpg'
+ABOUT_ME = "I'm a computer scientist and software engineer, specializing in imaging: sheet music, scientific visualization, astromony and biomedical.  Open source software and open science advocate."
+
+SOCIAL = (('github', 'http://github.com/mdboom'),
+          ('linkedin', 'http://linkedin.com/in/mdboom'))
+
+CC_LICENSE = "CC-BY-NC"
