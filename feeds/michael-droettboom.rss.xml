@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Boom! Michael Droettboom's blog - Michael Droettboom</title><link>/</link><description></description><lastBuildDate>Fri, 20 Nov 2015 16:16:00 -0500</lastBuildDate><item><title>Debugging Python C/C++ extensions in gdb</title><link>/blog/2015/11/20/gdb-python-extensions/</link><description>&lt;p&gt;&lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; has fantastic support for debugging Python/C extensions.  It
+understands how to print the contents of &lt;cite&gt;PyObject *&lt;/cite&gt; variables using
+their Python-side representation, and can even print Python
+tracebacks.&lt;/p&gt;
+&lt;p&gt;These features are described &lt;a class="reference external" href="https://fedoraproject.org/wiki/Features/EasierPythonDebugging"&gt;elsewhere&lt;/a&gt;.  I
+suggest visiting that link to see why this is so cool.  This blog
+posting is …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Michael Droettboom</dc:creator><pubDate>Fri, 20 Nov 2015 16:16:00 -0500</pubDate><guid isPermaLink="false">tag:None,2015-11-20:/blog/2015/11/20/gdb-python-extensions/</guid><category>python debugging gdb</category></item><item><title>VirtualBox on Mac OS X</title><link>/blog/2013/08/29/virtualbox-on-mac-os-x/</link><description>&lt;p&gt;I recently got a Mac Mini so I can start working on Macintosh-specific
+issues with matplotlib.  Thanks again to Hans Petter Langtangen, the
+Director of the Center for Biomedical Computing at &lt;a class="reference external" href="http://home.simula.no/~hpl"&gt;Simula&lt;/a&gt; for his gracious donation that
+supported the purchase.&lt;/p&gt;
+&lt;p&gt;One of the things I'd like to use this machine …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Michael Droettboom</dc:creator><pubDate>Thu, 29 Aug 2013 09:33:00 -0400</pubDate><guid isPermaLink="false">tag:None,2013-08-29:/blog/2013/08/29/virtualbox-on-mac-os-x/</guid></item><item><title>matplotlib lessons learned</title><link>/blog/2013/03/25/matplotlib-lessons-learned/</link><description>&lt;p&gt;Jake Vanderplass has a very thought-provoking essay about the &lt;a class="reference external" href="http://jakevdp.github.com/blog/2013/03/23/matplotlib-and-the-future-of-visualization-in-python/"&gt;future
+of visualization in Python&lt;/a&gt;.
+It's an exciting time for visualization in Python with so many new
+options exploding onto the scene, and Jake has provided a nice
+summary.  However, I don't think it presents a very current view of
+matplotlib …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Michael Droettboom</dc:creator><pubDate>Mon, 25 Mar 2013 09:47:00 -0400</pubDate><guid isPermaLink="false">tag:None,2013-03-25:/blog/2013/03/25/matplotlib-lessons-learned/</guid><category>matplotlib</category></item><item><title>Matplotlib in the browser: It's coming</title><link>/blog/2012/10/11/matplotlib-in-the-browser-its-coming/</link><description>&lt;blockquote class="pull-quote"&gt;
+UPDATE: I am now sharing my code in the
+&lt;a class="reference external" href="https://github.com/mdboom/mpl_browser_experiments"&gt;mdboom/mpl_browser_experiments&lt;/a&gt; github
+repository, rather than in a gist.&lt;/blockquote&gt;
+&lt;p&gt;It's occurred to me recently that in my previous blog posts &lt;a class="reference external" href="http://mdboom.github.com/blog/2012/08/07/client-side-rendering-in-matplotlib/"&gt;Part II&lt;/a&gt;
+and &lt;a class="reference external" href="http://mdboom.github.com/blog/2012/08/06/matplotlib-client-side/"&gt;Part I&lt;/a&gt;,
+I was going about the problem all wrong.  Getting the plotting logic
+running in the browser …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Michael Droettboom</dc:creator><pubDate>Thu, 11 Oct 2012 14:35:00 -0400</pubDate><guid isPermaLink="false">tag:None,2012-10-11:/blog/2012/10/11/matplotlib-in-the-browser-its-coming/</guid></item><item><title>Amazon MP3 ends their support for Linux</title><link>/blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/</link><description>&lt;p&gt;I've bought digital music from Amazon for almost as long as they've
+been in that business.  Their prices are very competitive, the MP3's
+are dog-standard and DRM-free so they work on every device imaginable,
+and, until recently, they have supported Linux.&lt;/p&gt;
+&lt;p&gt;Admittedly, they haven't supported Linux well for some time …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Michael Droettboom</dc:creator><pubDate>Tue, 11 Sep 2012 11:40:00 -0400</pubDate><guid isPermaLink="false">tag:None,2012-09-11:/blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/</guid></item><item><title>John Hunter</title><link>/blog/2012/08/31/john-hunter/</link><description>&lt;p&gt;We have lost one of the greats of our community.&lt;/p&gt;
+&lt;p&gt;I first met John Hunter when he came to give a presentation about
+matplotlib at the Space Telescope Science Institute in 2004 (or
+thereabouts).  I remember being blown away by how capable matplotlib
+was (even then), and stunned by John's …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Michael Droettboom</dc:creator><pubDate>Fri, 31 Aug 2012 10:22:00 -0400</pubDate><guid isPermaLink="false">tag:None,2012-08-31:/blog/2012/08/31/john-hunter/</guid></item><item><title>Client-side Rendering in Matplotlib, Part II: The language blender</title><link>/blog/2012/08/07/client-side-rendering-in-matplotlib/</link><description>&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;EDIT 2012-08-08: Added benchmarks in Firefox in addition to Chrome&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;In the &lt;a class="reference external" href="http://mdboom.github.com/blog/2012/08/06/matplotlib-client-side/"&gt;last post&lt;/a&gt;,
+I outlined some of the architectural difficulties bringing
+matplotlib's interactivity to the browser.  In short, there's a big
+chunk of code that lies between building the tree of artists and
+rendering them to the screen …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Michael Droettboom</dc:creator><pubDate>Tue, 07 Aug 2012 13:56:00 -0400</pubDate><guid isPermaLink="false">tag:None,2012-08-07:/blog/2012/08/07/client-side-rendering-in-matplotlib/</guid><category>matplotlib</category></item><item><title>Client-side rendering in matplotlib, Part I: Defining the problem</title><link>/blog/2012/08/06/matplotlib-client-side/</link><description>&lt;p&gt;One of the big challenges that matplotlib faces as it enters its
+second decade is moving from a desktop app to the web browser
+client/server paradigm.  This need has been known for a few years at
+least: SAGE and the IPython notebook are rich web clients and powerful
+ways …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Michael Droettboom</dc:creator><pubDate>Mon, 06 Aug 2012 16:16:00 -0400</pubDate><guid isPermaLink="false">tag:None,2012-08-06:/blog/2012/08/06/matplotlib-client-side/</guid><category>matplotlib</category></item></channel></rss>
