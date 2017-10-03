@@ -48,8 +48,7 @@ DEFAULT_PAGINATION = 3
 ARTICLE_URL = 'blog/{date:%Y}/{date:%m}/{date:%d}/{slug}/'
 ARTICLE_SAVE_AS = 'blog/{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html'
 
-THEME = os.path.join(os.path.dirname(__file__), '..',
-                     'pelican-themes', 'pelican-bootstrap3')
+THEME = os.path.join('themes', 'pelican-bootstrap3')
 
 DISQUS_SITENAME = "mdboom"
 DISQUS_NO_ID = True
