@@ -62,7 +62,7 @@ FAVICON = 'images/favicon.png'
 
 JINJA_ENVIRONMENT = {'extensions': ['jinja2.ext.i18n']}
 
-PLUGIN_PATHS = ['../pelican-plugins']
+PLUGIN_PATHS = ['plugins']
 PLUGINS = ['i18n_subsites']
 
 SITELOGO = 'images/favicon.png'
