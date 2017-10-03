@@ -71,6 +71,8 @@ AVATAR = 'images/headshot.jpg'
 ABOUT_ME = "I'm a computer scientist and software engineer, specializing in imaging: sheet music, scientific visualization, astromony and biomedical.  Open source software and open science advocate."
 
 SOCIAL = (('github', 'http://github.com/mdboom'),
-          ('linkedin', 'http://linkedin.com/in/mdboom'))
+          ('linkedin', 'http://linkedin.com/in/mdboom'),
+          ('twitter', 'http://twitter.com/MDroettboom'),
+          ('keybase.io', 'http://keybase.io/mdboom', 'check'))
 
 CC_LICENSE = "CC-BY-NC"
