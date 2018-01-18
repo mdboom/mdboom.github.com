@@ -1,5 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="http://droettboom.com/" rel="alternate"></link><link href="http://droettboom.com/feeds/all.atom.xml" rel="self"></link><id>http://droettboom.com/</id><updated>2015-11-20T16:16:00-05:00</updated><entry><title>Debugging Python C/C++ extensions in gdb</title><link href="http://droettboom.com/blog/2015/11/20/gdb-python-extensions/" rel="alternate"></link><published>2015-11-20T16:16:00-05:00</published><updated>2015-11-20T16:16:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2015-11-20:/blog/2015/11/20/gdb-python-extensions/</id><summary type="html">&lt;p&gt;&lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; has fantastic support for debugging Python/C extensions.  It
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="http://droettboom.com/" rel="alternate"></link><link href="http://droettboom.com/feeds/all.atom.xml" rel="self"></link><id>http://droettboom.com/</id><updated>2018-01-18T00:00:00-05:00</updated><entry><title>Jupyter notebooks and version control</title><link href="http://droettboom.com/blog/2018/01/18/diffable-jupyter-notebooks/" rel="alternate"></link><published>2018-01-18T00:00:00-05:00</published><updated>2018-01-18T00:00:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-01-18:/blog/2018/01/18/diffable-jupyter-notebooks/</id><summary type="html">&lt;p class="first last"&gt;Presents an experimental alternative file format for Jupyter notebooks that plays nicer with version control.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Presents an experimental alternative file format for Jupyter notebooks that plays nicer with version control.&lt;/p&gt;
+&lt;div class="section" id="the-problem"&gt;
+&lt;h2&gt;The problem&lt;/h2&gt;
+&lt;p&gt;There's no doubt that Jupyter notebooks are taking over the world for data science experimentation.
+When notebooks are relied on for ongoing decision-making within an organization, it's inevitable that, like all software, they will require bugfixes or updates.
+Without proper version control of these changes, its difficult to know what changes were made, and, more importantly, to reason about what effect those changes may have had on the results.
+While you can simply put Jupyter notebooks into a version control system (VCS), such as &lt;a class="reference external" href="http://git-scm.com"&gt;git&lt;/a&gt;, the design of the notebook file format makes certain important operations, like calculating the difference between two revisions, less friendly than they could be.&lt;/p&gt;
+&lt;p&gt;For example, the &lt;a class="reference external" href="http://nbformat.readthedocs.io/"&gt;Jupyter notebook file format&lt;/a&gt; contains binary blobs for image output.
+The diffs between these sections are large and noisy, and ultimately unhelpful to the software developer reviewing a pull request.
+Secondly, since the file format is based on &lt;a class="reference external" href="http://www.json.org"&gt;JSON&lt;/a&gt;, multi-line strings (such as all source code) are full of boilerplate:
+Each line is in its own set of double-quotes, with explicit newlines (&lt;tt class="docutils literal"&gt;\n&lt;/tt&gt;).  For example, this Python:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+items = []
+for i, item in enumerate(database.all_docs(params={'include_docs' : True})):
+    if i &amp;gt; 1: break
+    items.append(item)
+print items
+&lt;/pre&gt;
+&lt;p&gt;turns into the following JSON:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;quot;source&amp;quot;: [
+  &amp;quot;items = []\n&amp;quot;,
+  &amp;quot;for i, item in enumerate(database.all_docs(params={'include_docs' : True})):\n&amp;quot;,
+  &amp;quot;    if i &amp;gt; 1: break\n&amp;quot;,
+  &amp;quot;    items.append(item)\n&amp;quot;,
+  &amp;quot;print items&amp;quot;
+]
+&lt;/pre&gt;
+&lt;p&gt;All of this makes it more difficult to see meaningful changes through all the noise.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="some-solutions"&gt;
+&lt;h2&gt;Some solutions&lt;/h2&gt;
+&lt;p&gt;I'm by no means the first person to notice these issues, and others have tackled this problem from different directions.&lt;/p&gt;
+&lt;p&gt;In the blog post &lt;a class="reference external" href="http://timstaley.co.uk/posts/making-git-and-jupyter-notebooks-play-nice/"&gt;Making Git and Jupyter play nice&lt;/a&gt;, Tim Staley suggests filtering the notebook files to remove the output cells and less important content (such as &lt;tt class="docutils literal"&gt;metadata&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;execution_count&lt;/tt&gt;).
+While this goes a long way to removing a lot of the &amp;quot;noise&amp;quot; in diffs, the content is still JSON.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://github.com/rossant/ipymd"&gt;ipymd&lt;/a&gt; perhaps comes the closest to solving this problem, in my opinion, by converting notebooks to markdown, with code inserted as standard markdown code blocks.  For example:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Here is some Python code:
+
+```python
+&amp;gt;&amp;gt;&amp;gt; print(&amp;quot;Hello world!&amp;quot;)
+Hello world!
+```
+&lt;/pre&gt;
+&lt;p&gt;It currently has a major shortcoming, in that it doesn't handle non-textual output cells.
+Jupyter output cells are more complex than they might appear at first glance, as each can include multiple representations of the same thing, allowing the front-end to ultimately choose the best based on context.
+I think there are probably some clever ways that could be resolved, but any solution is likely to be lossy relative to what standard Jupyter notebooks can do, or break strict compatibility with markdown.&lt;/p&gt;
+&lt;p&gt;There is also &lt;a class="reference external" href="http://nbdime.readthedocs.io/en/stable/"&gt;nbdime&lt;/a&gt;: a tool designed specifically for diffing and merging Jupyter notebooks.
+The advantage of nbdime is that, since it was purpose-built for Jupyter notebooks, the user interface can take advantage of notebook-specific features, such as image diffing.
+Unfortunately, it is hard to integrate it into existing code review workflows, like Github pull requests.
+Here at Mozilla, for example, many of those doing data science in Jupyter notebooks are Firefox software engineers first and foremost, so they are comfortable and opinionated about the community of &amp;quot;power tools&amp;quot; built around version control: suggesting a single-use tool just for notebooks might be a hard sell.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="yet-another-idea"&gt;
+&lt;h2&gt;Yet another idea&lt;/h2&gt;
+&lt;p&gt;Given all this, I've experimented with an approach that both allows for better diffs while still retaining all of the information present in a Jupyter notebook.
+There are lot of ways it could be done, but in the interest of not inventing entirely new syntax, it turns out you can get a large part of the way to the goal by just using &lt;a class="reference external" href="http://yaml.org"&gt;YAML&lt;/a&gt; instead of JSON, with the following tweaks to the YAML writer:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Always write markdown, source code and text output in &lt;a class="reference external" href="http://www.yaml.org/spec/1.2/spec.html#id2795688"&gt;literal style&lt;/a&gt;.  This avoids the explicit newlines required for multi-line text in JSON.&lt;/li&gt;
+&lt;li&gt;Remove any keys that point to empty lists or dictionaries, e.g. a &lt;tt class="docutils literal"&gt;metadata&lt;/tt&gt; entries without any actual metadata.&lt;/li&gt;
+&lt;li&gt;Order the keys in a consistent way that makes sense to humans.  For example, for each cell include the &lt;tt class="docutils literal"&gt;cell_type&lt;/tt&gt; first, followed by the content, with less important things like &lt;tt class="docutils literal"&gt;metadata&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;execution_order&lt;/tt&gt; afterward.&lt;/li&gt;
+&lt;li&gt;Non-textual output cells are saved externally into a directory of files.
+This keeps output out of the diff of the main code in the notebook, but it's still present when the notebook is reloaded.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For example, here is a cell with output in this YAML-based format:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+- cell_type: code
+  source: |-
+    fig, ax = plt.subplots(figsize=(18,10))
+    sns.boxplot(df.ARR_DELAY_NEW, df.FL_DATE, ax=ax)
+    fig.autofmt_xdate()
+  outputs:
+  - output_type: display_data
+    data:
+      text/plain: |-
+        &amp;lt;matplotlib.figure.Figure at 0x7f679ad6e190&amp;gt;
+      image/png: Exploration of Airline On-Time Performance_files/6ff8d173e4d8a288.png
+  metadata:
+    collapsed: false
+  execution_count: 45
+&lt;/pre&gt;
+&lt;p&gt;Compare that to the original in standard Jupyter notebook JSON:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+{
+ &amp;quot;cell_type&amp;quot;: &amp;quot;code&amp;quot;,
+ &amp;quot;input&amp;quot;: [
+  &amp;quot;fig, ax = plt.subplots(figsize=(18,10))\n&amp;quot;,
+  &amp;quot;sns.boxplot(df.ARR_DELAY_NEW, df.FL_DATE, ax=ax)\n&amp;quot;,
+  &amp;quot;fig.autofmt_xdate()&amp;quot;
+ ],
+ &amp;quot;metadata&amp;quot;: {
+  &amp;quot;collapsed&amp;quot;: false
+ },
+ &amp;quot;outputs&amp;quot;: [
+  {
+   &amp;quot;metadata&amp;quot;: {},
+   &amp;quot;output_type&amp;quot;: &amp;quot;display_data&amp;quot;,
+   &amp;quot;data&amp;quot;: {
+    &amp;quot;text/plain&amp;quot;: [
+     &amp;quot;&amp;lt;matplotlib.figure.Figure at 0x7f679ad6e190&amp;gt;&amp;quot;
+    ],
+    &amp;quot;image/png&amp;quot;: &amp;quot;...BASE64 encoded data removed...&amp;quot;,
+   }
+  }
+ ],
+ &amp;quot;execution_count&amp;quot;: 45
+},
+&lt;/pre&gt;
+&lt;p&gt;The result is something that is not quite as user-friendly as the markdown produced by ipymd, but it is fully lossless.
+Another nice feature of the design is that converting from this format back to a standard Jupyter notebook is as simple as loading YAML, snarfing the external content back in place, and writing out JSON.  That hopefully bodes well for its future-proofing as Jupyter continues to evolve.&lt;/p&gt;
+&lt;p&gt;One problem still present is that markdown cells don't diff very well, since in most cases markdown paragraphs are written as one long continuous line.
+Brandon Rhodes has some great suggestions about using &lt;a class="reference external" href="http://rhodesmill.org/brandon/2012/one-sentence-per-line/"&gt;semantic linefeeds&lt;/a&gt; to make prose more easily diffable that would help there, but I don't think that is 100% automatable.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="playing-with-the-idea"&gt;
+&lt;h2&gt;Playing with the idea&lt;/h2&gt;
+&lt;p&gt;I have an &lt;a class="reference external" href="http://github.com/mdboom/nbconvert_vc"&gt;experimental plugin&lt;/a&gt; for &lt;a class="reference external" href="http://nbconvert.readthedocs.io/"&gt;nbconvert&lt;/a&gt; on Github that implements the conversion to and from this YAML-based format.
+As an experiment, I ran the conversion over the entire git history of a collection of Jupyter notebooks put out by &lt;a class="reference external" href="https://github.com/ibm-et/jupyter-samples"&gt;IBM Emerging Technologies&lt;/a&gt;.
+(&lt;a class="reference external" href="https://git-scm.com/docs/git-filter-branch"&gt;git filter-branch&lt;/a&gt; is an awesome tool for this exact purpose, by the way.)
+Many of the notebooks in this repository have no history (whether that's because versioning Jupyter notebooks is too hard, we may never know), but for those that do have history, there is definitely some useful improvement, for example compare &lt;a class="reference external" href="https://github.com/ibm-et/jupyter-samples/commit/29162a6ed77ccb2ef23cd530f5f028a9e1a3a27c"&gt;before&lt;/a&gt; and &lt;a class="reference external" href="https://github.com/mdboom/jupyter-samples/commit/0060324e6618afa52c571278f86876a60cce2899"&gt;after&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;My main purpose of this blog post is just to solicit feedback on these ideas as I work toward a solution for better support for version control workflows with Jupyter notebooks.
+Please leave comments, suggestions and questions below.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="acknowledgements"&gt;
+&lt;h2&gt;Acknowledgements&lt;/h2&gt;
+&lt;p&gt;This work was supported by &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;moz://a&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="jupyter"></category><category term="python"></category><category term="data science"></category></entry><entry><title>Debugging Python C/C++ extensions in gdb</title><link href="http://droettboom.com/blog/2015/11/20/gdb-python-extensions/" rel="alternate"></link><published>2015-11-20T16:16:00-05:00</published><updated>2015-11-20T16:16:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2015-11-20:/blog/2015/11/20/gdb-python-extensions/</id><summary type="html">&lt;p&gt;&lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; has fantastic support for debugging Python/C extensions.  It
 understands how to print the contents of &lt;cite&gt;PyObject *&lt;/cite&gt; variables using
 their Python-side representation, and can even print Python
 tracebacks.&lt;/p&gt;
