@@ -29,6 +29,7 @@ DISPLAY_CATEGORIES_ON_MENU = False
 # Blogroll
 
 LINKS = (
+    ('Mozilla', 'http://mozilla.com'),
     ('Python', 'http://python.org'),
     ('Jupyter', 'http://jupyter.org'),
     ('Astropy', 'http://astropy.org'),
@@ -67,7 +68,7 @@ PLUGINS = ['i18n_subsites']
 SITELOGO = 'images/favicon.png'
 
 AVATAR = 'images/headshot.jpg'
-ABOUT_ME = "I'm a computer scientist and software engineer, specializing in imaging: sheet music, scientific visualization, astromony and biomedical.  Open source software and open science advocate."
+ABOUT_ME = "I'm a computer scientist and software engineer, specializing in imaging and data: sheet music, scientific visualization, astromony, biomedical data and software telemetry.  Open source software and open science advocate."
 
 SOCIAL = (('github', 'http://github.com/mdboom'),
           ('linkedin', 'http://linkedin.com/in/mdboom'),
