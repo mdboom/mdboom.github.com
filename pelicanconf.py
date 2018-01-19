@@ -15,7 +15,11 @@ TIMEZONE = 'America/New_York'
 DEFAULT_LANG = u'en'
 
 STATIC_PATHS = ['static', 'images', 'papers', 'extra/CNAME']
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
+EXTRA_PATH_METADATA = {
+    'extra/CNAME': {'path': 'CNAME'},
+    'static/keybase.txt': {'path': 'keybase.txt'},
+    'images/favicon.png': {'path': 'favicon.png'}
+}
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
