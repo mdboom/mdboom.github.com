@@ -34,6 +34,7 @@ DISPLAY_CATEGORIES_ON_MENU = False
 
 LINKS = (
     ('Mozilla', 'http://mozilla.com'),
+    ('matplotlib', 'http://matplotlib.org'),
     ('Python', 'http://python.org'),
     ('Jupyter', 'http://jupyter.org'),
     ('Astropy', 'http://astropy.org'),
