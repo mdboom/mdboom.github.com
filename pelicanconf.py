@@ -18,7 +18,7 @@ STATIC_PATHS = ['static', 'images', 'papers', 'extra/CNAME']
 EXTRA_PATH_METADATA = {
     'extra/CNAME': {'path': 'CNAME'},
     'static/keybase.txt': {'path': 'keybase.txt'},
-    'images/favicon.png': {'path': 'favicon.png'}
+    'images/favicon2.png': {'path': 'favicon.png'}
 }
 
 # Feed generation is usually not desired when developing
