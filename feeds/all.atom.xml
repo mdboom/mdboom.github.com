@@ -146,7 +146,7 @@ that.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="check-it-out"&gt;
 &lt;h3&gt;Check it out&lt;/h3&gt;
-&lt;p&gt;The easiest way to play with this is to visit the &lt;a class="reference external" href="https://iodide-project.github.io/iodide-examples/output-handling.html"&gt;example Pyodide notebook&lt;/a&gt;.
+&lt;p&gt;The easiest way to play with this is to visit the &lt;a class="reference external" href="https://iodide-project.github.io/iodide-examples/python.html"&gt;example Pyodide notebook&lt;/a&gt;.
 (Note that this only works on Firefox right now. Chrome support is &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/issues/17"&gt;pending&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;You can also get involved at &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/"&gt;pyodide github repository&lt;/a&gt;. Note that while Pyodide grew
 out of the needs of Iodide, there's nothing Iodide-specific about it, and it
