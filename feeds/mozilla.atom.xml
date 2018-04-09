@@ -1,5 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog - mozilla</title><link href="http://droettboom.com/" rel="alternate"></link><link href="http://droettboom.com/feeds/mozilla.atom.xml" rel="self"></link><id>http://droettboom.com/</id><updated>2018-01-18T00:00:00-05:00</updated><entry><title>Jupyter notebooks and version control</title><link href="http://droettboom.com/blog/2018/01/18/diffable-jupyter-notebooks/" rel="alternate"></link><published>2018-01-18T00:00:00-05:00</published><updated>2018-01-18T00:00:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-01-18:/blog/2018/01/18/diffable-jupyter-notebooks/</id><summary type="html">&lt;p class="first last"&gt;Presents an experimental alternative file format for Jupyter notebooks that plays nicer with version control.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog - mozilla</title><link href="http://droettboom.com/" rel="alternate"></link><link href="http://droettboom.com/feeds/mozilla.atom.xml" rel="self"></link><id>http://droettboom.com/</id><updated>2018-04-04T00:00:00-04:00</updated><entry><title>Scientific Python in the Browser</title><link href="http://droettboom.com/blog/2018/04/04/python-in-the-browser/" rel="alternate"></link><published>2018-04-04T00:00:00-04:00</published><updated>2018-04-04T00:00:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-04-04:/blog/2018/04/04/python-in-the-browser/</id><summary type="html">&lt;p class="first last"&gt;An early report on getting the scientific Python stack compiled to WebAssembly.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; An early report on getting the scientific Python stack compiled to WebAssembly.&lt;/p&gt;
+&lt;div class="section" id="data-science-in-the-browser"&gt;
+&lt;h2&gt;Data Science in the Browser&lt;/h2&gt;
+&lt;p&gt;Shortly after starting at Mozilla in January, I became aware of Hamilton Ulmer
+and Brendan Colloran's &lt;a class="reference external" href="https://github.com/iodide-project/iodide"&gt;Iodide&lt;/a&gt;
+project, an experiment to build a data science notebook based on web
+technologies. Unlike Jupyter notebooks, the computation happens in the browser,
+with direct access to Web API technologies like the DOM. Sharing a notebook is
+as simple as passing around a single HTML file, since there's no server side to
+worry about. It's not out to replace Jupyter notebooks, but rather to exist in a
+different design tradeoff space that makes it more suitable the sharing and
+collaboration.&lt;/p&gt;
+&lt;p&gt;Since it targets the browser, the programming language of Iodide is, of course,
+Javascript. While there are a number of libraries for doing data science in
+Javascript, such as &lt;a class="reference external" href="https://github.com/nicolaspanel/numjs"&gt;numjs&lt;/a&gt; and &lt;a class="reference external" href="http://scijs.net/packages/"&gt;scijs&lt;/a&gt;, they aren't as widely used or as battle-tested
+as the scientific Python or R ecosystems. Nonetheless, I think &amp;quot;data science in
+Javascript&amp;quot; is an interesting area to explore, particularly since Javascript has
+some of the best JIT compilers of any dynamic language. This advantage allows
+writing both high-level orchestration and low-level numeric code in the same
+language, side-stepping the notorious &amp;quot;two language problem&amp;quot; in scientific
+Python. (In Python land, most of the core scientific libraries have significant
+chunks of code in lower level languages such as C, FORTRAN or &lt;a class="reference external" href="http://cython.org/"&gt;Cython&lt;/a&gt; for performance reasons.) Combining Javascript's great
+compiler technology, and perhaps adding a smattering of transpilation to fix
+some syntactic issues, is really promising, and Iodide as a project is
+exploring that space.&lt;/p&gt;
+&lt;p&gt;Nonetheless, we received frequent feedback that Iodide &amp;quot;looks really cool, but I
+wish I could use the Python (or R) tools I'm familiar with.&amp;quot; I understood in
+theory that it should be possible to compile the Python interpreter into
+&lt;a class="reference external" href="http://webassembly.org/"&gt;WebAssembly&lt;/a&gt; in order to run it in the browser.
+There are already a few projects that do this: (&lt;a class="reference external" href="https://github.com/dgym/cpython-emscripten"&gt;cpython-emscripten&lt;/a&gt;, &lt;a class="reference external" href="https://github.com/micropython/micropython/pull/3575"&gt;micropython javascript support&lt;/a&gt;, &lt;a class="reference external" href="http://pypyjs.org/"&gt;pypyjs&lt;/a&gt;). Unfortunately, I couldn't find a project that included
+a practical scientific Python stack including &lt;a class="reference external" href="http://numpy.org"&gt;Numpy&lt;/a&gt; and
+friends. I was concerned about the amount of effort it would take to build such
+a thing, and also whether the result would be performant enough to be useful. In
+February, we had a conversation with some folks who work on WebAssembly tooling
+at Mozilla, and they were pretty bullish that it wouldn't be too hard. Based on
+their optimism, I gave it a shot, and starting with dgym's &lt;a class="reference external" href="https://github.com/dgym/cpython-emscripten"&gt;cpython-emscripten&lt;/a&gt; as a basis, I had the basic
+parts of a Python interpreter working in WebAssembly in a couple of days. Of
+course, going from that to a working Numpy took much longer, but thanks to some
+help from Alon Zakai and others, Numpy is working, too. With that done, it has
+been much easier getting other libraries higher up the stack to work, including
+preliminary support for Pandas.&lt;/p&gt;
+&lt;div class="section" id="tight-integration"&gt;
+&lt;h3&gt;Tight integration&lt;/h3&gt;
+&lt;p&gt;One thing that sets this implementation apart from other Python-in-the-browser
+projects I've come across is the ability to easily pass and share objects
+between Python and Javascript.&lt;/p&gt;
+&lt;p&gt;The basic Python data types (None, bool, int, float, str, bytes, list and dict)
+are transparently converted to and from their Javascript equivalents. Other
+types, including Numpy arrays, are wrapped in a proxy that allows Javascript to
+call their methods and access their items and attributes. Vice versa, Javascript
+objects are wrapped in a Python proxy. These proxies allow objects to be
+shared on both sides of the language barrier without copying,
+which is particularly important for large Numpy arrays.&lt;/p&gt;
+&lt;p&gt;Say, for example, you had a value in Javascript:&lt;/p&gt;
+&lt;pre class="code javascript literal-block"&gt;
+&lt;span class="c1"&gt;// javascript
+&lt;/span&gt;&lt;span class="nx"&gt;secret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Wklv#lv#olnh#pdjlf$&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;You could use it from Python by using the &lt;tt class="docutils literal"&gt;from js import ...&lt;/tt&gt; syntax:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="c1"&gt;# python&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;js&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;secret&lt;/span&gt;
+
+&lt;span class="n"&gt;decoded&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;''&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;chr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;ord&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;secret&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;And then send data back to the Javascript side using &lt;tt class="docutils literal"&gt;pyodide.pyimport&lt;/tt&gt;:&lt;/p&gt;
+&lt;pre class="code javascript literal-block"&gt;
+&lt;span class="c1"&gt;// javascript
+&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;decoded&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;pyodide&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pyimport&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;decoded&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;One of the coolest side effects of this design is that Python has complete
+access to the Web API, so it can manipulate the DOM, use HTML Canvas, access
+webcams or audio and all the other cool things you can do from Javascript in a
+browser.&lt;/p&gt;
+&lt;p&gt;For example, changing the browser tab's title is as simple as importing
+&lt;tt class="docutils literal"&gt;window&lt;/tt&gt; and setting an attribute:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;js&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;window&lt;/span&gt;
+&lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;My mind is blown&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="what-works"&gt;
+&lt;h3&gt;What works&lt;/h3&gt;
+&lt;p&gt;Most of the Python standard library works. The most notable exceptions are:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;subprocess&lt;/tt&gt;: since the browser isn't an OS, it can't spawn new processes.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;socket&lt;/tt&gt;: access to raw network sockets would break the browser security
+model. There are a lot of networking-related things in the standard library
+built on &lt;tt class="docutils literal"&gt;socket&lt;/tt&gt; that therefore also don't work.&lt;/li&gt;
+&lt;li&gt;All of the browser sandboxing still applies, so you can't access the local
+filesystem. However, by calling through Javascript, you do have access to
+&lt;tt class="docutils literal"&gt;XMLHttpRequest&lt;/tt&gt; and browser local storage. Eventually, Python wrappers
+around this functionality &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/issues/19"&gt;should be written&lt;/a&gt; to make those
+operations feel more like they do in native Python.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Within Numpy, all of the core functionality works, but there's no support for
+&lt;tt class="docutils literal"&gt;long double&lt;/tt&gt; (but those are pretty niche). There are still some low-level
+compiler bugs that prevent the FFT stuff from compiling, but that should
+eventually resolve.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="how-fast-is-it"&gt;
+&lt;h3&gt;How fast is it?&lt;/h3&gt;
+&lt;p&gt;To answer this question, I reached for a few existing Python and Numpy benchmarks:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The venerable &lt;a class="reference external" href="https://svn.python.org/projects/python/trunk/Lib/test/pystone.py"&gt;pystone&lt;/a&gt;,
+which ships with CPython.&lt;/li&gt;
+&lt;li&gt;Serge Guelton's set of &lt;a class="reference external" href="https://github.com/serge-sans-paille/numpy-benchmarks/"&gt;numpy benchmarks&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These benchmarks probably fall into the trap of being a little too &amp;quot;synthetic&amp;quot;.
+I would have preferred to also use the &lt;a class="reference external" href="http://pyperformance.readthedocs.io/index.html"&gt;Python Performance Benchmark Suite&lt;/a&gt;, which aims to be a little
+closer to &amp;quot;real world&amp;quot;, but it has a significant number of dependencies and
+would need to be adapted to work on a platform without &lt;tt class="docutils literal"&gt;subprocess&lt;/tt&gt; before it
+could be used in this context. Nonetheless, I think these benchmarks offer a
+useful approximation for now.&lt;/p&gt;
+&lt;p&gt;The &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/tree/master/benchmark/benchmarks/"&gt;benchmarks&lt;/a&gt;
+were run on the same machine in the native CPython implementation and in Firefox
+Nightly using selenium. The following figure shows how many times slower the
+WebAssembly implementation is.&lt;/p&gt;
+&lt;object data="/images/pyodide-benchmarks.svg" style="width: 800px; height: 800px;" type="image/svg+xml"&gt;
+description&lt;/object&gt;
+&lt;p&gt;The results are interesting. For benchmarks that spend most of their time in
+Numpy routines, such as &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/tree/master/benchmark/benchmarks/harris.py"&gt;harris&lt;/a&gt;
+or &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/tree/master/benchmark/benchmarks/rosen.py"&gt;rosen&lt;/a&gt;,
+runtime is at par with the native-compiled Python. When WebAssembly rocks, it
+really, really rocks. Unfortunately, for other benchmarks that spend a lot of
+time looping or making function calls in Python, runtimes can be as much as 35
+times slower. I have an unsubstantiated hunch that this is due to the use of
+Emscripten's &lt;a class="reference external" href="https://kripken.github.io/emscripten-site/docs/porting/guidelines/function_pointer_issues.html#asm-pointer-casts"&gt;EMULATE_FUNCTION_POINTER_CASTS&lt;/a&gt;
+option which is required to make all of the function pointer calls that CPython
+does work correctly.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="future-directions"&gt;
+&lt;h3&gt;Future directions&lt;/h3&gt;
+&lt;p&gt;I'd love to see improvements to the toolchain that close the performance gap. At
+this point, I don't personally know enough to anticipate how much work is
+involved.&lt;/p&gt;
+&lt;p&gt;Another current limitation is that all of the packages you anticipate you might
+need must be compiled and wrapped into a single large data file that is
+downloaded in its entirety to your browser before anything can start. It would
+be great to modularize that, so that packages are downloaded on demand. Related
+to that, it would also be helpful to modularize the build system so that
+individual packages can be added more independently. &lt;a class="reference external" href="https://github.com/conda/conda-build"&gt;Conda build&lt;/a&gt; could potentially serve as a basis for
+that.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="check-it-out"&gt;
+&lt;h3&gt;Check it out&lt;/h3&gt;
+&lt;p&gt;The easiest way to play with this is to visit the &lt;a class="reference external" href="https://iodide-project.github.io/iodide-examples/output-handling.html"&gt;example Pyodide notebook&lt;/a&gt;.
+(Note that this only works on Firefox right now. Chrome support is &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/issues/17"&gt;pending&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;You can also get involved at &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/"&gt;pyodide github repository&lt;/a&gt;. Note that while Pyodide grew
+out of the needs of Iodide, there's nothing Iodide-specific about it, and it
+should be useful in other contexts where you want to embed a scientific Python
+stack in the browser. I'm pretty new to WebAssembly and I'd love any help,
+advice or comments to make this better.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="python"></category><category term="data science"></category></entry><entry><title>Jupyter notebooks and version control</title><link href="http://droettboom.com/blog/2018/01/18/diffable-jupyter-notebooks/" rel="alternate"></link><published>2018-01-18T00:00:00-05:00</published><updated>2018-01-18T00:00:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-01-18:/blog/2018/01/18/diffable-jupyter-notebooks/</id><summary type="html">&lt;p class="first last"&gt;Presents an experimental alternative file format for Jupyter notebooks that plays nicer with version control.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Presents an experimental alternative file format for Jupyter notebooks that plays nicer with version control.&lt;/p&gt;
 &lt;div class="section" id="the-problem"&gt;
 &lt;h2&gt;The problem&lt;/h2&gt;
