@@ -3,6 +3,7 @@ Jupyter notebooks and version control
 
 :date: 2018-01-18
 :modified: 2018-01-18
+:category: mozilla
 :tags: jupyter, python, data science
 :slug: diffable-jupyter-notebooks
 :authors: Michael Droettboom
