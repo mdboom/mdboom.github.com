@@ -200,7 +200,7 @@ Check it out
 ------------
 
 The easiest way to play with this is to visit the `example Pyodide notebook
-<https://iodide-project.github.io/iodide-examples/python.html>`__.
+<https://iodide-project.github.io/pyodide-demo/python.html>`__.
 (Note that this only works on Firefox right now. Chrome support is `pending
 <https://github.com/iodide-project/pyodide/issues/17>`__).
 
