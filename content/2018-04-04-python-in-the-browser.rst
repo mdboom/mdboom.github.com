@@ -166,6 +166,12 @@ WebAssembly implementation is.
     :width: 800
     :alt: description
 
+**EDIT 2018-04-10:** The original results posted here inadvertently included
+Numpy import time in the WebAssembly times (but not in the native times).
+These have now been corrected above. There is some improvement in the
+results, but not in a best or worst case. You can see the original results
+`here </images/pyodide-benchmarks-2018-04-09.svg>`__.
+
 The results are interesting. For benchmarks that spend most of their time in
 Numpy routines, such as `harris
 <https://github.com/iodide-project/pyodide/tree/master/benchmark/benchmarks/harris.py>`__
