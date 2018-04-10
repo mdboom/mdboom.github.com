@@ -231,6 +231,11 @@ Nightly using selenium. The following figure shows how many times slower the
 WebAssembly implementation is.</p>
 <object data="/images/pyodide-benchmarks.svg" style="width: 800px; height: 800px;" type="image/svg+xml">
 description</object>
+<p><strong>EDIT 2018-04-10:</strong> The original results posted here inadvertently included
+Numpy import time in the WebAssembly times (but not in the native times).
+These have now been corrected above. There is some improvement in the
+results, but not in a best or worst case. You can see the original results
+<a class="reference external" href="/images/pyodide-benchmarks-2018-04-09.svg">here</a>.</p>
 <p>The results are interesting. For benchmarks that spend most of their time in
 Numpy routines, such as <a class="reference external" href="https://github.com/iodide-project/pyodide/tree/master/benchmark/benchmarks/harris.py">harris</a>
 or <a class="reference external" href="https://github.com/iodide-project/pyodide/tree/master/benchmark/benchmarks/rosen.py">rosen</a>,
