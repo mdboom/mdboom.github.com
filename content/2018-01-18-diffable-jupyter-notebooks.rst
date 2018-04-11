@@ -11,6 +11,8 @@ Jupyter notebooks and version control
 
 **Summary:** Presents an experimental alternative file format for Jupyter notebooks that plays nicer with version control.
 
+**UPDATE: 2018-04-11:** Matthias Bussonnier pointed out on Twitter he did something `very similar quite some time ago <https://matthiasbussonnier.com/posts/05-YAML%20Notebook.html>`__.  Given the interest, what can we do to push this along so it's an obvious choice for Jupyter users?
+
 The problem
 -----------
 
