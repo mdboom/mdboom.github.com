@@ -1,5 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="http://droettboom.com/" rel="alternate"></link><link href="http://droettboom.com/feeds/all.atom.xml" rel="self"></link><id>http://droettboom.com/</id><updated>2018-04-04T00:00:00-04:00</updated><entry><title>Scientific Python in the Browser</title><link href="http://droettboom.com/blog/2018/04/04/python-in-the-browser/" rel="alternate"></link><published>2018-04-04T00:00:00-04:00</published><updated>2018-04-04T00:00:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-04-04:/blog/2018/04/04/python-in-the-browser/</id><summary type="html">&lt;p class="first last"&gt;An early report on getting the scientific Python stack compiled to WebAssembly.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="http://droettboom.com/" rel="alternate"></link><link href="http://droettboom.com/feeds/all.atom.xml" rel="self"></link><id>http://droettboom.com/</id><updated>2018-04-11T00:00:00-04:00</updated><entry><title>Profiling WebAssembly</title><link href="http://droettboom.com/blog/2018/04/11/profiling-webassembly/" rel="alternate"></link><published>2018-04-11T00:00:00-04:00</published><updated>2018-04-11T00:00:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-04-11:/blog/2018/04/11/profiling-webassembly/</id><summary type="html">&lt;p class="first last"&gt;Tips for profiling WebAssembly&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Tips for profiling WebAssembly&lt;/p&gt;
+&lt;p&gt;I couldn't find a comprehensive guide to profiling WebAssembly, so I thought I'd
+share my own limited experience here. In my &lt;a class="reference external" href="/blog/2018/04/04/python-in-the-browser/"&gt;last post&lt;/a&gt;, I talked about benchmarking a
+WebAssembly port of the scientific Python stack. I knew which benchmarks were
+doing better than others and had some theories about why, but since I didn't yet
+know how to profile WebAssembly, I couldn't really answer that with any
+certainty.&lt;/p&gt;
+&lt;p&gt;It turns out that profiling WebAssembly is quite easy.&lt;/p&gt;
+&lt;div class="section" id="rebuilding-with-the-profiling-flag"&gt;
+&lt;h2&gt;Rebuilding with the --profiling flag&lt;/h2&gt;
+&lt;p&gt;The first step is to rebuild the application with the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--profiling&lt;/span&gt;&lt;/tt&gt; flag
+passed to both the compiler and the linker for every object. This makes sure
+that all of the information necessary for profiling is available in the output
+and makes the code more readable. The typical way to do this would be to set
+&lt;tt class="docutils literal"&gt;CFLAGS&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;LDFLAGS&lt;/tt&gt; and let the &lt;tt class="docutils literal"&gt;./configure&lt;/tt&gt; script for your project
+pick those up. In the case of &lt;tt class="docutils literal"&gt;pyodide&lt;/tt&gt;, the Python cross-compiling setup
+makes that tricky, or at least I couldn't figure it out in a short amount of
+time. Fortunately, &lt;tt class="docutils literal"&gt;emscripten&lt;/tt&gt; provides a handy backdoor to just force this
+on everything: the &lt;tt class="docutils literal"&gt;EMCC_CFLAGS&lt;/tt&gt; environment variable. Therefore, to make a
+profiling-friendly build of &lt;tt class="docutils literal"&gt;pyodide&lt;/tt&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;make clean
+&lt;span class="nv"&gt;EMCC_CFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;--profiling make
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="setting-start-and-stop-points-for-profiling"&gt;
+&lt;h2&gt;Setting start and stop points for profiling&lt;/h2&gt;
+&lt;p&gt;You generally don't want to profile an entire run, which would include
+initialization and other things. It turns out there's a handy Javascript API to
+turn the profiler on and off.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;console.profile()&lt;/tt&gt; turns the profiler on.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;console.profileEnd()&lt;/tt&gt; turns the profiler off.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you wanted to call these from C/C++, you could use the &lt;tt class="docutils literal"&gt;EM_ASM&lt;/tt&gt; macro, which
+allows you to insert literal Javascript into the C application:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;EM_ASM&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;profile&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In my case, I wanted to turn the profiler on and off from Python, so I can do:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;js&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;console&lt;/span&gt;
+&lt;span class="n"&gt;console&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;profile&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="profiling"&gt;
+&lt;h2&gt;Profiling&lt;/h2&gt;
+&lt;p&gt;The actual profiling is performed within the development tools of your browser.
+When you load an &lt;tt class="docutils literal"&gt;.html&lt;/tt&gt; file that runs the WebAssembly built and instrumented
+as above, it will record a set of profiling data available from the
+&lt;strong&gt;Performance&lt;/strong&gt; tab.&lt;/p&gt;
+&lt;p&gt;I'll refer you to the &lt;a class="reference external" href="https://developer.mozilla.org/en-US/docs/Tools/Performance"&gt;Performance Tools documentation&lt;/a&gt; for more
+information. Suffice it to say that profiling WebAssembly is almost exactly like
+profiling vanilla Javascript in the browser.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="case-study"&gt;
+&lt;h2&gt;Case study&lt;/h2&gt;
+&lt;p&gt;For &lt;tt class="docutils literal"&gt;pyodide&lt;/tt&gt;, I created a profiling build to look into the &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/blob/master/benchmark/benchmarks/julia.py"&gt;julia benchmark&lt;/a&gt;
+that I knew was performing poorly. Right away, I noticed from the Call Tree that
+50% of the time was spent in this function:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;named&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;NAMED_GLOBALS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nx"&gt;Module&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;g$_&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;Module&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;_&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;// &amp;lt;- 50% of runtime HERE&lt;/span&gt;
+        &lt;span class="p"&gt;};&lt;/span&gt;
+    &lt;span class="p"&gt;})(&lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This code is actually part of the boilerplate that emscripten emits. It helps
+dynamically loaded modules (such as Numpy in my case) access symbols in the main
+module. Since these symbols don't change at runtime, we don't actually need to
+do the dictionary lookup for &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Module['_'&lt;/span&gt; + named]&lt;/tt&gt; every time, we can cache
+(memoize) it at startup and then just use that:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;named&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;NAMED_GLOBALS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;func&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Module&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;_&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+        &lt;span class="nx"&gt;Module&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;g$_&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;func&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;};&lt;/span&gt;
+    &lt;span class="p"&gt;})(&lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This 2-line change to emscripten resulted in significant speedups in my
+&lt;tt class="docutils literal"&gt;pyodide&lt;/tt&gt; benchmarks across the board.&lt;/p&gt;
+&lt;object data="/images/benchmark_improvement.svg" style="width: 800px; height: 800px;" type="image/svg+xml"&gt;
+description&lt;/object&gt;
+&lt;p&gt;Here, the &lt;em&gt;x&lt;/em&gt;-axis is the number of times slower that WebAssembly runs vs. native
+code. The grey bars are the timings before this change, and blue bars are the
+timings after this change.&lt;/p&gt;
+&lt;p&gt;More details about this changes are in the &lt;a class="reference external" href="https://github.com/kripken/emscripten/pull/6437"&gt;pull request&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="python"></category><category term="data science"></category></entry><entry><title>Scientific Python in the Browser</title><link href="http://droettboom.com/blog/2018/04/04/python-in-the-browser/" rel="alternate"></link><published>2018-04-04T00:00:00-04:00</published><updated>2018-04-11T00:00:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-04-04:/blog/2018/04/04/python-in-the-browser/</id><summary type="html">&lt;p class="first last"&gt;An early report on getting the scientific Python stack compiled to WebAssembly.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; An early report on getting the scientific Python stack compiled to WebAssembly.&lt;/p&gt;
 &lt;div class="section" id="data-science-in-the-browser"&gt;
 &lt;h2&gt;Data Science in the Browser&lt;/h2&gt;
@@ -54,32 +145,28 @@ objects are wrapped in a Python proxy. These proxies allow objects to be
 shared on both sides of the language barrier without copying,
 which is particularly important for large Numpy arrays.&lt;/p&gt;
 &lt;p&gt;Say, for example, you had a value in Javascript:&lt;/p&gt;
-&lt;pre class="code javascript literal-block"&gt;
-&lt;span class="c1"&gt;// javascript
-&lt;/span&gt;&lt;span class="nx"&gt;secret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Wklv#lv#olnh#pdjlf$&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// javascript&lt;/span&gt;
+&lt;span class="nx"&gt;secret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Wklv#lv#olnh#pdjlf$&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;You could use it from Python by using the &lt;tt class="docutils literal"&gt;from js import ...&lt;/tt&gt; syntax:&lt;/p&gt;
-&lt;pre class="code python literal-block"&gt;
-&lt;span class="c1"&gt;# python&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# python&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;js&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;secret&lt;/span&gt;
 
-&lt;span class="n"&gt;decoded&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;''&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;chr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;ord&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;secret&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;
+&lt;span class="n"&gt;decoded&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;chr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;ord&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;secret&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;And then send data back to the Javascript side using &lt;tt class="docutils literal"&gt;pyodide.pyimport&lt;/tt&gt;:&lt;/p&gt;
-&lt;pre class="code javascript literal-block"&gt;
-&lt;span class="c1"&gt;// javascript
-&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;decoded&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;pyodide&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pyimport&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;decoded&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// javascript&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;decoded&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;pyodide&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pyimport&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;decoded&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;One of the coolest side effects of this design is that Python has complete
 access to the Web API, so it can manipulate the DOM, use HTML Canvas, access
 webcams or audio and all the other cool things you can do from Javascript in a
 browser.&lt;/p&gt;
 &lt;p&gt;For example, changing the browser tab's title is as simple as importing
 &lt;tt class="docutils literal"&gt;window&lt;/tt&gt; and setting an attribute:&lt;/p&gt;
-&lt;pre class="code python literal-block"&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;js&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;window&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;js&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;window&lt;/span&gt;
 &lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;My mind is blown&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="what-works"&gt;
 &lt;h3&gt;What works&lt;/h3&gt;
@@ -135,6 +222,10 @@ times slower. I have an unsubstantiated hunch that this is due to the use of
 Emscripten's &lt;a class="reference external" href="https://kripken.github.io/emscripten-site/docs/porting/guidelines/function_pointer_issues.html#asm-pointer-casts"&gt;EMULATE_FUNCTION_POINTER_CASTS&lt;/a&gt;
 option which is required to make all of the function pointer calls that CPython
 does work correctly.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;UPDATE 2018-04-11:&lt;/strong&gt; My hunch was wrong, and I was able to get to the bottom
+of the root cause and significantly speed up these benchmarks. See my post
+&lt;a class="reference external" href="/blog/2018/04/11/profiling-webassembly/"&gt;Profiling WebAssembly&lt;/a&gt; for more
+info.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="future-directions"&gt;
 &lt;h3&gt;Future directions&lt;/h3&gt;

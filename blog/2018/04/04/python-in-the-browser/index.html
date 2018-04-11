@@ -165,32 +165,28 @@ objects are wrapped in a Python proxy. These proxies allow objects to be
 shared on both sides of the language barrier without copying,
 which is particularly important for large Numpy arrays.</p>
 <p>Say, for example, you had a value in Javascript:</p>
-<pre class="code javascript literal-block">
-<span class="c1">// javascript
-</span><span class="nx">secret</span> <span class="o">=</span> <span class="s2">&quot;Wklv#lv#olnh#pdjlf$&quot;</span>
-</pre>
+<div class="highlight"><pre><span></span><span class="c1">// javascript</span>
+<span class="nx">secret</span> <span class="o">=</span> <span class="s2">&quot;Wklv#lv#olnh#pdjlf$&quot;</span>
+</pre></div>
 <p>You could use it from Python by using the <tt class="docutils literal">from js import ...</tt> syntax:</p>
-<pre class="code python literal-block">
-<span class="c1"># python</span>
+<div class="highlight"><pre><span></span><span class="c1"># python</span>
 <span class="kn">from</span> <span class="nn">js</span> <span class="kn">import</span> <span class="n">secret</span>
 
-<span class="n">decoded</span> <span class="o">=</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">secret</span><span class="p">)</span>
-</pre>
+<span class="n">decoded</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">secret</span><span class="p">)</span>
+</pre></div>
 <p>And then send data back to the Javascript side using <tt class="docutils literal">pyodide.pyimport</tt>:</p>
-<pre class="code javascript literal-block">
-<span class="c1">// javascript
-</span><span class="kd">var</span> <span class="nx">decoded</span> <span class="o">=</span> <span class="nx">pyodide</span><span class="p">.</span><span class="nx">pyimport</span><span class="p">(</span><span class="s2">&quot;decoded&quot;</span><span class="p">)</span>
-</pre>
+<div class="highlight"><pre><span></span><span class="c1">// javascript</span>
+<span class="kd">var</span> <span class="nx">decoded</span> <span class="o">=</span> <span class="nx">pyodide</span><span class="p">.</span><span class="nx">pyimport</span><span class="p">(</span><span class="s2">&quot;decoded&quot;</span><span class="p">)</span>
+</pre></div>
 <p>One of the coolest side effects of this design is that Python has complete
 access to the Web API, so it can manipulate the DOM, use HTML Canvas, access
 webcams or audio and all the other cool things you can do from Javascript in a
 browser.</p>
 <p>For example, changing the browser tab's title is as simple as importing
 <tt class="docutils literal">window</tt> and setting an attribute:</p>
-<pre class="code python literal-block">
-<span class="kn">from</span> <span class="nn">js</span> <span class="kn">import</span> <span class="n">window</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">js</span> <span class="kn">import</span> <span class="n">window</span>
 <span class="n">window</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;My mind is blown&quot;</span>
-</pre>
+</pre></div>
 </div>
 <div class="section" id="what-works">
 <h3>What works</h3>
@@ -246,6 +242,10 @@ times slower. I have an unsubstantiated hunch that this is due to the use of
 Emscripten's <a class="reference external" href="https://kripken.github.io/emscripten-site/docs/porting/guidelines/function_pointer_issues.html#asm-pointer-casts">EMULATE_FUNCTION_POINTER_CASTS</a>
 option which is required to make all of the function pointer calls that CPython
 does work correctly.</p>
+<p><strong>UPDATE 2018-04-11:</strong> My hunch was wrong, and I was able to get to the bottom
+of the root cause and significantly speed up these benchmarks. See my post
+<a class="reference external" href="/blog/2018/04/11/profiling-webassembly/">Profiling WebAssembly</a> for more
+info.</p>
 </div>
 <div class="section" id="future-directions">
 <h3>Future directions</h3>
