@@ -2,7 +2,7 @@ Scientific Python in the Browser
 ################################
 
 :date: 2018-04-04
-:modified: 2018-04-04
+:modified: 2018-04-11
 :category: mozilla
 :tags: python, data science
 :slug: python-in-the-browser
@@ -78,14 +78,14 @@ which is particularly important for large Numpy arrays.
 
 Say, for example, you had a value in Javascript:
 
-.. code:: javascript
+.. code-block:: javascript
 
     // javascript
     secret = "Wklv#lv#olnh#pdjlf$"
 
 You could use it from Python by using the ``from js import ...`` syntax:
 
-.. code:: python
+.. code-block:: python
 
     # python
     from js import secret
@@ -94,7 +94,7 @@ You could use it from Python by using the ``from js import ...`` syntax:
 
 And then send data back to the Javascript side using ``pyodide.pyimport``:
 
-.. code:: javascript
+.. code-block:: javascript
 
     // javascript
     var decoded = pyodide.pyimport("decoded")
@@ -107,7 +107,7 @@ browser.
 For example, changing the browser tab's title is as simple as importing
 ``window`` and setting an attribute:
 
-.. code:: python
+.. code-block:: python
 
     from js import window
     window.title = "My mind is blown"
@@ -185,6 +185,11 @@ Emscripten's `EMULATE_FUNCTION_POINTER_CASTS
 <https://kripken.github.io/emscripten-site/docs/porting/guidelines/function_pointer_issues.html#asm-pointer-casts>`__
 option which is required to make all of the function pointer calls that CPython
 does work correctly.
+
+**UPDATE 2018-04-11:** My hunch was wrong, and I was able to get to the bottom
+of the root cause and significantly speed up these benchmarks. See my post
+`Profiling WebAssembly </blog/2018/04/11/profiling-webassembly/>`__ for more
+info.
 
 Future directions
 -----------------
