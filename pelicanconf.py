@@ -78,6 +78,7 @@ ABOUT_ME = "I'm a computer scientist and software engineer, specializing in imag
 SOCIAL = (('github', 'http://github.com/mdboom'),
           ('linkedin', 'http://linkedin.com/in/mdboom'),
           ('twitter', 'http://twitter.com/MDroettboom'),
+          ('mastodon', 'https://mastodon.technology/invite/kvc3zFhG'),
           ('keybase.io', 'http://keybase.io/mdboom', 'check'))
 
 CC_LICENSE = "CC-BY-NC"
