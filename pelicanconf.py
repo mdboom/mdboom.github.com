@@ -17,6 +17,7 @@ DEFAULT_LANG = u'en'
 STATIC_PATHS = ['static', 'images', 'papers', 'extra/CNAME']
 EXTRA_PATH_METADATA = {
     'extra/CNAME': {'path': 'CNAME'},
+    'extra/pyodide_console.html': {'path': 'pyodide_console.html'},
     'static/keybase.txt': {'path': 'keybase.txt'},
     'images/favicon2.png': {'path': 'favicon.png'}
 }
