@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>Profiling WebAssembly - Boom!  Michael Droettboom's blog</title>
+    <title>This Week in Glean: November 1, 2019 - Boom!  Michael Droettboom's blog</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,21 +10,21 @@
 
     <link href="http://droettboom.com/images/favicon.png" rel="icon">
 
-<link rel="canonical" href="http://droettboom.com/blog/2018/04/11/profiling-webassembly/">
+<link rel="canonical" href="http://droettboom.com/blog/2019/11/01/this-week-in-glean-november-1-2019/">
 
         <meta name="author" content="Michael Droettboom" />
-        <meta name="keywords" content="python,data science" />
-        <meta name="description" content="Tips for profiling WebAssembly" />
+        <meta name="keywords" content="glean,data" />
+        <meta name="description" content="When data goes wrong" />
 
         <meta property="og:site_name" content="Boom!  Michael Droettboom's blog" />
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="Profiling WebAssembly"/>
-        <meta property="og:url" content="http://droettboom.com/blog/2018/04/11/profiling-webassembly/"/>
-        <meta property="og:description" content="Tips for profiling WebAssembly"/>
-        <meta property="article:published_time" content="2018-04-11" />
-            <meta property="article:section" content="mozilla" />
-            <meta property="article:tag" content="python" />
-            <meta property="article:tag" content="data science" />
+        <meta property="og:title" content="This Week in Glean: November 1, 2019"/>
+        <meta property="og:url" content="http://droettboom.com/blog/2019/11/01/this-week-in-glean-november-1-2019/"/>
+        <meta property="og:description" content="When data goes wrong"/>
+        <meta property="article:published_time" content="2019-11-01" />
+            <meta property="article:section" content="misc" />
+            <meta property="article:tag" content="glean" />
+            <meta property="article:tag" content="data" />
             <meta property="article:author" content="Michael Droettboom" />
 
 
@@ -42,8 +42,8 @@
 
 
 
-        <link href="http://droettboom.com/feeds/mozilla.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Boom!  Michael Droettboom's blog mozilla ATOM Feed"/>
+        <link href="http://droettboom.com/feeds/misc.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Boom!  Michael Droettboom's blog misc ATOM Feed"/>
 
 </head>
 <body>
@@ -84,10 +84,10 @@
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://droettboom.com/blog/2018/04/11/profiling-webassembly/"
+                    <a href="http://droettboom.com/blog/2019/11/01/this-week-in-glean-november-1-2019/"
                        rel="bookmark"
-                       title="Permalink to Profiling WebAssembly">
-                        Profiling WebAssembly
+                       title="Permalink to This Week in Glean: November 1, 2019">
+                        This Week in Glean: November 1, 2019
                     </a>
                 </h1>
             </header>
@@ -97,7 +97,7 @@
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2018-04-11T00:00:00-04:00"> Wed 11 April 2018</time>
+        <i class="fa fa-calendar"></i><time datetime="2019-11-01T15:20:00-04:00"> Fri 01 November 2019</time>
     </span>
 
 
@@ -105,103 +105,33 @@
 
 
 <span class="label label-default">Tags</span>
-	<a href="http://droettboom.com/tag/python.html">python</a>
+	<a href="http://droettboom.com/tag/glean.html">glean</a>
         /
-	<a href="http://droettboom.com/tag/data-science.html">data science</a>
+	<a href="http://droettboom.com/tag/data.html">data</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p><strong>Summary:</strong> Tips for profiling WebAssembly</p>
-<p>I couldn't find a comprehensive guide to profiling WebAssembly, so I thought I'd
-share my own limited experience here. In my <a class="reference external" href="/blog/2018/04/04/python-in-the-browser/">last post</a>, I talked about benchmarking a
-WebAssembly port of the scientific Python stack. I knew which benchmarks were
-doing better than others and had some theories about why, but since I didn't yet
-know how to profile WebAssembly, I couldn't really answer that with any
-certainty.</p>
-<p>It turns out that profiling WebAssembly is quite easy.</p>
-<div class="section" id="rebuilding-with-the-profiling-flag">
-<h2>Rebuilding with the --profiling flag</h2>
-<p>The first step is to rebuild the application with the <tt class="docutils literal"><span class="pre">--profiling</span></tt> flag
-passed to both the compiler and the linker for every object. This makes sure
-that all of the information necessary for profiling is available in the output
-and makes the code more readable. The typical way to do this would be to set
-<tt class="docutils literal">CFLAGS</tt> and <tt class="docutils literal">LDFLAGS</tt> and let the <tt class="docutils literal">./configure</tt> script for your project
-pick those up. In the case of <tt class="docutils literal">pyodide</tt>, the Python cross-compiling setup
-makes that tricky, or at least I couldn't figure it out in a short amount of
-time. Fortunately, <tt class="docutils literal">emscripten</tt> provides a handy backdoor to just force this
-on everything: the <tt class="docutils literal">EMCC_CFLAGS</tt> environment variable. Therefore, to make a
-profiling-friendly build of <tt class="docutils literal">pyodide</tt>:</p>
-<div class="highlight"><pre><span></span>make clean
-<span class="nv">EMCC_CFLAGS</span><span class="o">=</span>--profiling make
-</pre></div>
-</div>
-<div class="section" id="setting-start-and-stop-points-for-profiling">
-<h2>Setting start and stop points for profiling</h2>
-<p>You generally don't want to profile an entire run, which would include
-initialization and other things. It turns out there's a handy Javascript API to
-turn the profiler on and off.</p>
-<ul class="simple">
-<li><tt class="docutils literal">console.profile()</tt> turns the profiler on.</li>
-<li><tt class="docutils literal">console.profileEnd()</tt> turns the profiler off.</li>
+                <p>(“This Week in Glean” is a series of blog posts that the Glean Team at Mozilla is using to try to communicate better about our work. They could be release notes, documentation, hopes, dreams, or whatever: so long as it is inspired by Glean. The last two posts are <a href="https://chuttenblog.wordpress.com/2019/10/17/this-week-in-glean-glean-on-desktop-project-fog/">here</a> and <a href="https://fnordig.de/2019/10/24/this-week-in-glean/">here</a>.)</p>
+<p>This week in Glean, we bring you a detective story from the Mozilla telemetry beat.  It's a story about how fixing things can often break things in unexpected ways.  It's about how things that may work perfectly in the lab, suddenly fail in the wild at scale.  And it's about how our team used all of the data sources at our disposal to solve a problem.</p>
+<p>Glean is a new effort at Mozilla to collect telemetry based on lessons from our past experiences that can be used across a number of our products and better support our <a href="https://www.mozilla.org/en-US/about/policy/lean-data/">lean data practices</a>.  It is currently being used to collect telemetry from <a href="https://blog.mozilla.org/futurereleases/2019/06/27/reinventing-firefox-for-android-a-preview/">Firefox Preview for Android</a>, but will be rolling out to more Mozilla products in the coming months.</p>
+<p>When using Firefox Preview, the browser makes measurements (or telemetry) about its usage and how it's performing.  Users can choose to disable telemetry if they prefer, however the data from the rest provides us with key insights that allow us to build stable and performant products that meet the needs of our users.  This telemetry is periodically sent to Mozilla in bundles called "<a href="https://mozilla.github.io/glean/book/user/pings/index.html">pings</a>", all of which is orchestrated on Firefox's behalf by the Glean SDK.</p>
+<p>The Glean SDK sends a few different kinds of pings, but the two that are relevant to our story are the <a href="https://mozilla.github.io/glean/book/user/pings/metrics.html">metrics</a> ping and <a href="https://mozilla.github.io/glean/book/user/pings/baseline.html">baseline</a> ping.  The metrics ping is sent once a day at 04:00 local time, if the user used the application in the last 24 hours.  The baseline ping contains minimal data, but is sent more often: every time the application "goes to background". This happens when the user switches to another application or the device goes to sleep.  Given how people normally use their smartphones, the browser "goes to background" a few times a day, so one would expect to see baseline pings occuring more often than metrics pings.</p>
+<p>Not long after the release of Firefox Preview, we noticed that we were getting a metrics ping every 24 hours from each user, even if they hadn't used the browser during that period.  This wastes bandwidth, both for us and our users, since there's no need to send data if there haven't been any changes.</p>
+<p>The bug was happening because every time Glean sent a metrics ping at 4am, it would just go ahead and schedule the next one to be sent 24 hours later. Android doesn't provide a lot of good options to solve this problem. The solution we arrived at is that Glean would schedule the ping for the next 04:00 only if the user is actually using the application at the time. If they aren't using it, we'll just check the next time the user opens the app, and schedule it for the following 04:00 at that time. Android provides an API that can tell our app when the app goes to foreground and background (among other things) called the "<a href="https://developer.android.com/topic/libraries/architecture/lifecycle">LifecycleObserver API</a>". Using that bit of information, Glean can know when the user is using the app and schedule our next metrics ping accordingly.</p>
+<p>We merged <a href="https://github.com/mozilla-mobile/android-components/pull/3993">this fix</a>, feeling we had squashed that bug and moved on.  But our jaws dropped when we saw the following graph:</p>
+<p><img alt="Glean metrics graph" src="http://droettboom.com/images/glean-pings.png"></p>
+<p>The graph shows the number of clients that sent a baseline ping (green), metrics ping (red) or both a baseline and metrics ping (blue).  Around August 20, when we fixed that bug, the number of metrics pings went down (as expected), but the number of baseline pings went down even more, such that there were now fewer baseline pings than metrics pings.  How could that possibly be?</p>
+<p>We scratched our heads for a few days over this, methodically looking over of the other changes that occurred during that timeframe that may have caused this strange outcome in the data.  One by one, all other options were eliminated until all signs pointed to that "fix" for the metrics ping.  But understanding how that fix could be connected to this behavior remained elusive.</p>
+<p>It turned out the answer lay hidden in our crash data.  In addition to the Glean telemetry, Firefox Preview uses Sentry to collect reports about application crashes.  These reports contain "backtraces", or specific information about where in the code the crash occurred.  For some time, we had seen crash reports that pointed at Android's Lifecycle Observer API, but they were of such low frequency that we hadn't invested the effort to investigate further.  Around the time of the "fix" however, there was an uptick in these kinds of crashes. </p>
+<p>It turns out the Lifecycle Observer API has an <a href="https://issuetracker.google.com/issues/138953075#comment2">undocumented limitation</a> that it wasn't designed to be called in the way we were calling it (off of the main thread of execution).  This caused the Lifecycle Observer to randomly fail, but only sometimes, and only for a fraction of users in the wild.  I, personally, have never been able to reproduce the behavior -- we know about it only because Firefox Preview is running on thousands of devices in the world at large and they report back through Sentry.</p>
+<p>When the Lifecycle Observer does fail, two interesting things happen in tandem:</p>
+<ul>
+<li>For the metrics ping, Glean no longer knows when the application is being used, so it sends the metrics ping <strong>more often</strong> than it should.</li>
+<li>The baseline ping is triggered directly from the Lifecycle Observer when the application goes to background. So when the Lifecycle Observer fails, Glean sends the baseline ping <strong>less often</strong> than we should.</li>
 </ul>
-<p>If you wanted to call these from C/C++, you could use the <tt class="docutils literal">EM_ASM</tt> macro, which
-allows you to insert literal Javascript into the C application:</p>
-<div class="highlight"><pre><span></span><span class="n">EM_ASM</span><span class="p">(</span>
-    <span class="n">console</span><span class="p">.</span><span class="n">profile</span><span class="p">();</span>
-<span class="p">);</span>
-</pre></div>
-<p>In my case, I wanted to turn the profiler on and off from Python, so I can do:</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">js</span> <span class="kn">import</span> <span class="n">console</span>
-<span class="n">console</span><span class="o">.</span><span class="n">profile</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="section" id="profiling">
-<h2>Profiling</h2>
-<p>The actual profiling is performed within the development tools of your browser.
-When you load an <tt class="docutils literal">.html</tt> file that runs the WebAssembly built and instrumented
-as above, it will record a set of profiling data available from the
-<strong>Performance</strong> tab.</p>
-<p>I'll refer you to the <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Tools/Performance">Performance Tools documentation</a> for more
-information. Suffice it to say that profiling WebAssembly is almost exactly like
-profiling vanilla Javascript in the browser.</p>
-</div>
-<div class="section" id="case-study">
-<h2>Case study</h2>
-<p>For <tt class="docutils literal">pyodide</tt>, I created a profiling build to look into the <a class="reference external" href="https://github.com/iodide-project/pyodide/blob/master/benchmark/benchmarks/julia.py">julia benchmark</a>
-that I knew was performing poorly. Right away, I noticed from the Call Tree that
-50% of the time was spent in this function:</p>
-<div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">named</span> <span class="k">in</span> <span class="nx">NAMED_GLOBALS</span><span class="p">)</span> <span class="p">{</span>
-    <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">named</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">Module</span><span class="p">[</span><span class="s1">&#39;g$_&#39;</span> <span class="o">+</span> <span class="nx">named</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">Module</span><span class="p">[</span><span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nx">named</span><span class="p">]</span> <span class="c1">// &lt;- 50% of runtime HERE</span>
-        <span class="p">};</span>
-    <span class="p">})(</span><span class="nx">named</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-<p>This code is actually part of the boilerplate that emscripten emits. It helps
-dynamically loaded modules (such as Numpy in my case) access symbols in the main
-module. Since these symbols don't change at runtime, we don't actually need to
-do the dictionary lookup for <tt class="docutils literal"><span class="pre">Module['_'</span> + named]</tt> every time, we can cache
-(memoize) it at startup and then just use that:</p>
-<div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">named</span> <span class="k">in</span> <span class="nx">NAMED_GLOBALS</span><span class="p">)</span> <span class="p">{</span>
-    <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">named</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">func</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">[</span><span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nx">named</span><span class="p">];</span>
-        <span class="nx">Module</span><span class="p">[</span><span class="s1">&#39;g$_&#39;</span> <span class="o">+</span> <span class="nx">named</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">func</span><span class="p">;</span>
-        <span class="p">};</span>
-    <span class="p">})(</span><span class="nx">named</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-<p>This 2-line change to emscripten resulted in significant speedups in my
-<tt class="docutils literal">pyodide</tt> benchmarks across the board.</p>
-<object data="/images/benchmark_improvement.svg" style="width: 800px; height: 800px;" type="image/svg+xml">
-description</object>
-<p>Here, the <em>x</em>-axis is the number of times slower that WebAssembly runs vs. native
-code. The grey bars are the timings before this change, and blue bars are the
-timings after this change.</p>
-<p>More details about this changes are in the <a class="reference external" href="https://github.com/kripken/emscripten/pull/6437">pull request</a>.</p>
-</div>
-
+<p>These two things in combination are what caused the red and green lines to cross and the fabric of space-time to become unraveled.  The culprit is most likely that the fix added a second use of the Lifecycle Observer to the application: it was now being used both to handle the metrics ping and the baseline ping. Using it twice (and potentially concurrently) was enough to push a long latent crash problem into the monster that ate our data. </p>
+<p>These sorts of puzzles can be very frustrating until they reveal themselves.  Having a great team to brainstorm hypotheses with, and a common mission to find a "cause" without a "blame"  is incredibly valuable.  Thanks to everyone on the Glean team: Alessio Placitelli, Travis Long, Jan-Erik Rediger, Georg Fritzsche, Chris Hutten-Czapski and Beatriz Rizental.</p>
+<p>Join us next week.  Who knows what we'll find in the icy fjords of Glean land...</p>
             </div>
             <!-- /.entry-content -->
     <hr/>
@@ -213,7 +143,7 @@ timings after this change.</p>
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
             var disqus_shortname = 'mdboom'; // required: replace example with your forum shortname
 
-                var disqus_url = 'http://droettboom.com/blog/2018/04/11/profiling-webassembly/';
+                var disqus_url = 'http://droettboom.com/blog/2019/11/01/this-week-in-glean-november-1-2019/';
 
             var disqus_config = function () {
                 this.language = "en";
