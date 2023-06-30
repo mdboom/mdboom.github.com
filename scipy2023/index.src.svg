@@ -1,0 +1,1165 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:html="http://www.w3.org/1999/xhtml" viewBox="0 0 1600 900" onload="initialize()" right="100%" left="0%" style="stroke-width: 0px; background-color: black;">
+    <script xlink:href="slides.js" />
+    <style>
+        @import url(styles.css);
+    </style>
+
+    <defs>
+        <clipPath id="clip">
+            <rect width="1600" height="900" />
+        </clipPath>
+        <clipPath id="faceclip">
+            <circle cx="250" cy="250" r="250" />
+        </clipPath>
+        <g id="faces" />
+        <g id="panel">
+            <rect width="1600" height="900" fill="rgba(0,0,0,0.5)" />
+        </g>
+    </defs>
+
+    <g id="background" clip-path="url(#clip)">
+        <use href="#star" />
+        <rect width="1600" height="900" color="black" />
+    </g>
+
+    <g id="slides" clip-path="url(#clip)">
+        <g>
+            <use href="#title" transform="scale(1)" animid="title" />
+            <g animid="opinions" opacity="0">
+                <text class="text" x="800" y="450" text-anchor="middle">Opinions are my own</text>
+            </g>
+        </g>
+        <g duration="3000" easing="sine">
+            <use href="#title" transform="translate(0,-900) scale(0.15)" animid="title" />
+            <g animid="opinions" opacity="1">
+                <text class="text" x="800" y="450" text-anchor="middle">Opinions are my own</text>
+            </g>
+            <text animid="2000" class="text" x="800" y="450" text-anchor="middle" opacity="0">The Year 2000</text>
+        </g>
+        <g duration="1000" easing="sine">
+            <g animid="opinions" opacity="0" />
+            <text animid="2000" class="text" x="800" y="450" text-anchor="middle" opacity="1">The Year 2000</text>
+        </g>
+        <g duration="1000" easing="sine">
+            <text animid="2000" class="text" x="800" y="450" text-anchor="middle" opacity="0">The Year 2000</text>
+            <use animid="parnassus" href="#parnassus" opacity="0" />
+        </g>
+        <g easing="sine">
+            <use animid="parnassus" href="#parnassus" opacity="1" transform="scale(1)" />
+        </g>
+        <g>
+            <use animid="parnassus" href="#parnassus" opacity="1" transform="scale(0.001) translate(800000, 450000)" />
+            <g transform="translate(800,450)">
+                <g style="transform: scale(0.5) perspective(1500px) translateX(-65%) rotateX(80deg) translateY(900px)">
+                    <use href="#install" transform="translate(0, 205)">
+                        <animateTransform attributeName="transform" attributeType="XML" type="translate" from="0 200" to="0 -3000" dur="20s" fill="freeze" />
+                    </use>
+                </g>
+            </g>
+        </g>
+        <g>
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#planet" transform="scale(0.001)" />
+            </g>
+        </g>
+        <g>
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#planet" transform="scale(1.0)" />
+            </g>
+        </g>
+        <g>
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#planet" transform="scale(1.75)" />
+            </g>
+        </g>
+        <g>
+            <g animid="new-feature-loc" transform="translate(1650,950)">
+                <use href="#planet" transform="scale(0.8)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#planet" transform="scale(2.5)" />
+            </g>
+        </g>
+        <g>
+            <g animid="new-feature-loc" transform="translate(950,600)">
+                <use href="#planet" transform="scale(0.8)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#planet" transform="scale(2.5)" />
+            </g>
+        </g>
+        <g>
+            <g animid="new-feature-loc2" transform="translate(-50,950)">
+                <use href="#planet" transform="scale(0.8)" />
+            </g>
+            <g animid="new-feature-loc" transform="translate(800,450)">
+                <use href="#planet" transform="scale(0.8)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#planet" transform="scale(3.0)" />
+            </g>
+        </g>
+        <g>
+            <g animid="new-feature-loc2" transform="translate(650,600)">
+                <use href="#planet" transform="scale(0.8)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#planet" transform="scale(3.0)" />
+            </g>
+        </g>
+        <g>
+            <g animid="new-feature-loc2" transform="translate(800,450)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc3" transform="translate(-200,450)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc4" transform="translate(93,-257)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc5" transform="translate(800,-550)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc6" transform="translate(1507,-257)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc7" transform="translate(1800,450)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc8" transform="translate(1507,1157)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc9" transform="translate(600,1450)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc10" transform="translate(93,1157)">
+                <use href="#planet" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#planet" transform="scale(3.5)" />
+            </g>
+        </g>
+        <g>
+            <g animid="new-feature-loc3" transform="translate(500,450)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc4" transform="translate(588,238)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc5" transform="translate(800,150)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc6" transform="translate(1012,238)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc7" transform="translate(1100,450)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc8" transform="translate(1012,662)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc9" transform="translate(800,750)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc10" transform="translate(588,662)">
+                <use href="#planet" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#planet" transform="scale(3.5)" />
+            </g>
+        </g>
+        <g duration="2000">
+            <g animid="new-feature-loc3" transform="translate(800,450)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc4" transform="translate(800,450)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc5" transform="translate(800,450)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc6" transform="translate(800,450)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc7" transform="translate(800,450)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc8" transform="translate(800,450)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc9" transform="translate(800,450)">
+                <use href="#planet" />
+            </g>
+            <g animid="new-feature-loc10" transform="translate(800,450)">
+                <use href="#planet" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#planet" transform="scale(10.0)" />
+            </g>
+            <use animid="olive" href="#olive" transform="translate(800,450)" />
+        </g>
+        <g easing="sine">
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#planet" transform="scale(8.0)" />
+            </g>
+            <use animid="olive" href="#olive" transform="scale(1.0)" />
+        </g>
+        <g continue="">
+            <g animid="astrodog" transform="translate(-400,0)">
+                <use href="#astrodog">
+                    <animateTransform attributeName="transform" attributeType="XML" type="rotate" values="0 0 900;15 0 900; 0 0 900" dur="7s" repeatCount="indefinite" />
+                </use>
+            </g>
+            <g transform="translate(800,450)">
+                <use href="#planet" transform="scale(8.0)" />
+            </g>
+            <use animid="olive" href="#olive" transform="scale(0.01) translate(160000,90000)" />
+        </g>
+        <g duration="3000" easing="linear">
+            <use animid="package-back" href="#pip-install-back" transform="translate(0,900)" />
+            <g transform="translate(800,450)">
+                <use href="#planet" transform="scale(8.0)" />
+            </g>
+            <g animid="astrodog" transform="translate(1700, -50) scale(0.7)">
+                <use href="#astrodog" />
+            </g>
+            <use animid="package-front" href="#pip-install" transform="translate(0,900)" />
+        </g>
+        <g>
+            <use animid="package-back" href="#pip-install-back" transform="translate(0,0)" />
+            <g transform="translate(800,450)">
+                <use href="#planet" transform="scale(8.0)" />
+            </g>
+            <use animid="package-front" href="#pip-install" transform="translate(0,0)" />
+        </g>
+        <g>
+            <use animid="package-back" href="#pip-install-back" transform="translate(0,900)" />
+            <g animid="pkgf" transform="translate(800,450)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgi" transform="translate(800,450)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgg" transform="translate(800,450)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#planet" transform="scale(8.0)" />
+            </g>
+            <use animid="package-front" href="#pip-install" transform="translate(0,900)" />
+        </g>
+        <g>
+            <g animid="subprojects" id="subprojects" transform="scale(1)">
+                <g animid="pkgf" transform="translate(588,672)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g animid="pkgi" transform="translate(800,750)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g animid="pkgg" transform="translate(1012,672)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g transform="translate(800,450)">
+                    <use animid="planet" href="#planet" transform="scale(3.0)" />
+                </g>
+            </g>
+            <use href="#nadia-cover" transform="translate(0,900)" animid="nadia-cover" />
+        </g>
+        <g>
+            <use href="#subprojects" transform="translate(0,-900)" animid="subprojects" />
+            <use href="#nadia-cover" transform="translate(0,0)" animid="nadia-cover" />
+        </g>
+        <g>
+            <use href="#contributions" />
+            <use href="#nadia-cover" />
+        </g>
+        <g>
+            <use href="#project-types" />
+            <use href="#nadia-cover" />
+        </g>
+        <g continue="">
+            <use href="#subprojects" transform="translate(0,-900)" animid="subprojects" />
+            <use href="#nadia-cover" animid="nadia-cover" transform="scale(1)" />
+        </g>
+        <g continue="">
+            <use href="#subprojects" transform="translate(0,0)" animid="subprojects" />
+            <use href="#nadia-cover" animid="nadia-cover" transform="translate(0,900)" />
+        </g>
+        <g>
+            <line animid="edge0" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="0.001" />
+            <line animid="edge1" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="0.001" />
+            <line animid="edge2" x1="588" y1="672" x2="800" y2="450" stroke="#ff7f2a" stroke-width="0.001" />
+            <line animid="edge3" x1="588" y1="672" x2="800" y2="450" stroke="#ff7f2a" stroke-width="0.001" />
+            <line animid="edge4" x1="1012" y1="672" x2="800" y2="450" stroke="#ff7f2a" stroke-width="0.001" />
+            <line animid="edge5" x1="1012" y1="672" x2="800" y2="450" stroke="#ff7f2a" stroke-width="0.001" />
+            <line animid="edge6" x1="800" y1="750" x2="800" y2="450" stroke="#ff7f2a" stroke-width="0.001" />
+            <line animid="edge7" x1="800" y1="750" x2="800" y2="450" stroke="#ff7f2a" stroke-width="0.001" />
+            <line animid="edge8" x1="800" y1="450" x2="588" y2="672" stroke="#ff7f2a" stroke-width="0.001" />
+            <line animid="edge9" x1="800" y1="450" x2="1012" y2="672" stroke="#ff7f2a" stroke-width="0.001" />
+            <line animid="edge10" x1="800" y1="450" x2="800" y2="750" stroke="#ff7f2a" stroke-width="0.001" />
+            <g animid="pkgf" transform="translate(588,672)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgi" transform="translate(800,750)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgg" transform="translate(1012,672)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#planet" transform="scale(3.0)" />
+            </g>
+        </g>
+        <g>
+            <line animid="edge0" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge1" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge2" x1="588" y1="672" x2="800" y2="450" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge3" x1="588" y1="672" x2="800" y2="450" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge4" x1="1012" y1="672" x2="800" y2="450" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge5" x1="1012" y1="672" x2="800" y2="450" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge6" x1="800" y1="750" x2="800" y2="450" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge7" x1="800" y1="750" x2="800" y2="450" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge8" x1="800" y1="450" x2="588" y2="672" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge9" x1="800" y1="450" x2="1012" y2="672" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge10" x1="800" y1="450" x2="800" y2="750" stroke="#ff7f2a" stroke-width="20" />
+            <g animid="pkga" transform="translate(800,450)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgb" transform="translate(800,450)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgc" transform="translate(800,450)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgd" transform="translate(800,450)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkge" transform="translate(800,450)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgf" transform="translate(588,672)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgg" transform="translate(1012,672)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgh" transform="translate(800,450)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgi" transform="translate(800,750)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgj" transform="translate(800,450)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgk" transform="translate(800,450)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgl" transform="translate(800,450)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use href="#planet" transform="scale(3.0)" />
+            </g>
+        </g>
+        <g>
+            <g id="network" animid="network" transform="scale(1)" opacity="1">
+                <line animid="edge0" x1="1202" y1="199" x2="1341" y2="89" stroke="#ff7f2a" stroke-width="20" />
+                <line animid="edge1" x1="328" y1="331" x2="149" y2="331" stroke="#ff7f2a" stroke-width="20" />
+                <line animid="edge2" x1="525" y1="331" x2="328" y2="331" stroke="#ff7f2a" stroke-width="20" />
+                <line animid="edge3" x1="525" y1="331" x2="431" y2="160" stroke="#ff7f2a" stroke-width="20" />
+                <line animid="edge4" x1="1053" y1="331" x2="1202" y2="199" stroke="#ff7f2a" stroke-width="20" />
+                <line animid="edge5" x1="1053" y1="331" x2="1230" y2="414" stroke="#ff7f2a" stroke-width="20" />
+                <line animid="edge6" x1="608" y1="648" x2="413" y2="721" stroke="#ff7f2a" stroke-width="20" />
+                <line animid="edge7" x1="608" y1="648" x2="626" y2="827" stroke="#ff7f2a" stroke-width="20" />
+                <line animid="edge8" x1="800" y1="450" x2="525" y2="331" stroke="#ff7f2a" stroke-width="20" />
+                <line animid="edge9" x1="800" y1="450" x2="1053" y2="331" stroke="#ff7f2a" stroke-width="20" />
+                <line animid="edge10" x1="800" y1="450" x2="608" y2="648" stroke="#ff7f2a" stroke-width="20" />
+                <g animid="pkga" transform="translate(1341,89)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g animid="pkgb" transform="translate(431,160)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g animid="pkgc" transform="translate(1202,199)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g animid="pkgd" transform="translate(149,331)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g animid="pkge" transform="translate(328,331)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g animid="pkgf" transform="translate(525,331)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g animid="pkgg" transform="translate(1053,331)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g animid="pkgh" transform="translate(1230,414)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g animid="pkgi" transform="translate(608,648)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g animid="pkgj" transform="translate(413,721)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g animid="pkgk" transform="translate(626,827)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g animid="pkgl" transform="translate(800,450)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g transform="translate(800,450)">
+                    <use href="#planet" transform="scale(3.0)" />
+                </g>
+            </g>
+            <g animid="ecosystem" opacity="0">
+                <use href="#ecosystem" />
+                <text x="40" y="850" class="text">Source: Jupyter Meets the Earth</text>
+            </g>
+        </g>
+        <g easing="sine" duration="500">
+            <use href="#network" animid="network" transform="scale(1)" opacity="0.4" />
+            <g animid="ecosystem" opacity="1">
+                <use href="#ecosystem" />
+                <text x="40" y="850" class="text">Source: Jupyter Meets the Earth</text>
+            </g>
+        </g>
+        <g easing="sine" duration="500">
+            <use href="#network" animid="network" transform="scale(0.3) translate(3200,1800)" />
+            <use animid="metcalfe" href="#metcalfe" opacity="1.0" />
+            <use animid="metcalfe-corollary" href="#metcalfe-corollary" opacity="0.0" />
+            <g animid="ecosystem" opacity="0">
+                <use href="#ecosystem" />
+                <text x="40" y="850" class="text">Source: Jupyter Meets the Earth</text>
+            </g>
+        </g>
+        <g easing="sine">
+            <use href="#network" transform="scale(0.3) translate(3200,1800)" />
+            <use animid="metcalfe" href="#metcalfe" opacity="0.0" />
+            <use animid="metcalfe-corollary" href="#metcalfe-corollary" opacity="1.0" />
+            <use href="#man-month" transform="translate(0, 900)" animid="man-month" />
+        </g>
+        <g>
+            <use href="#network" transform="scale(0.3) translate(3200,1800)" />
+            <use href="#metcalfe-corollary" />
+            <use href="#man-month" transform="scale(1)" animid="man-month" />
+        </g>
+        <g duration="1" continue="">
+            <use href="#network" transform="scale(0.3) translate(3200,1800)" animid="network" />
+            <use href="#man-month" transform="scale(1)" animid="man-month" />
+        </g>
+        <g>
+            <use href="#network" transform="scale(1.0)" animid="network" />
+            <use href="#man-month" transform="translate(0,900)" animid="man-month" />
+        </g>
+        <g duration="2000" easing="sine">
+            <use href="#network" transform="scale(3.8) translate(-400, -450)" animid="network" />
+        </g>
+        <g>
+            <g animid="astrodog" transform="translate(1600,-900)">
+                <use href="#astrodog">
+                    <animateTransform attributeName="transform" attributeType="XML" type="rotate" values="0 0 900;15 0 900; 0 0 900" dur="7s" repeatCount="indefinite" />
+                </use>
+            </g>
+            <g transform="scale(3.8) translate(-400, -450)">
+                <g animid="pkgi" transform="translate(608,648)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g transform="translate(800,450)">
+                    <use href="#planet" transform="scale(3.0)" />
+                </g>
+                <g transform="translate(800,450)">
+                    <use href="#api" transform="scale(3.0)" />
+                </g>
+            </g>
+        </g>
+        <g duration="2000" easing="linear">
+            <g animid="astrodog" transform="translate(-400,0)">
+                <use href="#astrodog">
+                </use>
+            </g>
+            <g transform="scale(3.8) translate(-400, -450)">
+                <g animid="pkgi" transform="translate(608,648)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g transform="translate(800,450)">
+                    <use href="#planet" transform="scale(3.0)" />
+                </g>
+                <g transform="translate(800,450)">
+                    <use href="#api" transform="scale(3.0)" />
+                </g>
+            </g>
+        </g>
+        <g>
+            <g transform="scale(3.8) translate(-400, -450)">
+                <g transform="translate(608,648)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g transform="translate(800,450)">
+                    <use href="#planet" transform="scale(3.0)" />
+                    <use href="#api" transform="scale(3.0)" />
+                    <use href="#numpy-api" transform="scale(3.0)" />
+                </g>
+            </g>
+            <text class="text" x="1000" y="100">CPython</text>
+            <text class="text" text-anchor="middle" x="800" y="700">matplotlib</text>
+        </g>
+        <g>
+            <g transform="scale(3.8) translate(-400, -450)">
+                <g transform="translate(608,648)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g transform="translate(800,450)">
+                    <use href="#planet" transform="scale(3.0)" />
+                    <use href="#api" transform="scale(3.0)" />
+                    <use href="#cython-api" transform="scale(3.0)" />
+                </g>
+            </g>
+            <text class="text" x="1000" y="100">CPython</text>
+            <text class="text" text-anchor="middle" x="800" y="700">Cython</text>
+        </g>
+        <g>
+            <g animid="main" transform="scale(3.8) translate(-400, -450)">
+                <g transform="translate(608,648)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g transform="translate(800,450)">
+                    <use href="#planet" transform="scale(3.0)" />
+                    <use href="#api" transform="scale(3.0)" />
+                    <use href="#greenlet-api" transform="scale(3.0)" />
+                </g>
+            </g>
+            <text class="text" x="1000" y="100">CPython</text>
+            <text class="text" text-anchor="middle" x="800" y="700">Greenlet</text>
+        </g>
+        <g continue="">
+            <g animid="main" transform="scale(3.8) translate(-400, -450)">
+                <g animid="dependent" transform="translate(608,648)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g transform="translate(800,450)">
+                    <use href="#planet" transform="scale(3.0)" />
+                    <use href="#api" transform="scale(3.0)" />
+                </g>
+            </g>
+        </g>
+        <g continue="">
+            <g animid="main" transform="scale(3.8) translate(-400, -450)">
+                <g animid="dependent" transform="translate(800,450)">
+                    <use href="#planet" transform="scale(1.2)" />
+                </g>
+                <g transform="translate(800,450)">
+                    <use href="#planet" transform="scale(3.0)" />
+                    <use href="#api" transform="scale(0.01)" />
+                </g>
+            </g>
+        </g>
+        <g continue="" easing="sine">
+            <g animid="main" transform="scale(1)">
+                <g animid="planet1" transform="translate(800,450)">
+                    <use href="#planet-red" transform="scale(3.0)" />
+                </g>
+                <g animid="planet2" transform="translate(800,450)">
+                    <use href="#planet" transform="scale(3.0)" />
+                </g>
+            </g>
+        </g>
+        <g>
+            <g animid="planet1" transform="translate(1050,450)">
+                <use animid="planet1b" href="#planet-red" transform="scale(3.0)" />
+            </g>
+            <g animid="planet2" transform="translate(550,450)">
+                <use animid="planet2b" href="#planet" transform="scale(3.0)" />
+            </g>
+        </g>
+        <g continue="">
+            <g animid="planet1" transform="translate(1700,900)">
+                <use animid="planet1b" href="#planet-red" transform="scale(0.5)" />
+            </g>
+            <g animid="planet2" transform="translate(800,450)">
+                <use animid="planet2b" href="#planet" transform="scale(5.0)" />
+            </g>
+        </g>
+        <g continue="">
+            <line animid="edge0" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge1" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge2" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="20" />
+            <g animid="pkgf" transform="translate(800,450)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgi" transform="translate(800,450)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgg" transform="translate(800,450)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#planet" transform="scale(5.0)" />
+            </g>
+        </g>
+        <g>
+            <line animid="edge0" x1="800" y1="450" x2="588" y2="672" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge1" x1="800" y1="450" x2="800" y2="750" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge2" x1="800" y1="450" x2="1012" y2="672" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge3" x1="800" y1="450" x2="588" y2="672" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge4" x1="800" y1="450" x2="800" y2="750" stroke="#ff7f2a" stroke-width="20" />
+            <line animid="edge5" x1="800" y1="450" x2="1012" y2="672" stroke="#ff7f2a" stroke-width="20" />
+            <g animid="pkgf" transform="translate(588,672)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgi" transform="translate(800,750)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgg" transform="translate(1012,672)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="planett" transform="translate(800,450)">
+                <use animid="planet" href="#planet-red" transform="scale(3.0)" />
+            </g>
+            <g animid="api" transform="translate(800,450)">
+                <use href="#api2" transform="scale(3.0)" />
+            </g>
+            <g animid="planett2" transform="translate(800,450)">
+                <use animid="planet" href="#planet" transform="scale(3.0)" />
+            </g>
+            <g animid="api2" transform="translate(800,450)">
+                <use href="#api2" transform="scale(3.0)" />
+            </g>
+        </g>
+        <g>
+            <line animid="edge0" x1="500" y1="450" x2="588" y2="750" stroke="#ff7f2a" stroke-width="10" />
+            <line animid="edge1" x1="500" y1="450" x2="800" y2="750" stroke="#ff7f2a" stroke-width="10" />
+            <line animid="edge2" x1="500" y1="450" x2="1012" y2="750" stroke="#ff7f2a" stroke-width="10" />
+            <line animid="edge3" x1="1100" y1="450" x2="588" y2="750" stroke="#ff7f2a" stroke-width="10" />
+            <line animid="edge4" x1="1100" y1="450" x2="800" y2="750" stroke="#ff7f2a" stroke-width="10" />
+            <line animid="edge5" x1="1100" y1="450" x2="1012" y2="750" stroke="#ff7f2a" stroke-width="10" />
+            <g animid="pkgf" transform="translate(588,750)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgi" transform="translate(800,750)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="pkgg" transform="translate(1012,750)">
+                <use href="#planet" transform="scale(1.2)" />
+            </g>
+            <g animid="planett" transform="translate(1100,450)">
+                <use animid="planet" href="#planet-red" transform="scale(3.0)" />
+            </g>
+            <g animid="api" transform="translate(1100,450)">
+                <use animid="apib" href="#api2" transform="scale(3.0)" opacity="1" />
+            </g>
+            <g animid="planett2" transform="translate(500,450)">
+                <use animid="planet2" href="#planet" transform="scale(3.0)" />
+            </g>
+            <g animid="api2" transform="translate(500,450)">
+              <use animid="api2b" href="#api2" transform="scale(3.0)" opacity="1" />
+            </g>
+        </g>
+        <!-- <g duration="1"> -->
+        <!--     <line animid="edge0" x1="500" y1="450" x2="588" y2="750" stroke="#ff7f2a" stroke-width="10" /> -->
+        <!--     <line animid="edge1" x1="500" y1="450" x2="800" y2="750" stroke="#ff7f2a" stroke-width="10" /> -->
+        <!--     <line animid="edge2" x1="500" y1="450" x2="1012" y2="750" stroke="#ff7f2a" stroke-width="10" /> -->
+        <!--     <line animid="edge3" x1="1100" y1="450" x2="588" y2="750" stroke="#ff7f2a" stroke-width="10" /> -->
+        <!--     <line animid="edge4" x1="1100" y1="450" x2="800" y2="750" stroke="#ff7f2a" stroke-width="10" /> -->
+        <!--     <line animid="edge5" x1="1100" y1="450" x2="1012" y2="750" stroke="#ff7f2a" stroke-width="10" /> -->
+        <!--     <line animid="edge6" x1="500" y1="450" x2="588" y2="750" stroke="#ff7f2a" stroke-width="10" /> -->
+        <!--     <line animid="edge7" x1="500" y1="450" x2="800" y2="750" stroke="#ff7f2a" stroke-width="10" /> -->
+        <!--     <line animid="edge8" x1="500" y1="450" x2="1012" y2="750" stroke="#ff7f2a" stroke-width="10" /> -->
+        <!--     <line animid="edge9" x1="1100" y1="450" x2="588" y2="750" stroke="#ff7f2a" stroke-width="10" /> -->
+        <!--     <line animid="edge10" x1="1100" y1="450" x2="800" y2="750" stroke="#ff7f2a" stroke-width="10" /> -->
+        <!--     <line animid="edge11" x1="1100" y1="450" x2="1012" y2="750" stroke="#ff7f2a" stroke-width="10" /> -->
+        <!--     <g animid="pkga" transform="translate(588,750)"> -->
+        <!--         <use href="#planet" transform="scale(1.2)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="pkgb" transform="translate(588,750)"> -->
+        <!--         <use href="#planet" transform="scale(1.2)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="pkgc" transform="translate(588,750)"> -->
+        <!--         <use href="#planet" transform="scale(1.2)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="pkgx" transform="translate(1012,750)"> -->
+        <!--         <use href="#planet" transform="scale(1.2)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="pkgy" transform="translate(1012,750)"> -->
+        <!--         <use href="#planet" transform="scale(1.2)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="pkgz" transform="translate(1012,750)"> -->
+        <!--         <use href="#planet" transform="scale(1.2)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="pkgf" transform="translate(588,750)"> -->
+        <!--         <use href="#planet" transform="scale(1.2)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="pkgi" transform="translate(800,750)"> -->
+        <!--         <use href="#planet" transform="scale(1.2)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="pkgg" transform="translate(1012,750)"> -->
+        <!--         <use href="#planet" transform="scale(1.2)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="pkgx" transform="translate(1012,750)"> -->
+        <!--         <use href="#planet" transform="scale(1.2)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="pkgy" transform="translate(1012,750)"> -->
+        <!--         <use href="#planet" transform="scale(1.2)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="pkgz" transform="translate(1012,750)"> -->
+        <!--         <use href="#planet" transform="scale(1.2)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="edge" transform="translate(1100,450)"> -->
+        <!--         <use animid="edgeb" href="#edge" transform="scale(1.0)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="chrome" transform="translate(1100,450)"> -->
+        <!--         <use href="#chrome" transform="scale(3.0)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="safari" transform="translate(500,450)"> -->
+        <!--         <use animid="safari2" href="#safari" transform="scale(1.0)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="firefox" transform="translate(500,450)"> -->
+        <!--         <use href="#firefox" transform="scale(3.0)" /> -->
+        <!--     </g> -->
+        <!-- </g> -->
+        <!-- <g> -->
+        <!--     <g animid="web" transform="scale(1)"> -->
+        <!--         <line animid="edge0" x1="600" y1="350" x2="588" y2="750" stroke="#ff7f2a" stroke-width="5" /> -->
+        <!--         <line animid="edge1" x1="600" y1="350" x2="800" y2="750" stroke="#ff7f2a" stroke-width="5" /> -->
+        <!--         <line animid="edge2" x1="600" y1="350" x2="1012" y2="750" stroke="#ff7f2a" stroke-width="5" /> -->
+        <!--         <line animid="edge3" x1="1000" y1="350" x2="588" y2="750" stroke="#ff7f2a" stroke-width="5" /> -->
+        <!--         <line animid="edge4" x1="1000" y1="350" x2="800" y2="750" stroke="#ff7f2a" stroke-width="5" /> -->
+        <!--         <line animid="edge5" x1="1000" y1="350" x2="1012" y2="750" stroke="#ff7f2a" stroke-width="5" /> -->
+        <!--         <line animid="edge6" x1="1400" y1="350" x2="588" y2="750" stroke="#ff7f2a" stroke-width="5" /> -->
+        <!--         <line animid="edge7" x1="1400" y1="350" x2="800" y2="750" stroke="#ff7f2a" stroke-width="5" /> -->
+        <!--         <line animid="edge8" x1="1400" y1="350" x2="1012" y2="750" stroke="#ff7f2a" stroke-width="5" /> -->
+        <!--         <line animid="edge9" x1="200" y1="350" x2="588" y2="750" stroke="#ff7f2a" stroke-width="5" /> -->
+        <!--         <line animid="edge10" x1="200" y1="350" x2="800" y2="750" stroke="#ff7f2a" stroke-width="5" /> -->
+        <!--         <line animid="edge11" x1="200" y1="350" x2="1012" y2="750" stroke="#ff7f2a" stroke-width="5" /> -->
+        <!--         <g animid="pkga" transform="translate(-48,750)"> -->
+        <!--             <use href="#planet" transform="scale(1.2)" /> -->
+        <!--         </g> -->
+        <!--         <g animid="pkgb" transform="translate(164,750)"> -->
+        <!--             <use href="#planet" transform="scale(1.2)" /> -->
+        <!--         </g> -->
+        <!--         <g animid="pkgc" transform="translate(367,750)"> -->
+        <!--             <use href="#planet" transform="scale(1.2)" /> -->
+        <!--         </g> -->
+        <!--         <g animid="pkgf" transform="translate(588,750)"> -->
+        <!--             <use href="#planet" transform="scale(1.2)" /> -->
+        <!--         </g> -->
+        <!--         <g animid="pkgi" transform="translate(800,750)"> -->
+        <!--             <use href="#planet" transform="scale(1.2)" /> -->
+        <!--         </g> -->
+        <!--         <g animid="pkgg" transform="translate(1012,750)"> -->
+        <!--             <use href="#planet" transform="scale(1.2)" /> -->
+        <!--         </g> -->
+        <!--         <g animid="pkgx" transform="translate(1224,750)"> -->
+        <!--             <use href="#planet" transform="scale(1.2)" /> -->
+        <!--         </g> -->
+        <!--         <g animid="pkgy" transform="translate(1436,750)"> -->
+        <!--             <use href="#planet" transform="scale(1.2)" /> -->
+        <!--         </g> -->
+        <!--         <g animid="pkgz" transform="translate(1648,750)"> -->
+        <!--             <use href="#planet" transform="scale(1.2)" /> -->
+        <!--         </g> -->
+        <!--         <g animid="edge" transform="translate(1400,350)"> -->
+        <!--             <use animid="edgeb" href="#edge" transform="scale(3.0)" /> -->
+        <!--         </g> -->
+        <!--         <g animid="chrome" transform="translate(1000,350)"> -->
+        <!--             <use href="#chrome" transform="scale(3.0)" /> -->
+        <!--         </g> -->
+        <!--         <g animid="safari" transform="translate(600,350)"> -->
+        <!--             <use animid="safari2" href="#safari" transform="scale(3.0)" /> -->
+        <!--         </g> -->
+        <!--         <g animid="firefox" transform="translate(200,350)"> -->
+        <!--             <use href="#firefox" transform="scale(3.0)" /> -->
+        <!--         </g> -->
+        <!--     </g> -->
+        <!--     <g transform="translate(800,450)"> -->
+        <!--         <use animid="planet" href="#planet" transform="scale(0.001)" /> -->
+        <!--     </g> -->
+        <!-- </g> -->
+        <!-- <g easing="sine"> -->
+        <!--     <g animid="web" transform="translate(-9600,-5400) scale(13)" /> -->
+        <!--     <g animid="planett" transform="translate(800,450)"> -->
+        <!--         <use animid="planet" href="#planet" transform="scale(4.0)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="planett2" transform="translate(800,450)"> -->
+        <!--         <use animid="planet2" href="#planet" transform="scale(4.0)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="planett3" transform="translate(800,450)"> -->
+        <!--         <use animid="planet3" href="#planet" transform="scale(4.0)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="planett4" transform="translate(800,450)"> -->
+        <!--         <use animid="planet4" href="#planet" transform="scale(4.0)" /> -->
+        <!--     </g> -->
+        <!--     <g animid="planett5" transform="translate(800,450)"> -->
+        <!--         <use animid="planet5" href="#planet" transform="scale(4.0)" /> -->
+        <!--     </g> -->
+        <!-- </g> -->
+        <g easing="sine">
+          <!-- DELETE THIS FRAME IF UNCOMMENTING THE ABOVE FRAMES -->
+            <line animid="edge0" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="10" />
+            <line animid="edge1" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="10" />
+            <line animid="edge2" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="10" />
+            <line animid="edge3" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="10" />
+            <line animid="edge4" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="10" />
+            <line animid="edge5" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="10" />
+            <g animid="pkgf" transform="translate(800,450)">
+                <use href="#planet" transform="scale(2.0)" />
+            </g>
+            <g animid="pkgi" transform="translate(800,450)">
+                <use href="#planet" transform="scale(2.0)" />
+            </g>
+            <g animid="pkgg" transform="translate(800,450)">
+                <use href="#planet" transform="scale(2.0)" />
+            </g>
+            <g animid="planett" transform="translate(800,450)">
+                <use animid="planet" href="#planet" transform="scale(2.0)" />
+            </g>
+            <g animid="api" transform="translate(800,450)">
+                <use animid="apib" href="#api2" transform="scale(2.0)" opacity="0"/>
+            </g>
+            <g animid="planett2" transform="translate(800,450)">
+                <use animid="planet2" href="#planet" transform="scale(2.0)" />
+            </g>
+            <g animid="api2" transform="translate(800,450)">
+                <use animid="api2b" href="#api2" transform="scale(2.0)" opacity="0"/>
+            </g>
+        </g>
+        <g continue="">
+            <g animid="pkgf" transform="translate(995,227)">
+                <use animid="planet" href="#planet" transform="scale(2.0)" />
+            </g>
+            <g animid="pkgi" transform="translate(587,227)">
+                <use animid="planet2" href="#planet" transform="scale(2.0)" />
+            </g>
+            <g animid="pkgg" transform="translate(391,600)">
+                <use animid="planet3" href="#planet" transform="scale(2.0)" />
+            </g>
+            <g animid="planett" transform="translate(818,600)">
+                <use animid="planet4" href="#planet" transform="scale(2.0)" />
+            </g>
+            <g animid="planett2" transform="translate(1205,600)">
+                <use animid="planet5" href="#planet" transform="scale(2.0)" />
+            </g>
+            <use animid="languages" href="#languages" opacity="0.0" />
+        </g>
+        <g easing="linear" duration="800">
+            <g animid="numpy" transform="translate(580,220)">
+                <use animid="numpy2" href="#numpy-languages" transform="scale(2.1)" />
+            </g>
+            <use animid="languages" href="#languages" opacity="1.0" />
+        </g>
+        <g easing="sine" duration="400" continue="">
+            <g animid="numpy" transform="translate(587,227)">
+                <use animid="numpy2" href="#numpy-languages" transform="scale(2.0)" />
+            </g>
+            <use animid="languages" href="#languages" opacity="0.0" />
+        </g>
+        <g easing="sine">
+            <g animid="pkga" transform="translate(-100,450)">
+                <use href="#planet" transform="scale(1.0)" />
+            </g>
+            <g animid="numpy" transform="translate(800,450)">
+                <use animid="numpy2" href="#numpy-languages" transform="scale(4.0)" />
+            </g>
+        </g>
+        <g>
+            <g animid="pkga" transform="translate(500,450)">
+                <use href="#planet" transform="scale(1.0)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use href="#numpy-languages" transform="scale(4.0)" />
+            </g>
+        </g>
+        <g duration="500" continue="">
+            <g animid="pkga" transform="translate(600,450)">
+                <use href="#planet" transform="scale(1.0)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use href="#numpy-languages" transform="scale(4.0)" />
+            </g>
+        </g>
+        <g>
+            <g animid="pkga" transform="translate(-100,-100)">
+                <use href="#planet" transform="scale(1.0)" />
+            </g>
+            <g animid="pkgb" transform="translate(-100,650)">
+                <use href="#planet-red" transform="scale(1.0)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use href="#numpy-languages" transform="scale(4.0)" />
+            </g>
+        </g>
+        <g>
+            <g animid="pkgb" transform="translate(500,450)">
+                <use href="#planet-red" transform="scale(1.0)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="numpy" href="#numpy-languages" transform="scale(4.0)" />
+            </g>
+        </g>
+        <g>
+            <use animid="second-best" href="#second-best" opacity="0" />
+            <path animid="line" style="fill:none;stroke:#2a7fff;stroke-width:5;stroke-linecap:butt" d="m 250.897,350 c 0,0 0,0 0,0" />
+            <g animid="pkgb" transform="translate(800,450)">
+                <use href="#planet-ref" transform="scale(1.0)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="numpy" href="#numpy-languages" transform="scale(5.0)" />
+            </g>
+        </g>
+        <g>
+            <use animid="second-best" href="#second-best" opacity="1.0" />
+            <path animid="line" style="fill:none;stroke:#2a7fff;stroke-width:5;stroke-linecap:butt" d="m 250.897,350 c 383.43301,0 759.4242,0 1142.8572,0" />
+            <g transform="translate(800,450)">
+                <use animid="numpy" href="#numpy-languages" transform="scale(0.001)" />
+            </g>
+        </g>
+        <g>
+            <use href="#second-best" />
+            <path animid="line" style="fill:none;stroke:#2a7fff;stroke-width:5;stroke-linecap:butt" d="m 250.897,280.66445 c 383.43301,0 759.4242,174.35216 1142.8572,174.35216" />
+        </g>
+        <g continue="">
+            <use href="#second-best" />
+            <path animid="line" style="fill:none;stroke:#2a7fff;stroke-width:5;stroke-linecap:butt" d="m 250.897,350 c 383.43301,0 759.4242,0 1142.8572,0" />
+        </g>
+        <g duration="1">
+            <use href="#second-best" />
+            <path animid="line2" style="fill:none;stroke:#2a7fff;stroke-width:5;stroke-linecap:butt" d="m 250.89701,350.83056 c 0,0 296.25732,-0.27431 444.38598,-0.41147 107.7294,-0.0682 221.12839,-0.20475 221.12839,-0.20475 l 482.65832,-0.4469" />
+        </g>
+        <g>
+            <use href="#second-best" />
+            <path animid="line2" style="fill:none;stroke:#2a7fff;stroke-width:5;stroke-linecap:butt" d="m 250.89701,350.83056 c 0,0 296.25732,-0.27431 444.38598,-0.41147 104.54003,-132.95856 221.12839,-0.20475 221.12839,-0.20475 l 482.65832,-0.4469" />
+            <text class="text" x="800" y="450">Pyodide</text>
+        </g>
+        <g>
+            <g animid="chart" opacity="1">
+                <use href="#second-best" />
+                <path animid="line2" style="fill:none;stroke:#2a7fff;stroke-width:5;stroke-linecap:butt" d="m 250.89701,280.83056 c 0,0 296.25732,-0.27431 444.38598,-0.41147 107.7294,-0.0682 221.12839,-0.20475 221.12839,-0.20475 l 482.65832,-0.4469" />
+                <text class="text" x="800" y="400">Faster CPython</text>
+            </g>
+        </g>
+        <g>
+            <g animid="chart" opacity="1">
+                <use href="#second-best" />
+                <path animid="line2" style="fill:none;stroke:#2a7fff;stroke-width:5;stroke-linecap:butt" d="m 250.89701,200.83056 c 0,0 296.25732,-0.27431 444.38598,-0.41147 107.7294,-0.0682 221.12839,-0.20475 221.12839,-0.20475 l 482.65832,-0.4469" />
+            </g>
+            <use animid="growth" href="#growth" opacity="0" />
+        </g>
+        <g easing="sine">
+            <g animid="chart" opacity="0" />
+            <g transform="translate(800,450)">
+                <use animid="numpy" href="#numpy-languages" transform="scale(0.001)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="cog" href="#cog" transform="scale(0.001)" />
+            </g>
+            <use animid="growth" href="#growth" opacity="1" />
+        </g>
+        <g easing="sine">
+            <use animid="growth" href="#growth" opacity="0" />
+            <g transform="translate(800,450)">
+                <use animid="numpy" href="#numpy-languages" transform="scale(3)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="cog" href="#cog" transform="scale(2.2)" />
+            </g>
+            <text animid="question" opacity="0" text-anchor="middle" x="800" y="700" class="text">Can you translate this Python into faster C?</text>
+        </g>
+        <g easing="sine">
+            <g animid="planet1" transform="translate(-200,450)">
+                <use href="#planet" transform="scale(0.8)" />
+            </g>
+            <g animid="planet2" transform="translate(93,-257)">
+                <use href="#planet" transform="scale(0.8)" />
+            </g>
+            <g animid="planet3" transform="translate(93,1157)">
+                <use href="#planet" transform="scale(0.8)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="numpy-planet" href="#numpy-languages" transform="scale(3)" opacity="1" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="numpy" href="#cog" transform="scale(3)" opacity="0" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="cog" href="#cog" transform="scale(2.2)" opacity="1" />
+            </g>
+            <text animid="question" opacity="1" text-anchor="middle" x="800" y="700" class="text">Can you translate this Python into faster C?</text>
+        </g>
+        <g>
+            <g animid="planet1" transform="translate(500,450)">
+                <use href="#planet" transform="scale(0.8)" />
+            </g>
+            <g animid="planet2" transform="translate(588,238)">
+                <use href="#planet" transform="scale(0.8)" />
+            </g>
+            <g animid="planet3" transform="translate(588,662)">
+                <use href="#planet" transform="scale(0.8)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="numpy-planet" href="#numpy-languages" transform="scale(3)" opacity="0" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="numpy" href="#cog" transform="scale(3)" opacity="1" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="cog" href="#cog" transform="scale(2.2)" opacity="0" />
+            </g>
+            <text animid="question" opacity="0" text-anchor="middle" x="800" y="700" class="text">Can you translate this code from Python to C?</text>
+        </g>
+        <g continue="">
+            <g animid="planet1" transform="translate(800,450)">
+                <use href="#planet" transform="scale(0.8)" />
+            </g>
+            <g animid="planet2" transform="translate(800,450)">
+                <use href="#planet" transform="scale(0.8)" />
+            </g>
+            <g animid="planet3" transform="translate(800,450)">
+                <use href="#planet" transform="scale(0.8)" />
+            </g>
+            <g animid="planet4" transform="translate(800,450)">
+                <use href="#planet-red" transform="scale(0.8)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="numpy" href="#cog" transform="scale(3)" />
+            </g>
+        </g>
+        <g>
+            <g animid="planet1b" transform="translate(-200,450)">
+                <use href="#planet-red" transform="scale(0.8)" />
+            </g>
+            <g animid="planet2b" transform="translate(93,-257)">
+                <use href="#planet-red" transform="scale(0.8)" />
+            </g>
+            <g animid="planet3b" transform="translate(93,1157)">
+                <use href="#planet-red" transform="scale(0.8)" />
+            </g>
+            <g animid="planet4" transform="translate(1100,450)">
+                <use href="#planet-red" transform="scale(0.8)" />
+            </g>
+            <circle cx="800" cy="450" r="1" stroke-width="8" stroke="#ff7f2a" animid="circle" fill="none" />
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#cog" transform="scale(3)" />
+            </g>
+        </g>
+        <g>
+            <g animid="planet1b" transform="translate(500,450)">
+                <use href="#planet-red" transform="scale(0.8)" />
+            </g>
+            <g animid="planet2b" transform="translate(588,238)">
+                <use href="#planet-red" transform="scale(0.8)" />
+            </g>
+            <g animid="planet3b" transform="translate(588,662)">
+                <use href="#planet-red" transform="scale(0.8)" />
+            </g>
+            <g animid="planet4" transform="translate(1800,450)">
+                <use href="#planet-red" transform="scale(0.8)" />
+            </g>
+            <circle cx="800" cy="450" r="450" stroke-width="20" stroke="#ff7f2a" animid="circle" fill="none" />
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#cog" transform="scale(3)" />
+            </g>
+        </g>
+        <g continue="">
+            <g animid="planet1b" transform="translate(800,450)">
+                <use href="#planet-red" transform="scale(0.8)" />
+            </g>
+            <g animid="planet2b" transform="translate(800,450)">
+                <use href="#planet-red" transform="scale(0.8)" />
+            </g>
+            <g animid="planet3b" transform="translate(800,450)">
+                <use href="#planet-red" transform="scale(0.8)" />
+            </g>
+            <g animid="planet5" transform="translate(800,450)">
+                <use href="#garbage" transform="scale(1.2)" />
+            </g>
+            <circle cx="800" cy="450" r="450" stroke-width="20" stroke="#ff7f2a" animid="circle" fill="none" />
+            <g transform="translate(800,450)">
+                <use animid="cog" href="#cog" transform="scale(3)" />
+            </g>
+        </g>
+        <g>
+            <g animid="planet5" transform="translate(1100,450)">
+                <use href="#garbage" transform="scale(1.2)" />
+            </g>
+            <circle cx="800" cy="450" r="450" stroke-width="20" stroke="#ff7f2a" animid="circle" fill="none" />
+            <g transform="translate(800,450)">
+                <use animid="cog" href="#cog" transform="scale(3)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#planet" opacity="1" transform="scale(0.001)" />
+            </g>
+        </g>
+        <g onenterslide="exitFaces">
+            <g animid="planet5" transform="translate(1800,450)">
+                <use href="#garbage" transform="scale(1.2)" />
+            </g>
+            <circle cx="800" cy="450" r="1" stroke-width="100" stroke="#ff7f2a" animid="circle" fill="none" />
+            <g animid="faces" transform="scale(0.001) translate(800000, 450000)">
+                <use href="#orbit" />
+                <use href="#faces" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="cog" href="#cog" transform="scale(0.001)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="planet" href="#planet" opacity="1" transform="scale(4)" />
+            </g>
+        </g>
+        <g duration="3000" onenterslide="enterFaces">
+            <g animid="astrodog" transform="translate(-400,0)">
+                <use href="#astrodog">
+                    <animateTransform attributeName="transform" attributeType="XML" type="rotate" values="0 0 900;15 0 900; 0 0 900" dur="7s" repeatCount="indefinite" />
+                </use>
+            </g>
+            <g animid="bigzoom" transform="scale(1)">
+                <g transform="translate(800,450)">
+                    <use animid="planet" href="#planet" transform="scale(2.5)" />
+                </g>
+                <g animid="faces" transform="scale(1)">
+                    <use href="#orbit" />
+                    <use href="#faces" />
+                </g>
+            </g>
+        </g>
+        <g duration="10000" easing="sine">
+            <g animid="astrodog" transform="translate(1800,-500)">
+                <use href="#astrodog">
+                    <animateTransform attributeName="transform" attributeType="XML" type="rotate" values="0 0 900;15 0 900; 0 0 900" dur="7s" repeatCount="indefinite" />
+                </use>
+            </g>
+            <g animid="bigzoom" transform="scale(10) translate(-680 -380)">
+                <g transform="translate(800,450)">
+                    <use href="#planet" transform="scale(2.5)" />
+                </g>
+            </g>
+            <g animid="john" opacity="0">
+                <text class="text" text-anchor="middle" x="800" y="400">Dedicated to</text>
+                <text class="text" text-anchor="middle" x="800" y="500">John Hunter</text>
+            </g>
+        </g>
+        <g onenterslide="exitFaces" easing="linear">
+            <g transform="scale(10) translate(-680 -380)">
+                <g transform="translate(800,450)">
+                    <use href="#planet" transform="scale(2.5)" />
+                </g>
+            </g>
+            <g animid="john" opacity="1">
+                <text class="text" text-anchor="middle" x="800" y="400">Dedicated to</text>
+                <text class="text" text-anchor="middle" x="800" y="500">John Hunter</text>
+            </g>
+            <use animid="equality" href="#equality" opacity="0" />
+        </g>
+        <g easing="linear">
+            <g transform="scale(10) translate(-680 -380)">
+                <g transform="translate(800,450)">
+                    <use href="#planet" transform="scale(2.5)" />
+                </g>
+            </g>
+            <g animid="john" opacity="0" />
+            <use animid="equality" href="#equality" opacity="1" />
+        </g>
+    </g>
+</svg>

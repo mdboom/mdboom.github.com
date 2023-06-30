@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1600mm"
+   height="900mm"
+   viewBox="0 0 1600 900"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="install.svg"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#000000"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.088451365"
+     inkscape:cx="3103.4004"
+     inkscape:cy="8575.334"
+     inkscape:window-width="1904"
+     inkscape:window-height="1096"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g422" />
+  <defs
+     id="defs2">
+    <rect
+       x="79.943004"
+       y="91.934454"
+       width="5836.525"
+       height="12945.364"
+       id="rect98" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g422">
+      <text
+         xml:space="preserve"
+         transform="scale(0.26458333)"
+         id="text96"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:133.333px;font-family:Arial;-inkscape-font-specification:Arial;white-space:pre;shape-inside:url(#rect98);display:inline;fill:#ffff00"
+         x="2236.1272"
+         y="0"><tspan
+           x="2516.176"
+           y="213.91927"
+           id="tspan18839"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18837">INTRODUCTION
+</tspan></tspan><tspan
+           x="2998.2061"
+           y="382.47091"
+           id="tspan18843"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18841">
+</tspan></tspan><tspan
+           x="427.37929"
+           y="551.02255"
+           id="tspan18847"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18845">  matplotlib requires at a minimum python 2.4, numpy, libpng and
+</tspan></tspan><tspan
+           x="186.36428"
+           y="719.57418"
+           id="tspan18851"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488 0 0 0 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18849">  freetype.  To get the most out of matplotlib, you will want to build
+</tspan></tspan><tspan
+           x="387.21012"
+           y="888.12582"
+           id="tspan18855"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18853">  some of the optional GUI and image extensions, discussed below.
+</tspan></tspan><tspan
+           x="588.05596"
+           y="1056.6775"
+           id="tspan18859"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18857">  Matplotlib is known to work on linux, unix, win32 and OS X
+</tspan></tspan><tspan
+           x="2516.176"
+           y="1225.2291"
+           id="tspan18863"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18861">  platforms.
+</tspan></tspan><tspan
+           x="2998.2061"
+           y="1393.7807"
+           id="tspan18867"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18865">
+</tspan></tspan><tspan
+           x="226.53345"
+           y="1562.3324"
+           id="tspan18871"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18869">  There are two kinds of matplotlib backends: vector based and raster
+</tspan></tspan><tspan
+           x="306.87179"
+           y="1730.884"
+           id="tspan18875"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18873">  based.  The vector based backends, SVG, PDF and PS, produce ASCII
+</tspan></tspan><tspan
+           x="387.21012"
+           y="1899.4356"
+           id="tspan18879"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18877">  text output files *.svg, *.pdf and *.ps.  The core raster based
+</tspan></tspan><tspan
+           x="226.53345"
+           y="2067.9873"
+           id="tspan18883"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18881">  renderer is the http://antigrain.com (agg) backend.  This is a high
+</tspan></tspan><tspan
+           x="266.70262"
+           y="2236.5389"
+           id="tspan18887"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18885">  quality 2D library that supports fast antialiasing, alpha blending
+</tspan></tspan><tspan
+           x="427.37929"
+           y="2405.0907"
+           id="tspan18891"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18889">  and much more.  If you want to produce PNGs or GUI images that
+</tspan></tspan><tspan
+           x="226.53345"
+           y="2573.6424"
+           id="tspan18895"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18893">  support all of matplotlib's features, you should compile matplotlib
+</tspan></tspan><tspan
+           x="186.36428"
+           y="2742.1942"
+           id="tspan18899"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488 0 0 0 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18897">  with agg support and use one of the GUI agg backends: GTKAgg, WXAgg,
+</tspan></tspan><tspan
+           x="2234.9919"
+           y="2910.7459"
+           id="tspan18903"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18901">  TkAgg or FLTKAgg.
+</tspan></tspan><tspan
+           x="2998.2061"
+           y="3079.2977"
+           id="tspan18907"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18905">
+</tspan></tspan><tspan
+           x="2636.6835"
+           y="3247.8495"
+           id="tspan18911"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18909">COMPILING
+</tspan></tspan><tspan
+           x="2998.2061"
+           y="3416.4012"
+           id="tspan18915"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18913">
+</tspan></tspan><tspan
+           x="266.70262"
+           y="3584.953"
+           id="tspan18919"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18917">  You will need to have recent versions of freetype, libpng and zlib
+</tspan></tspan><tspan
+           x="226.53345"
+           y="3753.5047"
+           id="tspan18923"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18921">  installed on your system.  If you are using a package manager, also
+</tspan></tspan><tspan
+           x="306.87179"
+           y="3922.0565"
+           id="tspan18927"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18925">  make sure the devel versions of these packages are also installed
+</tspan></tspan><tspan
+           x="2114.4844"
+           y="4090.6082"
+           id="tspan18931"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18929">  (eg freetype-devel).
+</tspan></tspan><tspan
+           x="2998.2061"
+           y="4259.16"
+           id="tspan18935"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18933">
+</tspan></tspan><tspan
+           x="387.21012"
+           y="4427.7118"
+           id="tspan18939"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18937">  matplotlib ships with a setup.cfg.template which you can use to
+</tspan></tspan><tspan
+           x="306.87179"
+           y="4596.2635"
+           id="tspan18943"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18941">  customize the build process.  Copy it to setup.cfg if you need to
+</tspan></tspan><tspan
+           x="266.70262"
+           y="4764.8153"
+           id="tspan18947"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18945">  customize something.  See that files for details of the parameters
+</tspan></tspan><tspan
+           x="2435.8377"
+           y="4933.367"
+           id="tspan18951"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18949">  you can set.
+</tspan></tspan><tspan
+           x="2998.2061"
+           y="5101.9188"
+           id="tspan18955"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18953">
+</tspan></tspan><tspan
+           x="387.21012"
+           y="5270.4705"
+           id="tspan18959"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18957">  If you want to use a GUI backend, you will need either Tkinter,
+</tspan></tspan><tspan
+           x="226.53345"
+           y="5439.0223"
+           id="tspan18963"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18961">  pygtk , wxPython or Qt installed on your system, from src or from a
+</tspan></tspan><tspan
+           x="226.53345"
+           y="5607.5741"
+           id="tspan18967"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18965">  package manager including the devel packages.  You can choose which
+</tspan></tspan><tspan
+           x="146.19511"
+           y="5776.1258"
+           id="tspan18971"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488 0 0 0 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18969">  backends to enable by setting the flags in setup.cfg, but the default
+</tspan></tspan><tspan
+           x="186.36428"
+           y="5944.6776"
+           id="tspan18975"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488 0 0 0 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18973">  is to automatically detect your installed GUIs and build support for
+</tspan></tspan><tspan
+           x="306.87179"
+           y="6113.2293"
+           id="tspan18979"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18977">  them.  If you later find that you did not have a GUI toolkit like
+</tspan></tspan><tspan
+           x="186.36428"
+           y="6281.7811"
+           id="tspan18983"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488 0 0 0 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18981">  pygtk installed when you built matplotlib, but now want it, you will
+</tspan></tspan><tspan
+           x="869.24014"
+           y="6450.3328"
+           id="tspan18987"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18985">  need to install the toolkit and rebuild matplotlib.
+</tspan></tspan><tspan
+           x="2998.2061"
+           y="6618.8846"
+           id="tspan18991"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18989">
+</tspan></tspan><tspan
+           x="266.70262"
+           y="6787.4364"
+           id="tspan18995"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18993">  If you have installed prerequisites to nonstandard places and need
+</tspan></tspan><tspan
+           x="347.04096"
+           y="6955.9881"
+           id="tspan18999"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan18997">  to inform matplotlib where they are, edit setupext.py an add the
+</tspan></tspan><tspan
+           x="266.70262"
+           y="7124.5399"
+           id="tspan19003"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19001">  base dirs to the 'basedir' dictionary entry for your sys.platform.
+</tspan></tspan><tspan
+           x="989.74765"
+           y="7293.0916"
+           id="tspan19007"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19005">  Eg, if the header to some required library is in
+</tspan></tspan><tspan
+           x="266.70262"
+           y="7461.6434"
+           id="tspan19011"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19009">  /some/path/include/somheader.h, put /some/path in the basedir list
+</tspan></tspan><tspan
+           x="2194.8227"
+           y="7630.1952"
+           id="tspan19015"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19013">  for your platform.
+</tspan></tspan><tspan
+           x="2998.2061"
+           y="7798.7469"
+           id="tspan19019"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19017">
+</tspan></tspan><tspan
+           x="2998.2061"
+           y="7967.2987"
+           id="tspan19023"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19021">
+</tspan></tspan><tspan
+           x="186.36428"
+           y="8135.8504"
+           id="tspan19027"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488 0 0 0 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19025">  Once you have everything above set to your liking, just do the usual
+</tspan></tspan><tspan
+           x="2717.0219"
+           y="8304.4022"
+           id="tspan19031"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19029">  thing
+</tspan></tspan><tspan
+           x="2998.2061"
+           y="8472.9535"
+           id="tspan19035"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19033">
+</tspan></tspan><tspan
+           x="1913.6385"
+           y="8641.5052"
+           id="tspan19039"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19037">      python setup.py build
+</tspan></tspan><tspan
+           x="1833.3002"
+           y="8810.057"
+           id="tspan19043"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19041">      python setup.py install
+</tspan></tspan><tspan
+           x="2998.2061"
+           y="8978.6087"
+           id="tspan19047"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19045">
+</tspan></tspan><tspan
+           x="2717.0219"
+           y="9147.1605"
+           id="tspan19051"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19049">WINDOWS
+</tspan></tspan><tspan
+           x="2998.2061"
+           y="9315.7122"
+           id="tspan19055"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19053">
+</tspan></tspan><tspan
+           x="186.36428"
+           y="9484.264"
+           id="tspan19059"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488 0 0 0 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19057">  If you don't already have python installed, you may want to consider
+</tspan></tspan><tspan
+           x="266.70262"
+           y="9652.8158"
+           id="tspan19063"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19061">  using the enthought edition of python, which has scipy, numpy, and
+</tspan></tspan><tspan
+           x="788.90181"
+           y="9821.3675"
+           id="tspan19067"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19065">  wxpython, plus a lot of other goodies, preinstalled -
+</tspan></tspan><tspan
+           x="347.04096"
+           y="9989.9193"
+           id="tspan19071"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19069">  http://www.enthought.com/python .  With the enthought edition of
+</tspan></tspan><tspan
+           x="306.87179"
+           y="10158.471"
+           id="tspan19075"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19073">  python + matplotlib installer, the following backends should work
+</tspan></tspan><tspan
+           x="708.56347"
+           y="10327.023"
+           id="tspan19079"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19077">  out of the box: agg, wx, wxagg, tkagg, ps, pdf and svg.
+</tspan></tspan><tspan
+           x="2998.2061"
+           y="10495.575"
+           id="tspan19083"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19081">
+</tspan></tspan><tspan
+           x="347.04096"
+           y="10664.126"
+           id="tspan19087"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19085">  For standard python installations, you will also need to install
+</tspan></tspan><tspan
+           x="387.21012"
+           y="10832.678"
+           id="tspan19091"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19089">  either numpy, in addition to the matplotlib installer.  On some
+</tspan></tspan><tspan
+           x="306.87179"
+           y="11001.23"
+           id="tspan19095"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19093">  systems you will also need to download msvcp71.dll library, which
+</tspan></tspan><tspan
+           x="2074.3152"
+           y="11169.782"
+           id="tspan19099"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19097">  you can download from
+</tspan></tspan><tspan
+           x="266.70262"
+           y="11338.333"
+           id="tspan19103"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19101">  http://www.dll-files.com/dllindex/dll-files.shtml?msvcp71 or other
+</tspan></tspan><tspan
+           x="347.04096"
+           y="11506.885"
+           id="tspan19107"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19105">  sites.  You will need to unzip the archive and drag the dll into
+</tspan></tspan><tspan
+           x="2154.6535"
+           y="11675.437"
+           id="tspan19111"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19109">  c:\windows\system32
+</tspan></tspan><tspan
+           x="2998.2061"
+           y="11843.989"
+           id="tspan19115"><tspan
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19113">
+</tspan></tspan><tspan
+           x="306.87179"
+           y="12012.54"
+           id="tspan19119"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19117">  All of the GUI backends run on windows, but TkAgg is probably the
+</tspan></tspan><tspan
+           x="226.53345"
+           y="12181.092"
+           id="tspan19123"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19121">  best for interactive use from the standard python shell or ipython.
+</tspan></tspan><tspan
+           x="226.53345"
+           y="12349.644"
+           id="tspan19127"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19125">  The windows installer (*.exe) on the download page contains all the
+</tspan></tspan><tspan
+           x="467.54846"
+           y="12518.196"
+           id="tspan19131"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19129">  code you need to get up and running.  However, there are many
+</tspan></tspan><tspan
+           x="347.04096"
+           y="12686.747"
+           id="tspan19135"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19133">  examples that are not included in the windows installer.  If you
+</tspan></tspan><tspan
+           x="588.05596"
+           y="12855.299"
+           id="tspan19139"><tspan
+             dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 -0.00019836426 0 0 0 0 -0.00019836426 0 0 0 0 0 0 0 -0.00044250488"
+             style="font-weight:bold;font-family:'Lucida Sans Typewriter';-inkscape-font-specification:'Lucida Sans Typewriter Bold';text-align:center;text-anchor:middle"
+             id="tspan19137">  want to try the many demos that come in the matplotlib src
+</tspan></tspan></text>
+    </g>
+  </g>
+</svg>
