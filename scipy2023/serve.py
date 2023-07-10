@@ -15,7 +15,7 @@ ROOT = Path(__file__).parent
 class MyServer(SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/index.svg" or self.path == "/":
-            make.do_includes()
+            make.main()
             self.send_response(200)
             self.send_header("Content-type", "image/svg+xml")
             self.end_headers()

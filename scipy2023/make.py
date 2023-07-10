@@ -52,7 +52,6 @@ def do_includes():
             continue
 
         if filename.stem not in references:
-            print(f"skipping {filename.stem}")
             continue
 
         entry_tree = ET.parse(filename)
@@ -75,5 +74,9 @@ def do_includes():
     index_tree.write(ROOT / "index.svg")
 
 
-if __name__ == "__main__":
+def main():
     do_includes()
+
+
+if __name__ == "__main__":
+    main()

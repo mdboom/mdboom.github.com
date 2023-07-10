@@ -15,25 +15,21 @@
         <g id="panel">
             <rect width="1600" height="900" fill="rgba(0,0,0,0.5)" />
         </g>
+        <g id="background-stars" />
     </defs>
 
     <g id="background" clip-path="url(#clip)">
-        <use href="#star" />
-        <rect width="1600" height="900" color="black" />
+      <rect width="1600" height="900" color="black" />
+      <use href="#background-stars" />
+      <use href="#star" />
     </g>
 
     <g id="slides" clip-path="url(#clip)">
         <g>
             <use href="#title" transform="scale(1)" animid="title" />
-            <g animid="opinions" opacity="0">
-                <text class="text" x="800" y="450" text-anchor="middle">Opinions are my own</text>
-            </g>
         </g>
         <g duration="3000" easing="sine">
             <use href="#title" transform="translate(0,-900) scale(0.15)" animid="title" />
-            <g animid="opinions" opacity="1">
-                <text class="text" x="800" y="450" text-anchor="middle">Opinions are my own</text>
-            </g>
             <text animid="2000" class="text" x="800" y="450" text-anchor="middle" opacity="0">The Year 2000</text>
         </g>
         <g duration="1000" easing="sine">
@@ -47,7 +43,7 @@
         <g easing="sine">
             <use animid="parnassus" href="#parnassus" opacity="1" transform="scale(1)" />
         </g>
-        <g>
+        <g duration="250" easing="linear">
             <use animid="parnassus" href="#parnassus" opacity="1" transform="scale(0.001) translate(800000, 450000)" />
             <g transform="translate(800,450)">
                 <g style="transform: scale(0.5) perspective(1500px) translateX(-65%) rotateX(80deg) translateY(900px)">
@@ -655,7 +651,7 @@
                 <use animid="planet2" href="#planet" transform="scale(3.0)" />
             </g>
             <g animid="api2" transform="translate(500,450)">
-              <use animid="api2b" href="#api2" transform="scale(3.0)" opacity="1" />
+                <use animid="api2b" href="#api2" transform="scale(3.0)" opacity="1" />
             </g>
         </g>
         <!-- <g duration="1"> -->
@@ -797,7 +793,7 @@
         <!--     </g> -->
         <!-- </g> -->
         <g easing="sine">
-          <!-- DELETE THIS FRAME IF UNCOMMENTING THE ABOVE FRAMES -->
+            <!-- DELETE THIS FRAME IF UNCOMMENTING THE ABOVE FRAMES -->
             <line animid="edge0" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="10" />
             <line animid="edge1" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="10" />
             <line animid="edge2" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="10" />
@@ -817,13 +813,13 @@
                 <use animid="planet" href="#planet" transform="scale(2.0)" />
             </g>
             <g animid="api" transform="translate(800,450)">
-                <use animid="apib" href="#api2" transform="scale(2.0)" opacity="0"/>
+                <use animid="apib" href="#api2" transform="scale(2.0)" opacity="0" />
             </g>
             <g animid="planett2" transform="translate(800,450)">
                 <use animid="planet2" href="#planet" transform="scale(2.0)" />
             </g>
             <g animid="api2" transform="translate(800,450)">
-                <use animid="api2b" href="#api2" transform="scale(2.0)" opacity="0"/>
+                <use animid="api2b" href="#api2" transform="scale(2.0)" opacity="0" />
             </g>
         </g>
         <g continue="">
@@ -900,29 +896,80 @@
             </g>
         </g>
         <g>
-            <use animid="second-best" href="#second-best" opacity="0" />
-            <path animid="line" style="fill:none;stroke:#2a7fff;stroke-width:5;stroke-linecap:butt" d="m 250.897,350 c 0,0 0,0 0,0" />
             <g animid="pkgb" transform="translate(800,450)">
                 <use href="#planet-ref" transform="scale(1.0)" />
             </g>
             <g transform="translate(800,450)">
                 <use animid="numpy" href="#numpy-languages" transform="scale(5.0)" />
             </g>
+            <g animid="python" transform="translate(800,450)" opacity="0">
+                <use href="#planet" transform="scale(4.6)" />
+            </g>
         </g>
-        <g>
+        <g easing="linear" continue="">
+            <line animid="edge0" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="20" />
+            <g animid="c" transform="translate(800,450)">
+                <use href="#planet-red" transform="scale(2.0)" />
+            </g>
+            <g animid="python" transform="translate(800,450)" opacity="1">
+                <use href="#planet" transform="scale(4.6)" />
+            </g>
+        </g>
+        <g continue="">
+            <line animid="edge0" x1="400" y1="450" x2="1200" y2="450" stroke="#ff7f2a" stroke-width="20" />
+            <g animid="c" transform="translate(400,450)">
+                <use href="#planet-red" transform="scale(2.0)" />
+            </g>
+            <g animid="python" transform="translate(1200,450)" opacity="1">
+                <use href="#planet" transform="scale(4.6)" />
+            </g>
+            <g animid="labels" opacity="0">
+                <g id="labels">
+                    <text class="text" x="400" y="450" text-anchor="middle">C</text>
+                    <text class="text" x="1200" y="450" text-anchor="middle">Python</text>
+                    <text class="text" x="700" y="525" text-anchor="middle">Cython</text>
+                    <text class="text" x="700" y="600" text-anchor="middle">Numba</text>
+                    <text class="text" x="700" y="675" text-anchor="middle">Mojo ...</text>
+                </g>
+            </g>
+        </g>
+        <g easing="linear">
+            <use animid="second-best" href="#second-best" opacity="0" />
+            <path animid="line" style="fill:none;stroke:#2a7fff;stroke-width:5;stroke-linecap:butt" d="m 250.897,350 c 0,0 0,0 0,0" />
+            <line animid="edge0" x1="400" y1="450" x2="1200" y2="450" stroke="#ff7f2a" stroke-width="20" />
+            <g animid="c" transform="translate(400,450)">
+                <use animid="c2" href="#planet-red" transform="scale(2.0)" />
+            </g>
+            <g animid="python" transform="translate(1200,450)" opacity="1">
+                <use animid="python2" href="#planet" transform="scale(4.6)" />
+            </g>
+            <g animid="labels" opacity="1">
+                <use href="#labels" />
+            </g>
+        </g>
+        <g duration="2000">
+            <line animid="edge0" x1="800" y1="450" x2="800" y2="450" stroke="#ff7f2a" stroke-width="0" />
+            <g animid="c" transform="translate(800,450)">
+                <use animid="c2" href="#planet-red" transform="scale(0.001)" />
+            </g>
+            <g animid="python" transform="translate(800,450)" opacity="1">
+                <use animid="python2" href="#planet" transform="scale(0.001)" />
+            </g>
+            <g animid="labels" opacity="0">
+                <use href="#labels" />
+            </g>
             <use animid="second-best" href="#second-best" opacity="1.0" />
             <path animid="line" style="fill:none;stroke:#2a7fff;stroke-width:5;stroke-linecap:butt" d="m 250.897,350 c 383.43301,0 759.4242,0 1142.8572,0" />
-            <g transform="translate(800,450)">
-                <use animid="numpy" href="#numpy-languages" transform="scale(0.001)" />
-            </g>
         </g>
         <g>
             <use href="#second-best" />
             <path animid="line" style="fill:none;stroke:#2a7fff;stroke-width:5;stroke-linecap:butt" d="m 250.897,280.66445 c 383.43301,0 759.4242,174.35216 1142.8572,174.35216" />
+            <use animid="tradeoffs" href="#tradeoffs" opacity="1" />
         </g>
         <g continue="">
             <use href="#second-best" />
             <path animid="line" style="fill:none;stroke:#2a7fff;stroke-width:5;stroke-linecap:butt" d="m 250.897,350 c 383.43301,0 759.4242,0 1142.8572,0" />
+            <use animid="tradeoffs" href="#tradeoffs" opacity="0" />
         </g>
         <g duration="1">
             <use href="#second-best" />
@@ -952,12 +999,18 @@
             <g transform="translate(800,450)">
                 <use animid="numpy" href="#numpy-languages" transform="scale(0.001)" />
             </g>
-            <g transform="translate(800,450)">
-                <use animid="cog" href="#cog" transform="scale(0.001)" />
-            </g>
             <use animid="growth" href="#growth" opacity="1" />
         </g>
         <g easing="sine">
+            <use animid="growth" href="#growth" opacity="0" />
+            <g transform="translate(800,450)">
+                <use animid="numpy" href="#numpy-languages" transform="scale(3)" />
+            </g>
+            <g transform="translate(800,450)">
+                <use animid="cog" href="#cog" transform="scale(0.001)" />
+            </g>
+        </g>
+        <g>
             <use animid="growth" href="#growth" opacity="0" />
             <g transform="translate(800,450)">
                 <use animid="numpy" href="#numpy-languages" transform="scale(3)" />
@@ -1109,12 +1162,11 @@
             </g>
         </g>
         <g duration="3000" onenterslide="enterFaces">
-            <g animid="astrodog" transform="translate(-400,0)">
-                <use href="#astrodog">
-                    <animateTransform attributeName="transform" attributeType="XML" type="rotate" values="0 0 900;15 0 900; 0 0 900" dur="7s" repeatCount="indefinite" />
-                </use>
+            <g animid="blackhole" transform="scale(0.001) translate(800000,450000)">
+                <use href="#blackhole" />
             </g>
-            <g animid="bigzoom" transform="scale(1)">
+            <use href="#background-stars" />
+            <g id="bigzoom">
                 <g transform="translate(800,450)">
                     <use animid="planet" href="#planet" transform="scale(2.5)" />
                 </g>
@@ -1123,43 +1175,63 @@
                     <use href="#faces" />
                 </g>
             </g>
-        </g>
-        <g duration="10000" easing="sine">
             <g animid="astrodog" transform="translate(1800,-500)">
                 <use href="#astrodog">
                     <animateTransform attributeName="transform" attributeType="XML" type="rotate" values="0 0 900;15 0 900; 0 0 900" dur="7s" repeatCount="indefinite" />
                 </use>
             </g>
-            <g animid="bigzoom" transform="scale(10) translate(-680 -380)">
-                <g transform="translate(800,450)">
-                    <use href="#planet" transform="scale(2.5)" />
-                </g>
+        </g>
+        <g easing="sine" duration="2000">
+            <g animid="blackhole" transform="scale(1)" opacity="1">
+                <use href="#blackhole" />
             </g>
-            <g animid="john" opacity="0">
-                <text class="text" text-anchor="middle" x="800" y="400">Dedicated to</text>
-                <text class="text" text-anchor="middle" x="800" y="500">John Hunter</text>
+            <use href="#background-stars" />
+            <g id="bigzoom" animid="bigzoom" transform="scale(1)">
+                <g transform="translate(800,450)">
+                    <use animid="planet" href="#planet" transform="scale(0.8)" />
+                </g>
+                <g animid="faces" transform="scale(1)">
+                    <use href="#orbit" />
+                    <use href="#faces" />
+                </g>
             </g>
         </g>
-        <g onenterslide="exitFaces" easing="linear">
-            <g transform="scale(10) translate(-680 -380)">
-                <g transform="translate(800,450)">
-                    <use href="#planet" transform="scale(2.5)" />
-                </g>
+        <g duration="4000" easing="sine" continue="">
+            <g animid="blackhole" transform="scale(1)" opacity="0">
+                <use href="#blackhole" />
             </g>
-            <g animid="john" opacity="1">
-                <text class="text" text-anchor="middle" x="800" y="400">Dedicated to</text>
-                <text class="text" text-anchor="middle" x="800" y="500">John Hunter</text>
+            <g animid="bigzoom" transform="scale(40) translate(-775 -432)">
+                <g transform="translate(800,450)">
+                    <use href="#planet" transform="scale(0.8)" />
+                </g>
             </g>
             <use animid="equality" href="#equality" opacity="0" />
         </g>
         <g easing="linear">
-            <g transform="scale(10) translate(-680 -380)">
+            <g animid="planet2" transform="scale(40) translate(-775 -432)">
                 <g transform="translate(800,450)">
-                    <use href="#planet" transform="scale(2.5)" />
+                    <use animid="planet" href="#planet" transform="scale(0.8)" />
                 </g>
             </g>
-            <g animid="john" opacity="0" />
             <use animid="equality" href="#equality" opacity="1" />
+        </g>
+        <g easing="linear" continue="">
+            <g animid="planet2" transform="scale(40) translate(-775 -432)">
+                <g animid="blackhole" transform="scale(1)" opacity="0">
+                    <use href="#blackhole" />
+                </g>
+                <g transform="translate(800,450)">
+                    <use animid="planet" href="#planet" transform="scale(0.8)" />
+                </g>
+            </g>
+            <use animid="equality" href="#equality" opacity="0" />
+        </g>
+        <g duration="3000">
+            <g animid="planet2" transform="scale(1)">
+                <g transform="translate(800,450)">
+                    <use animid="planet" href="#planet" transform="scale(0.001)" />
+                </g>
+            </g>
         </g>
     </g>
 </svg>

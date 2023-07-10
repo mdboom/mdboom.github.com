@@ -3,3 +3,9 @@
     font-family: Rockwell;
     font-size: 64px;
 }
+
+.text-sm {
+    fill: black;
+    font-family: Rockwell;
+    font-size: 48px;
+}

@@ -64,7 +64,7 @@ function initFaces() {
 }
 
 function initStarfield() {
-  const background = document.getElementById("background");
+  const background = document.getElementById("background-stars");
 
   for (var i = 0; i < 100; ++i) {
     const use = document.createElementNS(svgns, "use");
