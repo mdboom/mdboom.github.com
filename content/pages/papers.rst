@@ -5,6 +5,15 @@ Papers
 :comments: false
 :date: September 14, 2015
 
+Keynote presentations
+---------------------
+
+SciPy India 2019
+
+SciPy US 2023
+
+PyCon Colombia 2025
+
 Adaptive Optics
 ---------------
 
