@@ -1,6 +1,13 @@
 Music
 =====
 
+Radio production
+----------------
+
+I am the host of a weekly radio show on `WHCP <whcp.org>`__, the `Big Band
+Theory <https://www.whcp.org/show/big-band-theory>`__, airing Saturdays and
+Sundays at 7pm (ET), and available for streaming a day or two later.
+
 Composition
 -----------
 
