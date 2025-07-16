@@ -10,6 +10,10 @@ h1, h2, h3, h4, h5, a.navbar-brand, .navbar
     font-family: Vollkorn
 }
 
+p {
+    font-size: 1.2em;
+}
+
 .list-group-item
 {
     padding: 2px 2px

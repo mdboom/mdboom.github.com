@@ -232,7 +232,7 @@ better if more parts were agnostic to the dimensionality of the data.&lt;/p&gt;
 &lt;p&gt;It's really exciting to watch all that's going on, and thanks to Jake
 Vanderplass for getting this discussion rolling.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="matplotlib"></category></entry><entry><title>Matplotlib in the browser: It's coming</title><link href="http://droettboom.com/blog/2012/10/11/matplotlib-in-the-browser-its-coming/" rel="alternate"></link><published>2012-10-11T14:35:00-04:00</published><updated>2012-10-11T14:35:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-10-11:/blog/2012/10/11/matplotlib-in-the-browser-its-coming/</id><summary type="html">&lt;blockquote class="pull-quote"&gt;
+</content><category term="matplotlib"></category><category term="matplotlib"></category></entry><entry><title>Matplotlib in the browser: It's coming</title><link href="http://droettboom.com/blog/2012/10/11/matplotlib-in-the-browser-its-coming/" rel="alternate"></link><published>2012-10-11T14:35:00-04:00</published><updated>2012-10-11T14:35:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-10-11:/blog/2012/10/11/matplotlib-in-the-browser-its-coming/</id><summary type="html">&lt;blockquote class="pull-quote"&gt;
 UPDATE: I am now sharing my code in the
 &lt;a class="reference external" href="https://github.com/mdboom/mpl_browser_experiments"&gt;mdboom/mpl_browser_experiments&lt;/a&gt; github
 repository, rather than in a gist.&lt;/blockquote&gt;
@@ -393,7 +393,7 @@ peer to the existing backends.&lt;/p&gt;
 &lt;p&gt;Watch the matplotlib and IPython projects -- pull requests will be
 coming soon.&lt;/p&gt;
 &lt;/div&gt;
-</content></entry><entry><title>John Hunter</title><link href="http://droettboom.com/blog/2012/08/31/john-hunter/" rel="alternate"></link><published>2012-08-31T10:22:00-04:00</published><updated>2012-08-31T10:22:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-31:/blog/2012/08/31/john-hunter/</id><summary type="html">&lt;p&gt;We have lost one of the greats of our community.&lt;/p&gt;
+</content><category term="matplotlib"></category></entry><entry><title>John Hunter</title><link href="http://droettboom.com/blog/2012/08/31/john-hunter/" rel="alternate"></link><published>2012-08-31T10:22:00-04:00</published><updated>2012-08-31T10:22:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-31:/blog/2012/08/31/john-hunter/</id><summary type="html">&lt;p&gt;We have lost one of the greats of our community.&lt;/p&gt;
 &lt;p&gt;I first met John Hunter when he came to give a presentation about
 matplotlib at the Space Telescope Science Institute in 2004 (or
 thereabouts).  I remember being blown away by how capable matplotlib
@@ -419,7 +419,7 @@ together in supporting each other at a time like this.  Sometimes it
 really is more than just code.&lt;/p&gt;
 &lt;p&gt;If matplotlib has been useful to you in any way, please give
 generously to the &lt;a class="reference external" href="http://numfocus.org/johnhunter/"&gt;John Hunter Memorial Fund&lt;/a&gt;.&lt;/p&gt;
-</content></entry><entry><title>Client-side Rendering in Matplotlib, Part II: The language blender</title><link href="http://droettboom.com/blog/2012/08/07/client-side-rendering-in-matplotlib/" rel="alternate"></link><published>2012-08-07T13:56:00-04:00</published><updated>2012-08-07T13:56:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-07:/blog/2012/08/07/client-side-rendering-in-matplotlib/</id><summary type="html">&lt;div class="admonition note"&gt;
+</content><category term="matplotlib"></category></entry><entry><title>Client-side Rendering in Matplotlib, Part II: The language blender</title><link href="http://droettboom.com/blog/2012/08/07/client-side-rendering-in-matplotlib/" rel="alternate"></link><published>2012-08-07T13:56:00-04:00</published><updated>2012-08-07T13:56:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-07:/blog/2012/08/07/client-side-rendering-in-matplotlib/</id><summary type="html">&lt;div class="admonition note"&gt;
 &lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
 &lt;p class="last"&gt;EDIT 2012-08-08: Added benchmarks in Firefox in addition to Chrome&lt;/p&gt;
 &lt;/div&gt;
@@ -574,7 +574,7 @@ very numerically-biased benchmark.&lt;/p&gt;
 &lt;p&gt;Where does that leave us?  Who knows...  Interesting ride, though.
 Stay tuned and leave comments...  There's more to hack away at.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="matplotlib"></category></entry><entry><title>Client-side rendering in matplotlib, Part I: Defining the problem</title><link href="http://droettboom.com/blog/2012/08/06/matplotlib-client-side/" rel="alternate"></link><published>2012-08-06T16:16:00-04:00</published><updated>2012-08-06T16:16:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-06:/blog/2012/08/06/matplotlib-client-side/</id><summary type="html">&lt;p&gt;One of the big challenges that matplotlib faces as it enters its
+</content><category term="matplotlib"></category><category term="matplotlib"></category></entry><entry><title>Client-side rendering in matplotlib, Part I: Defining the problem</title><link href="http://droettboom.com/blog/2012/08/06/matplotlib-client-side/" rel="alternate"></link><published>2012-08-06T16:16:00-04:00</published><updated>2012-08-06T16:16:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-06:/blog/2012/08/06/matplotlib-client-side/</id><summary type="html">&lt;p&gt;One of the big challenges that matplotlib faces as it enters its
 second decade is moving from a desktop app to the web browser
 client/server paradigm.  This need has been known for a few years at
 least: SAGE and the IPython notebook are rich web clients and powerful
@@ -661,7 +661,7 @@ framework or file format.&lt;/li&gt;
 &lt;strong&gt;Drawing&lt;/strong&gt; and &lt;strong&gt;Rendering&lt;/strong&gt; phases happen in a continuous loop as
 the figure is panned, zoomed and resized.&lt;/p&gt;
 &lt;p&gt;The &lt;strong&gt;Drawing&lt;/strong&gt; phase comprises a great deal of Python and C++ code
-&lt;a class="footnote-reference" href="#id2" id="id1"&gt;[1]&lt;/a&gt;, much of it at the heart of what matplotlib is.  The big pieces
+&lt;a class="footnote-reference" href="#footnote-1" id="footnote-reference-1"&gt;[1]&lt;/a&gt;, much of it at the heart of what matplotlib is.  The big pieces
 are:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;ul class="simple"&gt;
@@ -696,12 +696,12 @@ why this is a hard problem yet?&lt;/p&gt;
 possible solutions over the upcoming days and weeks.  In the meantime,
 I encourage all the comments and help on this I can get.&lt;/p&gt;
 &lt;hr class="docutils" /&gt;
-&lt;table class="docutils footnote" frame="void" id="id2" rules="none"&gt;
+&lt;table class="docutils footnote" frame="void" id="footnote-1" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;It's easy enough to see what code is required for the drawing
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;It's easy enough to see what code is required for the drawing
 phase by using &lt;cite&gt;coverage.py&lt;/cite&gt; and turning it on at the start of
 &lt;cite&gt;Figure.draw&lt;/cite&gt; and turning it off again at the end.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-</content><category term="matplotlib"></category></entry></feed>
+</content><category term="matplotlib"></category><category term="matplotlib"></category></entry></feed>

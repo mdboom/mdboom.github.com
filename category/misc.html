@@ -34,8 +34,6 @@
         <link href="http://droettboom.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
               title="Boom!  Michael Droettboom's blog ATOM Feed"/>
 
-
-
         <link href="http://droettboom.com/feeds/misc.atom.xml" type="application/atom+xml" rel="alternate"
               title="Boom!  Michael Droettboom's blog misc ATOM Feed"/>
 
@@ -43,7 +41,7 @@
 <body>
 
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-	<div class="container">
+    <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -69,15 +67,19 @@
         <!-- /.navbar-collapse -->
     </div>
 </div> <!-- /.navbar -->
+
 <!-- Banner -->
 <!-- End Banner -->
+
+<!-- Content Container -->
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
             <article>
-                <h2><a href="http://droettboom.com/blog/2019/11/01/this-week-in-glean-november-1-2019/">This Week in Glean: November 1, 2019</a></h2>
-                <div class="summary"><p>When data goes wrong</p>
-                    <a class="btn btn-default btn-xs" href="http://droettboom.com/blog/2019/11/01/this-week-in-glean-november-1-2019/">more ...</a>
+                <h2><a href="http://droettboom.com/blog/2025/07/13/how-to-think-about-llms-for-oss-development/">How to think about LLMs for OSS development</a></h2>
+                <div class="summary"><p class="first last">A talk I gave at PyCon Colombia 2025</p>
+
+                    <a class="btn btn-default btn-xs" href="http://droettboom.com/blog/2025/07/13/how-to-think-about-llms-for-oss-development/">more ...</a>
                 </div>
             </article>
             <hr/>
@@ -91,7 +93,7 @@
         </p>
     <p>
       <strong>About Michael Droettboom</strong><br/>
-        I'm a computer scientist and software engineer, specializing in imaging and data: sheet music, scientific visualization, astromony, biomedical data and software telemetry.  Open source software and open science advocate.
+        I'm a computer scientist and software engineer, specializing in imaging and data: sheet music, scientific visualization, astromony, biomedical data and software telemetry.  Open source software and open science advocate.  Core Python developer.
     </p>
 </div><!-- Sidebar -->
 <section class="well well-sm">
@@ -103,9 +105,7 @@
   <ul class="list-group" id="social">
     <li class="list-group-item"><a href="http://github.com/mdboom"><i class="fa fa-github-square fa-lg"></i> github</a></li>
     <li class="list-group-item"><a href="http://linkedin.com/in/mdboom"><i class="fa fa-linkedin-square fa-lg"></i> linkedin</a></li>
-    <li class="list-group-item"><a href="http://twitter.com/MDroettboom"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
     <li class="list-group-item"><a href="https://mastodon.technology/invite/kvc3zFhG"><i class="fa fa-mastodon-square fa-lg"></i> mastodon</a></li>
-    <li class="list-group-item"><a href="http://keybase.io/mdboom"><i class="fa fa-check-square fa-lg"></i> keybase.io</a></li>
   </ul>
 </li>
 <!-- End Sidebar/Social -->
@@ -118,7 +118,7 @@
       <a href="http://mozilla.com" target="_blank">Mozilla</a>
     </li>
     <li class="list-group-item">
-      <a href="https://iodide.io" target="_blank">Iodide</a>
+      <a href="http://pyodide.org" target="_blank">Pyodide</a>
     </li>
     <li class="list-group-item">
       <a href="http://matplotlib.org" target="_blank">matplotlib</a>
@@ -130,28 +130,16 @@
       <a href="http://jupyter.org" target="_blank">Jupyter</a>
     </li>
     <li class="list-group-item">
-      <a href="http://astropy.org" target="_blank">Astropy</a>
-    </li>
-    <li class="list-group-item">
-      <a href="http://numpy.org" target="_blank">Numpy</a>
-    </li>
-    <li class="list-group-item">
       <a href="http://valgrind.org" target="_blank">Valgrind</a>
     </li>
     <li class="list-group-item">
       <a href="http://www.gnu.org/software/emacs/" target="_blank">Emacs</a>
     </li>
     <li class="list-group-item">
-      <a href="http://i3wm.org/" target="_blank">i3 window manager</a>
-    </li>
-    <li class="list-group-item">
       <a href="http://tmux.sf.net/" target="_blank">tmux</a>
     </li>
     <li class="list-group-item">
       <a href="http://sphinx.pocoo.org/" target="_blank">Sphinx</a>
-    </li>
-    <li class="list-group-item">
-      <a href="http://fedoraproject.org" target="_blank">Fedora Linux</a>
     </li>
   </ul>
 </li>
@@ -162,11 +150,13 @@
         </div>
     </div>
 </div>
+<!-- End Content Container -->
+
 <footer>
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2019 Michael Droettboom
+         <div class="col-xs-10">&copy; 2025 Michael Droettboom
             &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                <p><small>  <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.en"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
@@ -185,6 +175,7 @@
 
 <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
 <script src="http://droettboom.com/theme/js/respond.min.js"></script>
+
 
     <!-- Disqus -->
     <script type="text/javascript">

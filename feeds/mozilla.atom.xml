@@ -20,8 +20,8 @@ makes that tricky, or at least I couldn't figure it out in a short amount of
 time. Fortunately, &lt;tt class="docutils literal"&gt;emscripten&lt;/tt&gt; provides a handy backdoor to just force this
 on everything: the &lt;tt class="docutils literal"&gt;EMCC_CFLAGS&lt;/tt&gt; environment variable. Therefore, to make a
 profiling-friendly build of &lt;tt class="docutils literal"&gt;pyodide&lt;/tt&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;make clean
-&lt;span class="nv"&gt;EMCC_CFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;--profiling make
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;make&lt;span class="w"&gt; &lt;/span&gt;clean
+&lt;span class="nv"&gt;EMCC_CFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;--profiling&lt;span class="w"&gt; &lt;/span&gt;make
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="setting-start-and-stop-points-for-profiling"&gt;
@@ -36,7 +36,7 @@ turn the profiler on and off.&lt;/p&gt;
 &lt;p&gt;If you wanted to call these from C/C++, you could use the &lt;tt class="docutils literal"&gt;EM_ASM&lt;/tt&gt; macro, which
 allows you to insert literal Javascript into the C application:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;EM_ASM&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="n"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;profile&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;profile&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
 &lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;In my case, I wanted to turn the profiler on and off from Python, so I can do:&lt;/p&gt;
@@ -59,12 +59,12 @@ profiling vanilla Javascript in the browser.&lt;/p&gt;
 &lt;p&gt;For &lt;tt class="docutils literal"&gt;pyodide&lt;/tt&gt;, I created a profiling build to look into the &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/blob/master/benchmark/benchmarks/julia.py"&gt;julia benchmark&lt;/a&gt;
 that I knew was performing poorly. Right away, I noticed from the Call Tree that
 50% of the time was spent in this function:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;named&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;NAMED_GLOBALS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="nx"&gt;Module&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;g$_&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;Module&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;_&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;// &amp;lt;- 50% of runtime HERE&lt;/span&gt;
-        &lt;span class="p"&gt;};&lt;/span&gt;
-    &lt;span class="p"&gt;})(&lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;NAMED_GLOBALS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nx"&gt;Module&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;g$_&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Module&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;_&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// &amp;lt;- 50% of runtime HERE&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;})(&lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This code is actually part of the boilerplate that emscripten emits. It helps
@@ -72,25 +72,24 @@ dynamically loaded modules (such as Numpy in my case) access symbols in the main
 module. Since these symbols don't change at runtime, we don't actually need to
 do the dictionary lookup for &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Module['_'&lt;/span&gt; + named]&lt;/tt&gt; every time, we can cache
 (memoize) it at startup and then just use that:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;named&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;NAMED_GLOBALS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;func&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Module&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;_&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-        &lt;span class="nx"&gt;Module&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;g$_&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;func&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="p"&gt;};&lt;/span&gt;
-    &lt;span class="p"&gt;})(&lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;NAMED_GLOBALS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;func&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Module&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;_&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nx"&gt;Module&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;g$_&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;func&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;})(&lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This 2-line change to emscripten resulted in significant speedups in my
 &lt;tt class="docutils literal"&gt;pyodide&lt;/tt&gt; benchmarks across the board.&lt;/p&gt;
-&lt;object data="/images/benchmark_improvement.svg" style="width: 800px; height: 800px;" type="image/svg+xml"&gt;
-description&lt;/object&gt;
+&lt;object data="/images/benchmark_improvement.svg" style="width: 800px; height: 800px;" type="image/svg+xml"&gt;description&lt;/object&gt;
 &lt;p&gt;Here, the &lt;em&gt;x&lt;/em&gt;-axis is the number of times slower that WebAssembly runs vs. native
 code. The grey bars are the timings before this change, and blue bars are the
 timings after this change.&lt;/p&gt;
 &lt;p&gt;More details about this changes are in the &lt;a class="reference external" href="https://github.com/kripken/emscripten/pull/6437"&gt;pull request&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="python"></category><category term="data science"></category></entry><entry><title>Scientific Python in the Browser</title><link href="http://droettboom.com/blog/2018/04/04/python-in-the-browser/" rel="alternate"></link><published>2018-04-04T00:00:00-04:00</published><updated>2018-04-11T00:00:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-04-04:/blog/2018/04/04/python-in-the-browser/</id><summary type="html">&lt;p class="first last"&gt;An early report on getting the scientific Python stack compiled to WebAssembly.&lt;/p&gt;
+</content><category term="mozilla"></category><category term="python"></category><category term="data science"></category></entry><entry><title>Scientific Python in the Browser</title><link href="http://droettboom.com/blog/2018/04/04/python-in-the-browser/" rel="alternate"></link><published>2018-04-04T00:00:00-04:00</published><updated>2018-04-11T00:00:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-04-04:/blog/2018/04/04/python-in-the-browser/</id><summary type="html">&lt;p class="first last"&gt;An early report on getting the scientific Python stack compiled to WebAssembly.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; An early report on getting the scientific Python stack compiled to WebAssembly.&lt;/p&gt;
 &lt;div class="section" id="data-science-in-the-browser"&gt;
 &lt;h2&gt;Data Science in the Browser&lt;/h2&gt;
@@ -146,7 +145,7 @@ shared on both sides of the language barrier without copying,
 which is particularly important for large Numpy arrays.&lt;/p&gt;
 &lt;p&gt;Say, for example, you had a value in Javascript:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// javascript&lt;/span&gt;
-&lt;span class="nx"&gt;secret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Wklv#lv#olnh#pdjlf$&amp;quot;&lt;/span&gt;
+&lt;span class="nx"&gt;secret&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Wklv#lv#olnh#pdjlf$&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;You could use it from Python by using the &lt;tt class="docutils literal"&gt;from js import ...&lt;/tt&gt; syntax:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# python&lt;/span&gt;
@@ -156,7 +155,7 @@ which is particularly important for large Numpy arrays.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;And then send data back to the Javascript side using &lt;tt class="docutils literal"&gt;pyodide.pyimport&lt;/tt&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// javascript&lt;/span&gt;
-&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;decoded&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;pyodide&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pyimport&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;decoded&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;decoded&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;pyodide&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pyimport&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;decoded&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;One of the coolest side effects of this design is that Python has complete
 access to the Web API, so it can manipulate the DOM, use HTML Canvas, access
@@ -205,8 +204,7 @@ useful approximation for now.&lt;/p&gt;
 were run on the same machine in the native CPython implementation and in Firefox
 Nightly using selenium. The following figure shows how many times slower the
 WebAssembly implementation is.&lt;/p&gt;
-&lt;object data="/images/pyodide-benchmarks.svg" style="width: 800px; height: 800px;" type="image/svg+xml"&gt;
-description&lt;/object&gt;
+&lt;object data="/images/pyodide-benchmarks.svg" style="width: 800px; height: 800px;" type="image/svg+xml"&gt;description&lt;/object&gt;
 &lt;p&gt;&lt;strong&gt;EDIT 2018-04-10:&lt;/strong&gt; The original results posted here inadvertently included
 Numpy import time in the WebAssembly times (but not in the native times).
 These have now been corrected above. There is some improvement in the
@@ -252,7 +250,7 @@ stack in the browser. I'm pretty new to WebAssembly and I'd love any help,
 advice or comments to make this better.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</content><category term="python"></category><category term="data science"></category></entry><entry><title>Jupyter notebooks and version control</title><link href="http://droettboom.com/blog/2018/01/18/diffable-jupyter-notebooks/" rel="alternate"></link><published>2018-01-18T00:00:00-05:00</published><updated>2018-01-18T00:00:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-01-18:/blog/2018/01/18/diffable-jupyter-notebooks/</id><summary type="html">&lt;p class="first last"&gt;Presents an experimental alternative file format for Jupyter notebooks that plays nicer with version control.&lt;/p&gt;
+</content><category term="mozilla"></category><category term="python"></category><category term="data science"></category></entry><entry><title>Jupyter notebooks and version control</title><link href="http://droettboom.com/blog/2018/01/18/diffable-jupyter-notebooks/" rel="alternate"></link><published>2018-01-18T00:00:00-05:00</published><updated>2018-01-18T00:00:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-01-18:/blog/2018/01/18/diffable-jupyter-notebooks/</id><summary type="html">&lt;p class="first last"&gt;Presents an experimental alternative file format for Jupyter notebooks that plays nicer with version control.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Presents an experimental alternative file format for Jupyter notebooks that plays nicer with version control.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;UPDATE: 2018-04-11:&lt;/strong&gt; Matthias Bussonnier pointed out on Twitter he did something &lt;a class="reference external" href="https://matthiasbussonnier.com/posts/05-YAML%20Notebook.html"&gt;very similar quite some time ago&lt;/a&gt;.  Given the interest, what can we do to push this along so it's an obvious choice for Jupyter users?&lt;/p&gt;
 &lt;div class="section" id="the-problem"&gt;
@@ -379,4 +377,4 @@ Please leave comments, suggestions and questions below.&lt;/p&gt;
 &lt;h2&gt;Acknowledgements&lt;/h2&gt;
 &lt;p&gt;This work was supported by &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;moz://a&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="jupyter"></category><category term="python"></category><category term="data science"></category></entry></feed>
+</content><category term="mozilla"></category><category term="jupyter"></category><category term="python"></category><category term="data science"></category></entry></feed>
