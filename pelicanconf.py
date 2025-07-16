@@ -16,7 +16,7 @@ DEFAULT_LANG = u'en'
 
 STATIC_PATHS = ['static', 'images', 'papers', 'extra/CNAME']
 EXTRA_PATH_METADATA = {
-    'extra/CNAME': {'path': 'CNAME'},
+    'extra/CNAME': {'path': 'iCNAME'},
     'extra/pyodide_console.html': {'path': 'pyodide_console.html'},
     'static/keybase.txt': {'path': 'keybase.txt'},
     'images/favicon2.png': {'path': 'favicon.png'}
@@ -35,18 +35,14 @@ DISPLAY_CATEGORIES_ON_MENU = False
 
 LINKS = (
     ('Mozilla', 'http://mozilla.com'),
-    ('Iodide', 'https://iodide.io'),
+    ('Pyodide', 'http://pyodide.org'),
     ('matplotlib', 'http://matplotlib.org'),
     ('Python', 'http://python.org'),
     ('Jupyter', 'http://jupyter.org'),
-    ('Astropy', 'http://astropy.org'),
-    ('Numpy', 'http://numpy.org'),
     ('Valgrind', 'http://valgrind.org'),
     ('Emacs', 'http://www.gnu.org/software/emacs/'),
-    ('i3 window manager', 'http://i3wm.org/'),
     ('tmux', 'http://tmux.sf.net/'),
-    ('Sphinx', 'http://sphinx.pocoo.org/'),
-    ('Fedora Linux', 'http://fedoraproject.org'))
+    ('Sphinx', 'http://sphinx.pocoo.org/'))
 
 DEFAULT_PAGINATION = 3
 
@@ -75,12 +71,10 @@ PLUGINS = ['i18n_subsites']
 SITELOGO = 'images/favicon.png'
 
 AVATAR = 'images/headshot.jpg'
-ABOUT_ME = "I'm a computer scientist and software engineer, specializing in imaging and data: sheet music, scientific visualization, astromony, biomedical data and software telemetry.  Open source software and open science advocate."
+ABOUT_ME = "I'm a computer scientist and software engineer, specializing in imaging and data: sheet music, scientific visualization, astromony, biomedical data and software telemetry.  Open source software and open science advocate.  Core Python developer."
 
 SOCIAL = (('github', 'http://github.com/mdboom'),
           ('linkedin', 'http://linkedin.com/in/mdboom'),
-          ('twitter', 'http://twitter.com/MDroettboom'),
-          ('mastodon', 'https://mastodon.technology/invite/kvc3zFhG'),
-          ('keybase.io', 'http://keybase.io/mdboom', 'check'))
+          ('mastodon', 'https://mastodon.technology/invite/kvc3zFhG'))
 
 CC_LICENSE = "CC-BY-NC"
