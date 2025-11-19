@@ -39,10 +39,9 @@ LINKS = (
     ('matplotlib', 'http://matplotlib.org'),
     ('Python', 'http://python.org'),
     ('Jupyter', 'http://jupyter.org'),
-    ('Valgrind', 'http://valgrind.org'),
-    ('Emacs', 'http://www.gnu.org/software/emacs/'),
-    ('tmux', 'http://tmux.sf.net/'),
-    ('Sphinx', 'http://sphinx.pocoo.org/'))
+    ('Pyodide', 'https://pyodide.org'),
+    ('CUDA Python', "https://github.com/nvidia/cuda-python"),
+)
 
 DEFAULT_PAGINATION = 3
 
@@ -52,7 +51,7 @@ DEFAULT_PAGINATION = 3
 ARTICLE_URL = 'blog/{date:%Y}/{date:%m}/{date:%d}/{slug}/'
 ARTICLE_SAVE_AS = 'blog/{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html'
 
-THEME = os.path.join('themes', 'pelican-bootstrap3')
+THEME = os.path.join('..', 'pelican-themes', 'pelican-bootstrap3')
 
 DISQUS_SITENAME = "mdboom"
 DISQUS_NO_ID = True
@@ -65,7 +64,7 @@ FAVICON = 'images/favicon.png'
 
 JINJA_ENVIRONMENT = {'extensions': ['jinja2.ext.i18n']}
 
-PLUGIN_PATHS = ['plugins']
+PLUGIN_PATHS = [os.path.join('..', 'pelican-plugins')]
 PLUGINS = ['i18n_subsites']
 
 SITELOGO = 'images/favicon.png'
