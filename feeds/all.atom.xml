@@ -1,0 +1,1491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="https://droettboom.com/" rel="alternate"/><link href="https://droettboom.com/feeds/all.atom.xml" rel="self"/><id>https://droettboom.com/</id><updated>2025-07-13T00:00:00-04:00</updated><entry><title>How to think about LLMs for OSS development</title><link href="https://droettboom.com/blog/2025/07/13/how-to-think-about-llms-for-oss-development/" rel="alternate"/><published>2025-07-13T00:00:00-04:00</published><updated>2025-07-13T00:00:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2025-07-13:/blog/2025/07/13/how-to-think-about-llms-for-oss-development/</id><summary type="html">&lt;p class="first last"&gt;A talk I gave at PyCon Colombia 2025&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;&lt;em&gt;In July, I had the honor of giving a keynote talk at PyCon Colombia 2025.  This isn't exactly what I said on stage, but it is the script I was working from.  Since some people prefer to read rather than watch a long video, I thought I would share it.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The full title of this talk is:
+&amp;quot;How to Think About Large Language Models for
+Open Source Software Development: A hype-free approach:
+That should still be relevant in a few months:
+That should work for most people&amp;quot;&lt;/p&gt;
+&lt;div class="section" id="prologue"&gt;
+&lt;h2&gt;Prologue&lt;/h2&gt;
+&lt;div class="section" id="disclaimer-1"&gt;
+&lt;h3&gt;Disclaimer #1&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Opinions are my own.&lt;/strong&gt; Biases are my own, too.  I know everyone’s experience in the world is different, and what works for me may not work for you.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="disclaimer-2"&gt;
+&lt;h3&gt;Disclaimer #2&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;This is a “how to think about” talk, not a “how to”.&lt;/strong&gt; There are plenty of “how to’s” out there – I don’t need to create another one.  I want to leave you with some good questions, and seed some good hallway conversations.  And maybe have a bit of a call to action.&lt;/p&gt;
+&lt;p&gt;But the other reason this talk is not a “how to” is that...&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="disclaimer-3"&gt;
+&lt;h3&gt;Disclaimer #3&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;This space is changing too rapidly to effectively give a keynote about.&lt;/strong&gt; It seems like there is a new model or new layer on top or a new startup with a new solution every single day.  I can’t possibly be on top of all the things people are doing in this space – if I say “we need a solution to X” in this talk, chances are someone already is working on that, I’m just not aware of them yet.&lt;/p&gt;
+&lt;p&gt;Thankfully I think I’ve found a framing to address this kind of rapid change.  Back in the 90’s when I was studying computer science, the big battlefield was programming languages.  There were all these languages that seemed to come and go – how do we know which ones to teach?  The answer was – none of them.  Focus on the things that are more fundamental – algorithms, data structures, distributed systems theory, etc – and use “teaching languages”, like “Turing, Eiffel, Standard ML of NJ” (anyone heard of those?) rather than the fads of the day.  Students are left “learning how to learn”.  I still think this was a good approach.&lt;/p&gt;
+&lt;p&gt;By treating LLMs as an unknown value, we can talk about general principles that are likely to remain relevant and ignore “news of the day” thinking.  And whether LLMs improve or devolve, hopefully you are left understanding how to make decisions on your own to apply them to your own day-to-day work.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="disclaimer-4"&gt;
+&lt;h3&gt;Disclaimer #4&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;I am not an expert in using LLMs for open source software development.&lt;/strong&gt; Let’s break this one down:&lt;/p&gt;
+&lt;p&gt;First, what do I mean by “expert”?  Anyone can become an “expert” in something with the right conditions.  No one was born knowing “software development” – they just had the opportunity to spend time learning about it and doing it.  That point may seem obvious, but there is a couple of decades of good research saying that most people believe that expertise is a fixed thing.  And counter to that, it’s been shown that SWE teams that believe in the “growth mindset” – i.e. that anyone can become an expert in something with the right conditions – tend to perform much better than teams that believe in the “immutable” view of expertise.&lt;/p&gt;
+&lt;p&gt;Secondly, I say “LLMs” here because I want to make it clear that what I’m talking about are these generative tools based on large language models, plus the scaffolding like agents added on the side. I’m talking about this current new wave of things as distinct from the broader world of Data Science and Machine Learning.  In particular, Artificial Intelligence is too overloaded, in my humble opinion.&lt;/p&gt;
+&lt;p&gt;And… I’m reducing the scope way down here to just open source software development.  I’m not talking about drawing cartoons, doing drug discovery or any of the other things that generative AI may be used for.  I’m also not talking about building software products that have LLMs inside them – that’s a whole other interesting space, but outside scope for today.&lt;/p&gt;
+&lt;p&gt;And I’m also talking about open source specifically, which is a bit different from, say, enterprise software development or other kinds of technical engineering.  This is something I’ve been doing for over 25 years, so maybe I am an expert on this part, and based on that, I would argue that open source software development is actually a very complex set of social dynamics more than it is a technical activity.  More on that later.&lt;/p&gt;
+&lt;p&gt;And when you put this all together, it’s clear that the number of experts who understand these very complex probabilistic tools (LLMs) and how they interact with these very complex social systems (OSS) is vanishingly small.  In general, the intersection of software engineering and social or psychological systems has historically been extremely poorly studied (though there are some standout researchers in that area, such as Dr. Nadia Eghbal and Dr. Catherine Hicks), but when you are talking about tools that have only been widely available for, say, 2-3 years – at scale:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Experience in AI for software development is the new 20 years of Java experience:&lt;/strong&gt; Meaning most of us are still figuring this out and working to “become” experts.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="disclaimer-5"&gt;
+&lt;h3&gt;Disclaimer #5&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;LLM discourse is mired in anecdotalism and polarization:&lt;/strong&gt; In software, it’s long been understood that “Works For Me” isn’t good enough.  This is just a really, really old core scientific principle.  It isn’t enough to say that “I took echinacea and my cold got better”, you would need to actually study the effects of echinacea on a larger population to ascribe any causal link that it’s a cure for the common cold.  So it’s surprising to me that so much of the discourse around LLMs is still at the level of “I did something” and “it was amazing” or “it’s garbage”.  Assuming good faith actors, both of those experiences are valid, but it doesn’t actually tell us much about how these systems really work when confronted with the real world at large.&lt;/p&gt;
+&lt;img alt="" src="/images/opinions.png" /&gt;
+&lt;p&gt;So, let’s suppose this is the universe of opinions or experiences with LLMs, plotted in a 2D space: on one dimension you have a person’s belief in its effectiveness and on the other how beneficial it will be.  You might have one of these “anecdotes”, like “AI is just a fad”, “I built my app in a weekend” (this is the vibe coder – which I sort of take to be a straw man).&lt;/p&gt;
+&lt;p&gt;And over here you have “AI will replace all SWE jobs 😦”, and “AI will replace all SWE jobs 😃”.  (The emoji are doing a lot of work here.)&lt;/p&gt;
+&lt;p&gt;But these are all extreme opinions.  The really interesting ones are in this middle part, because this is where you can have conversations about moving the field forward. For my part, I think there &lt;em&gt;is&lt;/em&gt; something useful here, and LLMs are here to stay, but I don’t yet know where it will end up for my own work or the world at large.  But if we want to make them better and more useful, and work for &lt;em&gt;US&lt;/em&gt;, specifically for open source software development, we need to be having conversations in &lt;em&gt;HERE&lt;/em&gt;.  One of the problems is that social media is designed to amplify the outlier opinions.  LLMs are probably the biggest technological advance we have seen since the beginning of the “social media” era, and that’s not doing us any favors.&lt;/p&gt;
+&lt;p&gt;The other reason anecdotalism is so sticky is:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="disclaimer-6"&gt;
+&lt;h3&gt;Disclaimer #6&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;LLM evaluation is really hard:&lt;/strong&gt; The solution space of LLMs is just so large that it’s beyond any direct means to evaluate it at scale.&lt;/p&gt;
+&lt;img alt="" src="/images/digits.png" /&gt;
+&lt;p&gt;When I first started doing machine learning back in the late 90’s, the general approach was you took a data set (like a set of hand-written digits) and you trained your model on half of it, then you used the other half to evaluate how it was doing.  (I’m hand waving over a lot of the detail here).  This was all very straightforward and easy to understand, and, as long as you were ethical, hard to game.  But with LLMs the expected solution space is so large, you can’t feasibly evaluate it in the usual way.  Often people resort to horrorific distortions of the scientific process like using one model to evaluate another model.  A lot of very smart people are working on making this better – but the state-of-the-art benchmark for software engineering tasks, SWE Bench, remains controversial, not just because there may be shenanigans going on by some players, but because the sophistication required to evaluate a model is equal to the sophistication required to create it in the first place.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="disclaimer-7"&gt;
+&lt;h3&gt;Disclaimer #7&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;We all make mistakes:&lt;/strong&gt; One thing I do find useful when talking about evaluating or benchmarking LLMs is the recognition that humans make mistakes, too.  We shouldn’t be comparing machine output to some Platonic ideal of the perfect programmer – the perfect programmer doesn’t and can’t exist – there are always grey areas and tradeoffs everywhere you look, because software is built to operate in the real world, which is messy.  But more importantly, because humans make mistakes and always have, we already have a set of processes and social constructs that we use to mitigate those mistakes, which can also apply to LLM-generated content.  It is crazy to think we would take those guardrails off just because we have more automation in the loop.  (More on that later).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="my-favorite-bug"&gt;
+&lt;h3&gt;My favorite bug&lt;/h3&gt;
+&lt;img alt="" src="/images/scatter.png" /&gt;
+&lt;p&gt;With that, let me take a detour and tell you about one of the favorite bugs that I caused.  Back in 2007, I was working on matplotlib, and we had a problem that drawing scatter plots with lots of circles was just too slow.  At the time, circles were drawn as polygons with a large number of edges, like 100.  And filling a polygon with a lot of sides is rather slow.&lt;/p&gt;
+&lt;img alt="" src="/images/bezier.png" /&gt;
+&lt;p&gt;I found a paper that showed how circles could be approximated using 4 bezier splines instead, and all of the graphics libraries underpinning matplotlib understand how to optimize bezier splines rather well, so it’s a whole lot faster, and the paper even got into detail about how accurate this approximation was, and with some back of the napkin math it was clear that even if you drew a circle the whole size of a screen or a page, the inaccuracy wouldn’t be visible at all.&lt;/p&gt;
+&lt;img alt="" src="/images/phoenix.png" /&gt;
+&lt;p&gt;Enter the Mars Phoenix lander.  The team managing the spacecraft at JPL was using matplotlib to plot its trajectory as it hurtled toward Mars at 12,000 km/h.&lt;/p&gt;
+&lt;img alt="" src="/images/trajectory.png" /&gt;
+&lt;p&gt;When you zoom in on the path, which is an ellipse much much larger than the circle representing Mars, the inaccuracy of the bezier curve was quite noticeable, and made it look as if the spacecraft would miss its landing entirely.&lt;/p&gt;
+&lt;img alt="" src="/images/command.png" /&gt;
+&lt;p&gt;They weren’t using this for guidance (thank goodness!), but planned to use it on the big control room screens when they invited the press to watch the landing.  “Oh, and, by the way, it’s already on its way, so please figure this out before it lands, we kind of have a hard deadline.”&lt;/p&gt;
+&lt;p&gt;Reverting the change wasn’t enough – the polygonal approximation also wouldn’t work at that scale (but it wasn’t as bad).  I worked to figure out the solution – basically dynamically truncating the arc when larger than the viewport – the solution isn’t really the important part.&lt;/p&gt;
+&lt;p&gt;The moral of the story is – we all make mistakes and it’s really hard to anticipate all of the uses of software when you write it. The process – of not putting code into production until others have a chance to test it – saved its impact from being much worse. And the way it was fixed – in one place in matplotlib itself – meant that future NASA missions, and all other matplotlib users, could also benefit.&lt;/p&gt;
+&lt;p&gt;Back to the disclaimers.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="disclaimer-8"&gt;
+&lt;h3&gt;Disclaimer #8&lt;/h3&gt;
+&lt;img alt="" src="/images/ethics.png" /&gt;
+&lt;p&gt;The most important disclaimer: Ethics matter: I want to acknowledge there are many ethical problems with LLMs, from climate-threatening energy usage, to amplification of bias, to labor market disruption, to intellectual property issues, and on and on.  I will touch on a few specific ethical quandaries related closely to open source software specifically later on, but I can’t effectively cover all of the ethical issues in this talk.  They are all important – anyone using LLMs should be aware of the pitfalls and be supporting those who are working on making it better.  We can proceed with some things in parallel while we work on solving the problems, and proceed with different levels of caution, depending on our context.  I don’t think “we should stop exploring these tools until we have all of the downsides figured out” to be a very practical position, but I’m also not going to say you are wrong if you choose to avoid the use of LLMs because any of these ethical problems are a dealbreaker for you.  It’s important to me the open source community participates with everyone.&lt;/p&gt;
+&lt;p&gt;For my part, you may notice my slides are simple because I chose not to use generative art in my talks on ethical grounds – you are getting the true and full extent of my own artistic abilities here. I had some humans help with the content, but I didn’t use LLMs to help me write this.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-middle"&gt;
+&lt;h2&gt;The middle&lt;/h2&gt;
+&lt;div class="section" id="open-source-software-contribution-workflow"&gt;
+&lt;h3&gt;Open source software contribution workflow&lt;/h3&gt;
+&lt;img alt="" src="/images/workflow.png" /&gt;
+&lt;p&gt;This is the usual workflow of adding a feature or fixing a bug to an open source project.  It’s worth noting that even this is fairly new – GitHub has mainstreamed this workflow, but 15 years ago, everyone just threw their code in a pile and hoped for the best.  But I think most serious open source these days has a workflow like this to mitigate risk and improve quality – with varying levels of rigidity based on context or project maturity.&lt;/p&gt;
+&lt;p&gt;You can actually use LLMs for any of these tasks, but how you approach them depends on the type of task.&lt;/p&gt;
+&lt;img alt="" src="/images/learning.png" /&gt;
+&lt;p&gt;For “learning” tasks, the LLM is acting like an augmented search engine, a summarization tool, or a research assistant.  It can flag important things to learn or try and help to build a mental model of the current state of the code.  There is low risk here – if it sends you down the wrong path, all you have wasted is time.&lt;/p&gt;
+&lt;img alt="" src="/images/creating.png" /&gt;
+&lt;p&gt;For “creative” tasks, you can use the LLM to generate the content, but ultimately, the human in the loop must take responsibility for the final result.  “The LLM did this, it works, but I don’t understand why” is never going to pass muster – not just because it’s riskier, but because the end result needs to be understandable by other humans and LLM systems in the future.  I might be reflecting my bias from working on long term projects here, but “building a quick short-term solution to throw away” doesn’t seem like we are advancing the art.&lt;/p&gt;
+&lt;p&gt;An important side note here is that LLMs seem to really pick up on documentation – “documenting code is the new SEO for LLMs”.&lt;/p&gt;
+&lt;img alt="" src="/images/collaborating.png" /&gt;
+&lt;p&gt;For “collaborating”, these are the points where the community comes together, so “keeping it real” is actually really important.  I think it’s ok to use machine translation and grammar checking tools to help make communication more effective, but beyond that, you want to be human here.  This is where things like personal trust, empathy and a sense of common purpose are built.  If a maintainer starts to feel like they are talking to a machine, it undermines that.  And I can’t really envision a world where LLMs are just chatting with other LLMs here.&lt;/p&gt;
+&lt;img alt="" src="/images/mitigating.png" /&gt;
+&lt;p&gt;It’s the “risk mitigation” steps where we need to retain the most caution.  Even here, LLMs may be useful – for example, GitHub Copilot will review PRs for you – but it’s unlikely the LLM will have enough context both of the entire codebase or how it connects to the real world to meaningfully review an entire PR.  I think today it’s more of an incremental improvement on linting – recognizing problematic patterns.  So the LLM is basically “another signal in the mix” and not a “final arbiter of quality or taste”.  Even with all of these combined filters of multiple humans and LLMs, my concern here is the mistakes and risks created by LLM-generated content may be subtly different from human-generated content, and the skill at identifying them will take some time to adapt to.&lt;/p&gt;
+&lt;img alt="" src="/images/workflow-full.png" /&gt;
+&lt;p&gt;So, in summary, you can see that we can accommodate some risks HERE, because we are mitigating for it OVER HERE.  If the use of LLMs made things worse, the mitigation may need to be different or harder in some ways (and we are going to need to adapt), but it doesn’t change fundamentally.&lt;/p&gt;
+&lt;img alt="" src="/images/traffic-jam.png" /&gt;
+&lt;p&gt;If the LLMs are improving throughput or “productivity”, the worry is that the volume of submissions will increase, open source library maintainers, already overwhelmed, will become burnt out.  A number of projects have already seen an influx of AI generated slop pull requests.  I think that for the most part “fully automated” or “malicious” issues and PRs will be filtered transparently by the platform – just like e-mail spam, it still exists but I don’t spend a lot of time thinking about it.  But for hybrid things – where a human is using LLMs to complete work faster and not fully understanding the implications, that’s a real issue.&lt;/p&gt;
+&lt;p&gt;A more optimistic view of this is that the quality of PRs will improve before they even get to the maintainers, and maintainers will spend less time in back-and-forth getting them in shape. I, personally, have built a prototype to help first time bug reporters create better reports.  It’s hard to get that without creating additional frustration.  But I haven’t seen any evidence that we are at the point where LLMs are reducing the burden on maintainers, yet.&lt;/p&gt;
+&lt;p&gt;Wherever that ends up, one thing seems clear: From the maintainer’s side, the job will become even more about reading code, understanding the larger implications of changes, and connecting issues in the software to real human problems.  My personal concern there is based on what we know about how humans learn – learning to be good at reading requires learning to be good at writing.  For example, when we teach how to identify a good and well-reasoned essay, we don’t just have students read a bunch of essays, we teach them how to write an essay – a principle known as constructivism.  It’s the same with code.  So there is an educational / pedagogical challenge we have to help support the next generation of open source maintainers and help them become good readers when they may get less experience as writers.&lt;/p&gt;
+&lt;p&gt;On the contributor’s side, the advice I have is to stay real and human.  Anything produced by LLM as a tool ultimately is still coming from you, so you need to learn enough to understand and stand behind it.&lt;/p&gt;
+&lt;img alt="" src="/images/assembly.png" /&gt;
+&lt;p&gt;Don’t fall into the productivity trap: using LLMs is not about timing your tasks with a stop watch and watching seconds being shaved off.  This is a Fordism (assembly line) view of software engineering, which doesn’t really apply to knowledge work.  Instead, think of time scales of weeks not seconds.  It’s not “it takes me X% less time to fix a bug”.&lt;/p&gt;
+&lt;p&gt;It’s things like – Are you forming stronger connections to the projects that you use?  Are you finding yourself understanding them better?  Do you find yourself tackling projects with confidence that seemed daunting before?  Does building quick throwaway prototypes help you understand the correct “permanent” solution?  You may never know if it’s the LLM that’s helping you, or just natural learning and the growing of expertise.  (If the cost of the LLM subscription is not an issue) does it even matter?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="generative-ai-policies-for-open-source-software-packages"&gt;
+&lt;h3&gt;Generative AI policies for open source software packages&lt;/h3&gt;
+&lt;p&gt;I’m not the only one thinking about how LLMs fit into open source software development.  One way to get a read on where the community is is by looking at the open source contribution policies.  It’s early days, and therefore, unlike licenses and codes of conduct which have settled on a handful of standard models, LLM policies are mostly “one-offs”.  When you look at some of them, it’s a sign that all open source isn’t created equal and they exist on a sort of “political spectrum”.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;I'm just going to link to some policies here.  I think they largely fit into the framework described above and highlight some of the concerns that OSS projects currently have.&lt;/em&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://matplotlib.org/devdocs/devel/contribute.html#restrictions-on-generative-ai-usage"&gt;matplotlib restrictions on generative AI usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://devguide.python.org/getting-started/generative-ai/"&gt;CPython Developers' Guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://www.linuxfoundation.org/legal/generative-ai"&gt;Linux Foundation Generative AI policy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://github.com/servo/servo/blob/adc0fc984d07918ad2eac3ab641d833a3cab008c/CONTRIBUTING.md#ai-contributions"&gt;Servo AI policy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://discuss.scientific-python.org/t/a-policy-on-generative-ai-assisted-contributions/1702"&gt;Scientific Python generative AI policy discussion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="open-source-graph-of-trust"&gt;
+&lt;h3&gt;Open source graph of trust&lt;/h3&gt;
+&lt;img alt="" src="/images/trust.png" /&gt;
+&lt;p&gt;Now let’s look at things from the perspective of a consumer of open source.  Typically, you pull in some dependencies for your project, and you end up with a whole tree of secondary dependencies that get automatically pulled in.  This forms a network of trust or reputation.  In this example, I’m writing the Phoenix Mars lander software, and I depend directly on matplotlib.  I heard it was a good library, maybe I met some of the folks at a conference and they seemed like nice people, so I trust it to do the right thing.  I don’t really know or care what’s beneath that, but maybe I trust the matplotlib developers to care about that.  Again, if one of these dependencies tanked in quality, the usual signals from the open source trust network will probably kick in.  (Entire companies exist to help with this dependency safety problem, of course, if you /really/ need to be certain.)  So there are some self-healing and mitigation of risk properties here as well.  When you ignore the possibility of bad faith actors, I think LLMs represent an incremental, not existential, risk.&lt;/p&gt;
+&lt;p&gt;However, as the xz incident has shown – where a state actor impersonated a developer in order to take over an open source project and inject malicious code – using LLMs to convincingly impersonate developers at scale may soon be a real risk.&lt;/p&gt;
+&lt;p&gt;But let’s get back to my favorite bug.  What if, back in 2007 the authors had access to an LLM, and they asked it to fix the bug?  As designed today, that LLM tool is more likely to just create a workaround – in this case, having been told that matplotlib’s circle drawing code was buggy, it might attempt to write its own in the local project and just pass the result of that calculation off to matplotlib, rather than trying to report the bug or filing a pull request against matplotlib.  These sort of workarounds are fine, of course – I don’t want to imply that we as busy software developers have to submit every bug we fix upstream.  But the social system that makes open source work depends on the fact that a certain fraction of engineers &lt;em&gt;do&lt;/em&gt; submit fixes upstream.  If everyone started using LLM-based tools, and those tools never suggest contributing upstream, we’d very soon run aground.  Not just because open source project quality wouldn’t move forward, but the solutions to the same problems may never make it back into training sets.  And if you remember that the LLM was trained on open source projects to begin with, what it’s actually doing is syphoning off value from the open source commons to individual users of the LLMs, and ultimately, in the form of money, to the companies that sell access to LLMs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="epilogue"&gt;
+&lt;h2&gt;Epilogue&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;We need tools that purpose-built for the social dynamics of open source software.&lt;/strong&gt; The current wave of LLM tools are largely coming from large corporations and are built to support that model of development.  We instead need tools that are built with the conventions of open source in mind.  There are a few things holding back building the whole stack:&lt;/p&gt;
+&lt;p&gt;Models are mind-bogglingly expensive to build.  By some outside estimates, ChatGPT will cost $2.5 billion dollars to train
+They are built from questionable rights in the training sets.  While some of the models sell themselves as “open”, most are not “open source” by the classic definition – that they could be rebuilt from first principles from fully open data.
+It’s therefore currently too hard to “bootstrap” the whole stack in an open source way, and open source has historically been reluctant to build processes that rely on tools we can’t build from first principles
+The copyright claims on the output of the models may be problematic. Can we find a way to ensure that attribution is being correctly applied?  That’s a hard problem because by the time the model is built it’s virtually impossible to track back to the source, but perhaps it is possible to do that as a post-processing step.&lt;/p&gt;
+&lt;p&gt;So, right now, I think it’s nigh impossible to build a model that would meet the traditional definition of open source.  But we don’t need to wait to “get everything we want” – we can pick these apart and tackle them individually – it will be hard and expensive at first, but eventually economies may shift.&lt;/p&gt;
+&lt;img alt="" src="/images/blackbox.png" /&gt;
+&lt;p&gt;And while we tackle those problems, we can still treat the LLM as a black box and build tooling designed for open source processes all around it.  I do believe the open source community has the opportunity to build something better that serves the commons, but we aren’t going to get there by standing on the sidelines.&lt;/p&gt;
+&lt;p&gt;Again, a lot of these things are already coming about.  Let’s do more of that.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Existing processes for risk mitigation help, but will need to continue to evolve.&lt;/strong&gt; The same systems that improve code quality with humans are still useful with LLMs, but they may change in nature, and they may require re-thinking how we approach validation of quality.  To the extent that LLMs start training us, it will be in our ability to detect and remediate for their problematic content.&lt;/p&gt;
+&lt;p&gt;We have some real challenges to get there – some of them are technical, and some are pedagogical.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Collaboration and reputation matter now more than ever.&lt;/strong&gt; Understanding how to work with other open source developers to meet the real world use cases remains the key skill, whether LLMs succeed or fail.&lt;/p&gt;
+&lt;p&gt;With the possibility of impersonation, or generation of “magical” solutions, personal responsibility, understanding, and reputation matter now more than ever.&lt;/p&gt;
+&lt;p&gt;I think that any additional skills you connect to software development matter more.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Conclusion:&lt;/strong&gt; And I think that’s as good a segway as any to go forth to the conference and meet and chat in the hallway about the possibilities here.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Gracias por escuchar y buena suerte!&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="misc"/></entry><entry><title>Profiling WebAssembly</title><link href="https://droettboom.com/blog/2018/04/11/profiling-webassembly/" rel="alternate"/><published>2018-04-11T00:00:00-04:00</published><updated>2018-04-11T00:00:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-04-11:/blog/2018/04/11/profiling-webassembly/</id><summary type="html">&lt;p class="first last"&gt;Tips for profiling WebAssembly&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Tips for profiling WebAssembly&lt;/p&gt;
+&lt;p&gt;I couldn't find a comprehensive guide to profiling WebAssembly, so I thought I'd
+share my own limited experience here. In my &lt;a class="reference external" href="/blog/2018/04/04/python-in-the-browser/"&gt;last post&lt;/a&gt;, I talked about benchmarking a
+WebAssembly port of the scientific Python stack. I knew which benchmarks were
+doing better than others and had some theories about why, but since I didn't yet
+know how to profile WebAssembly, I couldn't really answer that with any
+certainty.&lt;/p&gt;
+&lt;p&gt;It turns out that profiling WebAssembly is quite easy.&lt;/p&gt;
+&lt;div class="section" id="rebuilding-with-the-profiling-flag"&gt;
+&lt;h2&gt;Rebuilding with the --profiling flag&lt;/h2&gt;
+&lt;p&gt;The first step is to rebuild the application with the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--profiling&lt;/span&gt;&lt;/tt&gt; flag
+passed to both the compiler and the linker for every object. This makes sure
+that all of the information necessary for profiling is available in the output
+and makes the code more readable. The typical way to do this would be to set
+&lt;tt class="docutils literal"&gt;CFLAGS&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;LDFLAGS&lt;/tt&gt; and let the &lt;tt class="docutils literal"&gt;./configure&lt;/tt&gt; script for your project
+pick those up. In the case of &lt;tt class="docutils literal"&gt;pyodide&lt;/tt&gt;, the Python cross-compiling setup
+makes that tricky, or at least I couldn't figure it out in a short amount of
+time. Fortunately, &lt;tt class="docutils literal"&gt;emscripten&lt;/tt&gt; provides a handy backdoor to just force this
+on everything: the &lt;tt class="docutils literal"&gt;EMCC_CFLAGS&lt;/tt&gt; environment variable. Therefore, to make a
+profiling-friendly build of &lt;tt class="docutils literal"&gt;pyodide&lt;/tt&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;make&lt;span class="w"&gt; &lt;/span&gt;clean
+&lt;span class="nv"&gt;EMCC_CFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;--profiling&lt;span class="w"&gt; &lt;/span&gt;make
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="setting-start-and-stop-points-for-profiling"&gt;
+&lt;h2&gt;Setting start and stop points for profiling&lt;/h2&gt;
+&lt;p&gt;You generally don't want to profile an entire run, which would include
+initialization and other things. It turns out there's a handy Javascript API to
+turn the profiler on and off.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;console.profile()&lt;/tt&gt; turns the profiler on.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;console.profileEnd()&lt;/tt&gt; turns the profiler off.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you wanted to call these from C/C++, you could use the &lt;tt class="docutils literal"&gt;EM_ASM&lt;/tt&gt; macro, which
+allows you to insert literal Javascript into the C application:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;EM_ASM&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;profile&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In my case, I wanted to turn the profiler on and off from Python, so I can do:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;js&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;console&lt;/span&gt;
+&lt;span class="n"&gt;console&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;profile&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="profiling"&gt;
+&lt;h2&gt;Profiling&lt;/h2&gt;
+&lt;p&gt;The actual profiling is performed within the development tools of your browser.
+When you load an &lt;tt class="docutils literal"&gt;.html&lt;/tt&gt; file that runs the WebAssembly built and instrumented
+as above, it will record a set of profiling data available from the
+&lt;strong&gt;Performance&lt;/strong&gt; tab.&lt;/p&gt;
+&lt;p&gt;I'll refer you to the &lt;a class="reference external" href="https://developer.mozilla.org/en-US/docs/Tools/Performance"&gt;Performance Tools documentation&lt;/a&gt; for more
+information. Suffice it to say that profiling WebAssembly is almost exactly like
+profiling vanilla Javascript in the browser.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="case-study"&gt;
+&lt;h2&gt;Case study&lt;/h2&gt;
+&lt;p&gt;For &lt;tt class="docutils literal"&gt;pyodide&lt;/tt&gt;, I created a profiling build to look into the &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/blob/master/benchmark/benchmarks/julia.py"&gt;julia benchmark&lt;/a&gt;
+that I knew was performing poorly. Right away, I noticed from the Call Tree that
+50% of the time was spent in this function:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;NAMED_GLOBALS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nx"&gt;Module&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;g$_&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Module&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;_&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// &amp;lt;- 50% of runtime HERE&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;})(&lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This code is actually part of the boilerplate that emscripten emits. It helps
+dynamically loaded modules (such as Numpy in my case) access symbols in the main
+module. Since these symbols don't change at runtime, we don't actually need to
+do the dictionary lookup for &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;Module['_'&lt;/span&gt; + named]&lt;/tt&gt; every time, we can cache
+(memoize) it at startup and then just use that:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;NAMED_GLOBALS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;func&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;Module&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;_&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nx"&gt;Module&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;g$_&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;func&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;})(&lt;/span&gt;&lt;span class="nx"&gt;named&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This 2-line change to emscripten resulted in significant speedups in my
+&lt;tt class="docutils literal"&gt;pyodide&lt;/tt&gt; benchmarks across the board.&lt;/p&gt;
+&lt;object data="/images/benchmark_improvement.svg" style="width: 800px; height: 800px;" type="image/svg+xml"&gt;description&lt;/object&gt;
+&lt;p&gt;Here, the &lt;em&gt;x&lt;/em&gt;-axis is the number of times slower that WebAssembly runs vs. native
+code. The grey bars are the timings before this change, and blue bars are the
+timings after this change.&lt;/p&gt;
+&lt;p&gt;More details about this changes are in the &lt;a class="reference external" href="https://github.com/kripken/emscripten/pull/6437"&gt;pull request&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="mozilla"/><category term="python"/><category term="data science"/></entry><entry><title>Scientific Python in the Browser</title><link href="https://droettboom.com/blog/2018/04/04/python-in-the-browser/" rel="alternate"/><published>2018-04-04T00:00:00-04:00</published><updated>2018-04-11T00:00:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-04-04:/blog/2018/04/04/python-in-the-browser/</id><summary type="html">&lt;p class="first last"&gt;An early report on getting the scientific Python stack compiled to WebAssembly.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; An early report on getting the scientific Python stack compiled to WebAssembly.&lt;/p&gt;
+&lt;div class="section" id="data-science-in-the-browser"&gt;
+&lt;h2&gt;Data Science in the Browser&lt;/h2&gt;
+&lt;p&gt;Shortly after starting at Mozilla in January, I became aware of Hamilton Ulmer
+and Brendan Colloran's &lt;a class="reference external" href="https://github.com/iodide-project/iodide"&gt;Iodide&lt;/a&gt;
+project, an experiment to build a data science notebook based on web
+technologies. Unlike Jupyter notebooks, the computation happens in the browser,
+with direct access to Web API technologies like the DOM. Sharing a notebook is
+as simple as passing around a single HTML file, since there's no server side to
+worry about. It's not out to replace Jupyter notebooks, but rather to exist in a
+different design tradeoff space that makes it more suitable the sharing and
+collaboration.&lt;/p&gt;
+&lt;p&gt;Since it targets the browser, the programming language of Iodide is, of course,
+Javascript. While there are a number of libraries for doing data science in
+Javascript, such as &lt;a class="reference external" href="https://github.com/nicolaspanel/numjs"&gt;numjs&lt;/a&gt; and &lt;a class="reference external" href="http://scijs.net/packages/"&gt;scijs&lt;/a&gt;, they aren't as widely used or as battle-tested
+as the scientific Python or R ecosystems. Nonetheless, I think &amp;quot;data science in
+Javascript&amp;quot; is an interesting area to explore, particularly since Javascript has
+some of the best JIT compilers of any dynamic language. This advantage allows
+writing both high-level orchestration and low-level numeric code in the same
+language, side-stepping the notorious &amp;quot;two language problem&amp;quot; in scientific
+Python. (In Python land, most of the core scientific libraries have significant
+chunks of code in lower level languages such as C, FORTRAN or &lt;a class="reference external" href="http://cython.org/"&gt;Cython&lt;/a&gt; for performance reasons.) Combining Javascript's great
+compiler technology, and perhaps adding a smattering of transpilation to fix
+some syntactic issues, is really promising, and Iodide as a project is
+exploring that space.&lt;/p&gt;
+&lt;p&gt;Nonetheless, we received frequent feedback that Iodide &amp;quot;looks really cool, but I
+wish I could use the Python (or R) tools I'm familiar with.&amp;quot; I understood in
+theory that it should be possible to compile the Python interpreter into
+&lt;a class="reference external" href="http://webassembly.org/"&gt;WebAssembly&lt;/a&gt; in order to run it in the browser.
+There are already a few projects that do this: (&lt;a class="reference external" href="https://github.com/dgym/cpython-emscripten"&gt;cpython-emscripten&lt;/a&gt;, &lt;a class="reference external" href="https://github.com/micropython/micropython/pull/3575"&gt;micropython javascript support&lt;/a&gt;, &lt;a class="reference external" href="http://pypyjs.org/"&gt;pypyjs&lt;/a&gt;). Unfortunately, I couldn't find a project that included
+a practical scientific Python stack including &lt;a class="reference external" href="http://numpy.org"&gt;Numpy&lt;/a&gt; and
+friends. I was concerned about the amount of effort it would take to build such
+a thing, and also whether the result would be performant enough to be useful. In
+February, we had a conversation with some folks who work on WebAssembly tooling
+at Mozilla, and they were pretty bullish that it wouldn't be too hard. Based on
+their optimism, I gave it a shot, and starting with dgym's &lt;a class="reference external" href="https://github.com/dgym/cpython-emscripten"&gt;cpython-emscripten&lt;/a&gt; as a basis, I had the basic
+parts of a Python interpreter working in WebAssembly in a couple of days. Of
+course, going from that to a working Numpy took much longer, but thanks to some
+help from Alon Zakai and others, Numpy is working, too. With that done, it has
+been much easier getting other libraries higher up the stack to work, including
+preliminary support for Pandas.&lt;/p&gt;
+&lt;div class="section" id="tight-integration"&gt;
+&lt;h3&gt;Tight integration&lt;/h3&gt;
+&lt;p&gt;One thing that sets this implementation apart from other Python-in-the-browser
+projects I've come across is the ability to easily pass and share objects
+between Python and Javascript.&lt;/p&gt;
+&lt;p&gt;The basic Python data types (None, bool, int, float, str, bytes, list and dict)
+are transparently converted to and from their Javascript equivalents. Other
+types, including Numpy arrays, are wrapped in a proxy that allows Javascript to
+call their methods and access their items and attributes. Vice versa, Javascript
+objects are wrapped in a Python proxy. These proxies allow objects to be
+shared on both sides of the language barrier without copying,
+which is particularly important for large Numpy arrays.&lt;/p&gt;
+&lt;p&gt;Say, for example, you had a value in Javascript:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// javascript&lt;/span&gt;
+&lt;span class="nx"&gt;secret&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Wklv#lv#olnh#pdjlf$&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You could use it from Python by using the &lt;tt class="docutils literal"&gt;from js import ...&lt;/tt&gt; syntax:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# python&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;js&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;secret&lt;/span&gt;
+
+&lt;span class="n"&gt;decoded&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;chr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;ord&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;secret&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And then send data back to the Javascript side using &lt;tt class="docutils literal"&gt;pyodide.pyimport&lt;/tt&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// javascript&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;decoded&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;pyodide&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pyimport&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;decoded&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;One of the coolest side effects of this design is that Python has complete
+access to the Web API, so it can manipulate the DOM, use HTML Canvas, access
+webcams or audio and all the other cool things you can do from Javascript in a
+browser.&lt;/p&gt;
+&lt;p&gt;For example, changing the browser tab's title is as simple as importing
+&lt;tt class="docutils literal"&gt;window&lt;/tt&gt; and setting an attribute:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;js&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;window&lt;/span&gt;
+&lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;My mind is blown&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="what-works"&gt;
+&lt;h3&gt;What works&lt;/h3&gt;
+&lt;p&gt;Most of the Python standard library works. The most notable exceptions are:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;subprocess&lt;/tt&gt;: since the browser isn't an OS, it can't spawn new processes.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;socket&lt;/tt&gt;: access to raw network sockets would break the browser security
+model. There are a lot of networking-related things in the standard library
+built on &lt;tt class="docutils literal"&gt;socket&lt;/tt&gt; that therefore also don't work.&lt;/li&gt;
+&lt;li&gt;All of the browser sandboxing still applies, so you can't access the local
+filesystem. However, by calling through Javascript, you do have access to
+&lt;tt class="docutils literal"&gt;XMLHttpRequest&lt;/tt&gt; and browser local storage. Eventually, Python wrappers
+around this functionality &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/issues/19"&gt;should be written&lt;/a&gt; to make those
+operations feel more like they do in native Python.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Within Numpy, all of the core functionality works, but there's no support for
+&lt;tt class="docutils literal"&gt;long double&lt;/tt&gt; (but those are pretty niche). There are still some low-level
+compiler bugs that prevent the FFT stuff from compiling, but that should
+eventually resolve.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="how-fast-is-it"&gt;
+&lt;h3&gt;How fast is it?&lt;/h3&gt;
+&lt;p&gt;To answer this question, I reached for a few existing Python and Numpy benchmarks:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The venerable &lt;a class="reference external" href="https://svn.python.org/projects/python/trunk/Lib/test/pystone.py"&gt;pystone&lt;/a&gt;,
+which ships with CPython.&lt;/li&gt;
+&lt;li&gt;Serge Guelton's set of &lt;a class="reference external" href="https://github.com/serge-sans-paille/numpy-benchmarks/"&gt;numpy benchmarks&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These benchmarks probably fall into the trap of being a little too &amp;quot;synthetic&amp;quot;.
+I would have preferred to also use the &lt;a class="reference external" href="http://pyperformance.readthedocs.io/index.html"&gt;Python Performance Benchmark Suite&lt;/a&gt;, which aims to be a little
+closer to &amp;quot;real world&amp;quot;, but it has a significant number of dependencies and
+would need to be adapted to work on a platform without &lt;tt class="docutils literal"&gt;subprocess&lt;/tt&gt; before it
+could be used in this context. Nonetheless, I think these benchmarks offer a
+useful approximation for now.&lt;/p&gt;
+&lt;p&gt;The &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/tree/master/benchmark/benchmarks/"&gt;benchmarks&lt;/a&gt;
+were run on the same machine in the native CPython implementation and in Firefox
+Nightly using selenium. The following figure shows how many times slower the
+WebAssembly implementation is.&lt;/p&gt;
+&lt;object data="/images/pyodide-benchmarks.svg" style="width: 800px; height: 800px;" type="image/svg+xml"&gt;description&lt;/object&gt;
+&lt;p&gt;&lt;strong&gt;EDIT 2018-04-10:&lt;/strong&gt; The original results posted here inadvertently included
+Numpy import time in the WebAssembly times (but not in the native times).
+These have now been corrected above. There is some improvement in the
+results, but not in a best or worst case. You can see the original results
+&lt;a class="reference external" href="/images/pyodide-benchmarks-2018-04-09.svg"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The results are interesting. For benchmarks that spend most of their time in
+Numpy routines, such as &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/tree/master/benchmark/benchmarks/harris.py"&gt;harris&lt;/a&gt;
+or &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/tree/master/benchmark/benchmarks/rosen.py"&gt;rosen&lt;/a&gt;,
+runtime is at par with the native-compiled Python. When WebAssembly rocks, it
+really, really rocks. Unfortunately, for other benchmarks that spend a lot of
+time looping or making function calls in Python, runtimes can be as much as 35
+times slower. I have an unsubstantiated hunch that this is due to the use of
+Emscripten's &lt;a class="reference external" href="https://kripken.github.io/emscripten-site/docs/porting/guidelines/function_pointer_issues.html#asm-pointer-casts"&gt;EMULATE_FUNCTION_POINTER_CASTS&lt;/a&gt;
+option which is required to make all of the function pointer calls that CPython
+does work correctly.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;UPDATE 2018-04-11:&lt;/strong&gt; My hunch was wrong, and I was able to get to the bottom
+of the root cause and significantly speed up these benchmarks. See my post
+&lt;a class="reference external" href="/blog/2018/04/11/profiling-webassembly/"&gt;Profiling WebAssembly&lt;/a&gt; for more
+info.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="future-directions"&gt;
+&lt;h3&gt;Future directions&lt;/h3&gt;
+&lt;p&gt;I'd love to see improvements to the toolchain that close the performance gap. At
+this point, I don't personally know enough to anticipate how much work is
+involved.&lt;/p&gt;
+&lt;p&gt;Another current limitation is that all of the packages you anticipate you might
+need must be compiled and wrapped into a single large data file that is
+downloaded in its entirety to your browser before anything can start. It would
+be great to modularize that, so that packages are downloaded on demand. Related
+to that, it would also be helpful to modularize the build system so that
+individual packages can be added more independently. &lt;a class="reference external" href="https://github.com/conda/conda-build"&gt;Conda build&lt;/a&gt; could potentially serve as a basis for
+that.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="check-it-out"&gt;
+&lt;h3&gt;Check it out&lt;/h3&gt;
+&lt;p&gt;The easiest way to play with this is to visit the &lt;a class="reference external" href="https://iodide-project.github.io/pyodide-demo/python.html"&gt;example Pyodide notebook&lt;/a&gt; (EDIT: This link
+was fixed to a working version). (Note that this only works on Firefox right
+now. Chrome support is &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/issues/17"&gt;pending&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;You can also get involved at &lt;a class="reference external" href="https://github.com/iodide-project/pyodide/"&gt;pyodide github repository&lt;/a&gt;. Note that while Pyodide grew
+out of the needs of Iodide, there's nothing Iodide-specific about it, and it
+should be useful in other contexts where you want to embed a scientific Python
+stack in the browser. I'm pretty new to WebAssembly and I'd love any help,
+advice or comments to make this better.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="mozilla"/><category term="python"/><category term="data science"/></entry><entry><title>Jupyter notebooks and version control</title><link href="https://droettboom.com/blog/2018/01/18/diffable-jupyter-notebooks/" rel="alternate"/><published>2018-01-18T00:00:00-05:00</published><updated>2018-01-18T00:00:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-01-18:/blog/2018/01/18/diffable-jupyter-notebooks/</id><summary type="html">&lt;p class="first last"&gt;Presents an experimental alternative file format for Jupyter notebooks that plays nicer with version control.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Presents an experimental alternative file format for Jupyter notebooks that plays nicer with version control.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;UPDATE: 2018-04-11:&lt;/strong&gt; Matthias Bussonnier pointed out on Twitter he did something &lt;a class="reference external" href="https://matthiasbussonnier.com/posts/05-YAML%20Notebook.html"&gt;very similar quite some time ago&lt;/a&gt;.  Given the interest, what can we do to push this along so it's an obvious choice for Jupyter users?&lt;/p&gt;
+&lt;div class="section" id="the-problem"&gt;
+&lt;h2&gt;The problem&lt;/h2&gt;
+&lt;p&gt;There's no doubt that Jupyter notebooks are taking over the world for data science experimentation.
+When notebooks are relied on for ongoing decision-making within an organization, it's inevitable that, like all software, they will require bugfixes or updates.
+Without proper version control of these changes, its difficult to know what changes were made, and, more importantly, to reason about what effect those changes may have had on the results.
+While you can simply put Jupyter notebooks into a version control system (VCS), such as &lt;a class="reference external" href="http://git-scm.com"&gt;git&lt;/a&gt;, the design of the notebook file format makes certain important operations, like calculating the difference between two revisions, less friendly than they could be.&lt;/p&gt;
+&lt;p&gt;For example, the &lt;a class="reference external" href="http://nbformat.readthedocs.io/"&gt;Jupyter notebook file format&lt;/a&gt; contains binary blobs for image output.
+The diffs between these sections are large and noisy, and ultimately unhelpful to the software developer reviewing a pull request.
+Secondly, since the file format is based on &lt;a class="reference external" href="http://www.json.org"&gt;JSON&lt;/a&gt;, multi-line strings (such as all source code) are full of boilerplate:
+Each line is in its own set of double-quotes, with explicit newlines (&lt;tt class="docutils literal"&gt;\n&lt;/tt&gt;).  For example, this Python:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+items = []
+for i, item in enumerate(database.all_docs(params={'include_docs' : True})):
+    if i &amp;gt; 1: break
+    items.append(item)
+print items
+&lt;/pre&gt;
+&lt;p&gt;turns into the following JSON:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;quot;source&amp;quot;: [
+  &amp;quot;items = []\n&amp;quot;,
+  &amp;quot;for i, item in enumerate(database.all_docs(params={'include_docs' : True})):\n&amp;quot;,
+  &amp;quot;    if i &amp;gt; 1: break\n&amp;quot;,
+  &amp;quot;    items.append(item)\n&amp;quot;,
+  &amp;quot;print items&amp;quot;
+]
+&lt;/pre&gt;
+&lt;p&gt;All of this makes it more difficult to see meaningful changes through all the noise.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="some-solutions"&gt;
+&lt;h2&gt;Some solutions&lt;/h2&gt;
+&lt;p&gt;I'm by no means the first person to notice these issues, and others have tackled this problem from different directions.&lt;/p&gt;
+&lt;p&gt;In the blog post &lt;a class="reference external" href="http://timstaley.co.uk/posts/making-git-and-jupyter-notebooks-play-nice/"&gt;Making Git and Jupyter play nice&lt;/a&gt;, Tim Staley suggests filtering the notebook files to remove the output cells and less important content (such as &lt;tt class="docutils literal"&gt;metadata&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;execution_count&lt;/tt&gt;).
+While this goes a long way to removing a lot of the &amp;quot;noise&amp;quot; in diffs, the content is still JSON.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://github.com/rossant/ipymd"&gt;ipymd&lt;/a&gt; perhaps comes the closest to solving this problem, in my opinion, by converting notebooks to markdown, with code inserted as standard markdown code blocks.  For example:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Here is some Python code:
+
+```python
+&amp;gt;&amp;gt;&amp;gt; print(&amp;quot;Hello world!&amp;quot;)
+Hello world!
+```
+&lt;/pre&gt;
+&lt;p&gt;It currently has a major shortcoming, in that it doesn't handle non-textual output cells.
+Jupyter output cells are more complex than they might appear at first glance, as each can include multiple representations of the same thing, allowing the front-end to ultimately choose the best based on context.
+I think there are probably some clever ways that could be resolved, but any solution is likely to be lossy relative to what standard Jupyter notebooks can do, or break strict compatibility with markdown.&lt;/p&gt;
+&lt;p&gt;There is also &lt;a class="reference external" href="http://nbdime.readthedocs.io/en/stable/"&gt;nbdime&lt;/a&gt;: a tool designed specifically for diffing and merging Jupyter notebooks.
+The advantage of nbdime is that, since it was purpose-built for Jupyter notebooks, the user interface can take advantage of notebook-specific features, such as image diffing.
+Unfortunately, it is hard to integrate it into existing code review workflows, like Github pull requests.
+Here at Mozilla, for example, many of those doing data science in Jupyter notebooks are Firefox software engineers first and foremost, so they are comfortable and opinionated about the community of &amp;quot;power tools&amp;quot; built around version control: suggesting a single-use tool just for notebooks might be a hard sell.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="yet-another-idea"&gt;
+&lt;h2&gt;Yet another idea&lt;/h2&gt;
+&lt;p&gt;Given all this, I've experimented with an approach that both allows for better diffs while still retaining all of the information present in a Jupyter notebook.
+There are lot of ways it could be done, but in the interest of not inventing entirely new syntax, it turns out you can get a large part of the way to the goal by just using &lt;a class="reference external" href="http://yaml.org"&gt;YAML&lt;/a&gt; instead of JSON, with the following tweaks to the YAML writer:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Always write markdown, source code and text output in &lt;a class="reference external" href="http://www.yaml.org/spec/1.2/spec.html#id2795688"&gt;literal style&lt;/a&gt;.  This avoids the explicit newlines required for multi-line text in JSON.&lt;/li&gt;
+&lt;li&gt;Remove any keys that point to empty lists or dictionaries, e.g. a &lt;tt class="docutils literal"&gt;metadata&lt;/tt&gt; entries without any actual metadata.&lt;/li&gt;
+&lt;li&gt;Order the keys in a consistent way that makes sense to humans.  For example, for each cell include the &lt;tt class="docutils literal"&gt;cell_type&lt;/tt&gt; first, followed by the content, with less important things like &lt;tt class="docutils literal"&gt;metadata&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;execution_order&lt;/tt&gt; afterward.&lt;/li&gt;
+&lt;li&gt;Non-textual output cells are saved externally into a directory of files.
+This keeps output out of the diff of the main code in the notebook, but it's still present when the notebook is reloaded.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For example, here is a cell with output in this YAML-based format:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+- cell_type: code
+  source: |-
+    fig, ax = plt.subplots(figsize=(18,10))
+    sns.boxplot(df.ARR_DELAY_NEW, df.FL_DATE, ax=ax)
+    fig.autofmt_xdate()
+  outputs:
+  - output_type: display_data
+    data:
+      text/plain: |-
+        &amp;lt;matplotlib.figure.Figure at 0x7f679ad6e190&amp;gt;
+      image/png: Exploration of Airline On-Time Performance_files/6ff8d173e4d8a288.png
+  metadata:
+    collapsed: false
+  execution_count: 45
+&lt;/pre&gt;
+&lt;p&gt;Compare that to the original in standard Jupyter notebook JSON:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+{
+ &amp;quot;cell_type&amp;quot;: &amp;quot;code&amp;quot;,
+ &amp;quot;input&amp;quot;: [
+  &amp;quot;fig, ax = plt.subplots(figsize=(18,10))\n&amp;quot;,
+  &amp;quot;sns.boxplot(df.ARR_DELAY_NEW, df.FL_DATE, ax=ax)\n&amp;quot;,
+  &amp;quot;fig.autofmt_xdate()&amp;quot;
+ ],
+ &amp;quot;metadata&amp;quot;: {
+  &amp;quot;collapsed&amp;quot;: false
+ },
+ &amp;quot;outputs&amp;quot;: [
+  {
+   &amp;quot;metadata&amp;quot;: {},
+   &amp;quot;output_type&amp;quot;: &amp;quot;display_data&amp;quot;,
+   &amp;quot;data&amp;quot;: {
+    &amp;quot;text/plain&amp;quot;: [
+     &amp;quot;&amp;lt;matplotlib.figure.Figure at 0x7f679ad6e190&amp;gt;&amp;quot;
+    ],
+    &amp;quot;image/png&amp;quot;: &amp;quot;...BASE64 encoded data removed...&amp;quot;,
+   }
+  }
+ ],
+ &amp;quot;execution_count&amp;quot;: 45
+},
+&lt;/pre&gt;
+&lt;p&gt;The result is something that is not quite as user-friendly as the markdown produced by ipymd, but it is fully lossless.
+Another nice feature of the design is that converting from this format back to a standard Jupyter notebook is as simple as loading YAML, snarfing the external content back in place, and writing out JSON.  That hopefully bodes well for its future-proofing as Jupyter continues to evolve.&lt;/p&gt;
+&lt;p&gt;One problem still present is that markdown cells don't diff very well, since in most cases markdown paragraphs are written as one long continuous line.
+Brandon Rhodes has some great suggestions about using &lt;a class="reference external" href="http://rhodesmill.org/brandon/2012/one-sentence-per-line/"&gt;semantic linefeeds&lt;/a&gt; to make prose more easily diffable that would help there, but I don't think that is 100% automatable.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="playing-with-the-idea"&gt;
+&lt;h2&gt;Playing with the idea&lt;/h2&gt;
+&lt;p&gt;I have an &lt;a class="reference external" href="http://github.com/mdboom/nbconvert_vc"&gt;experimental plugin&lt;/a&gt; for &lt;a class="reference external" href="http://nbconvert.readthedocs.io/"&gt;nbconvert&lt;/a&gt; on Github that implements the conversion to and from this YAML-based format.
+As an experiment, I ran the conversion over the entire git history of a collection of Jupyter notebooks put out by &lt;a class="reference external" href="https://github.com/ibm-et/jupyter-samples"&gt;IBM Emerging Technologies&lt;/a&gt;.
+(&lt;a class="reference external" href="https://git-scm.com/docs/git-filter-branch"&gt;git filter-branch&lt;/a&gt; is an awesome tool for this exact purpose, by the way.)
+Many of the notebooks in this repository have no history (whether that's because versioning Jupyter notebooks is too hard, we may never know), but for those that do have history, there is definitely some useful improvement, for example compare &lt;a class="reference external" href="https://github.com/ibm-et/jupyter-samples/commit/29162a6ed77ccb2ef23cd530f5f028a9e1a3a27c"&gt;before&lt;/a&gt; and &lt;a class="reference external" href="https://github.com/mdboom/jupyter-samples/commit/0060324e6618afa52c571278f86876a60cce2899"&gt;after&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;My main purpose of this blog post is just to solicit feedback on these ideas as I work toward a solution for better support for version control workflows with Jupyter notebooks.
+Please leave comments, suggestions and questions below.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="acknowledgements"&gt;
+&lt;h2&gt;Acknowledgements&lt;/h2&gt;
+&lt;p&gt;This work was supported by &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;moz://a&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="mozilla"/><category term="jupyter"/><category term="python"/><category term="data science"/></entry><entry><title>Debugging Python C/C++ extensions in gdb</title><link href="https://droettboom.com/blog/2015/11/20/gdb-python-extensions/" rel="alternate"/><published>2015-11-20T16:16:00-05:00</published><updated>2015-11-20T16:16:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2015-11-20:/blog/2015/11/20/gdb-python-extensions/</id><summary type="html">&lt;p&gt;&lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; has fantastic support for debugging Python/C extensions.  It
+understands how to print the contents of &lt;cite&gt;PyObject *&lt;/cite&gt; variables using
+their Python-side representation, and can even print Python
+tracebacks.&lt;/p&gt;
+&lt;p&gt;These features are described &lt;a class="reference external" href="https://fedoraproject.org/wiki/Features/EasierPythonDebugging"&gt;elsewhere&lt;/a&gt;.  I
+suggest visiting that link to see why this is so cool.  This blog
+posting is …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; has fantastic support for debugging Python/C extensions.  It
+understands how to print the contents of &lt;cite&gt;PyObject *&lt;/cite&gt; variables using
+their Python-side representation, and can even print Python
+tracebacks.&lt;/p&gt;
+&lt;p&gt;These features are described &lt;a class="reference external" href="https://fedoraproject.org/wiki/Features/EasierPythonDebugging"&gt;elsewhere&lt;/a&gt;.  I
+suggest visiting that link to see why this is so cool.  This blog
+posting is just about how to get those features set up everywhere for
+any Python you may have on your system, on any Linux and Mac OS-X, and
+some additional tips to help make debugging Python/C extensions in
+&lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; more effective.&lt;/p&gt;
+&lt;div class="section" id="install-the-gdb-python-debugging-extension"&gt;
+&lt;h2&gt;Install the GDB Python-debugging extension&lt;/h2&gt;
+&lt;p&gt;Since version 7.0, &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; includes an embedded Python interpreter
+that can be used to write &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; extensions, changing how variables
+and backtraces are displayed.  &lt;tt class="docutils literal"&gt;CPython&lt;/tt&gt; includes one such extension
+in its source tree that is useful for debugging Python itself and
+Python/C extensions, in &lt;tt class="docutils literal"&gt;Tools/gdb/libpython.py&lt;/tt&gt;.&lt;/p&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;First make sure you have a working copy of &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt;.  If you're on a
+Mac, this process is fairly involved because &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; must be
+codesigned.  These &lt;a class="reference external" href="http://ntraft.com/installing-gdb-on-os-x-mavericks/"&gt;instructions&lt;/a&gt; may be
+useful.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The usual way for this extension to be used is to install it alongside
+the &lt;tt class="docutils literal"&gt;libpythonX.Y.so&lt;/tt&gt; shared object with the special name
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;libpythonX.Y.so-gdb.py&lt;/span&gt;&lt;/tt&gt;.  When &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; loads &lt;tt class="docutils literal"&gt;libpython&lt;/tt&gt; it
+should then automatically load the extension and start using the
+special display hooks for Python.  There are a couple of problems with
+this approach: The extension needs to be installed alongside each
+&lt;tt class="docutils literal"&gt;libpython.so&lt;/tt&gt; you want to debug, and if you're like me, you
+probably have a bunch of different Python versions installed using
+&lt;a class="reference external" href="http://github.com/yyuu/pyenv"&gt;pyenv&lt;/a&gt;, &lt;a class="reference external" href="http://www.continuum.io/downloads"&gt;anaconda&lt;/a&gt;, &lt;a class="reference external" href="http://brew.sh/"&gt;homebrew&lt;/a&gt;
+and the like.  Most of these tools don't install the &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; extension
+-- the only installation method I know of that actually does this is
+Fedora Linux, but even there it only works with the system Python.
+Even if we did install this extension alongside each &lt;tt class="docutils literal"&gt;libpython.so&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; will only autoload extensions from an explicit whitelist.&lt;/p&gt;
+&lt;p&gt;To get around this, we can bypass &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt;'s automatic extension
+loading mechanism and have &lt;tt class="docutils literal"&gt;libpython.py&lt;/tt&gt; loaded for any
+&lt;tt class="docutils literal"&gt;libpython.so&lt;/tt&gt; you may want to debug.&lt;/p&gt;
+&lt;p&gt;The first thing to do is to obtain the correct version of
+&lt;tt class="docutils literal"&gt;libpython.py&lt;/tt&gt; that matches the embedded Python interpreter inside
+of &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt;.  This version of Python has &lt;strong&gt;absolutely nothing to do
+with&lt;/strong&gt; the version of Python you want to debug -- it is merely the
+embedded interpreter that runs &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; extensions.  To see which
+version of Python is embedded inside your &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt;, do the following:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;gt; gdb
+GNU gdb (GDB) Fedora 7.10-29.fc23
+Copyright (C) 2015 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &amp;lt;http://gnu.org/licenses/gpl.html&amp;gt;
+...
+(gdb) python
+&amp;gt;import sys
+&amp;gt;print(sys.version_info)
+&amp;gt;end
+sys.version_info(major=3, minor=4, micro=3, releaselevel='final', serial=0)
+(gdb)
+&lt;/pre&gt;
+&lt;p&gt;In this case, my embedded Python interpreter is version 3.4.  When I
+installed &lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; through &lt;tt class="docutils literal"&gt;homebrew&lt;/tt&gt; on my Mac, it had version 2.7.
+In both cases, I was able to use this to debug any version of Python.&lt;/p&gt;
+&lt;p&gt;Download the version of &lt;tt class="docutils literal"&gt;libpython.py&lt;/tt&gt; corresponding to the embedded
+Python interpreter, and save it somewhere in your home directory.  (I
+put it in &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.config/gdb/libpython.py&lt;/span&gt;&lt;/tt&gt;, but you may want to put it
+somewhere else depending on how you organize your configuration
+files).&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Python 2.7: &lt;a class="reference external" href="https://hg.python.org/cpython/rawfile/2.7/Tools/gdb/libpython.py"&gt;libpython.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Python 3.3: &lt;a class="reference external" href="https://hg.python.org/cpython/rawfile/3.3/Tools/gdb/libpython.py"&gt;libpython.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Python 3.4: &lt;a class="reference external" href="https://hg.python.org/cpython/rawfile/3.4/Tools/gdb/libpython.py"&gt;libpython.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Python 3.5: &lt;a class="reference external" href="https://hg.python.org/cpython/rawfile/3.5/Tools/gdb/libpython.py"&gt;libpython.py&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Then we'll set up &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.gdbinit&lt;/span&gt;&lt;/tt&gt; to load this extension by adding the
+following:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+python
+import gdb
+import sys
+import os
+sys.path.insert(0, os.path.expanduser(&amp;quot;~/.emacs.d/gdb&amp;quot;))
+def setup_python(event):
+    import libpython
+gdb.events.new_objfile.connect(setup_python)
+end
+&lt;/pre&gt;
+&lt;p&gt;You will need to update the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.config/gdb&lt;/span&gt;&lt;/tt&gt; directory to be the same
+directory where you saved &lt;tt class="docutils literal"&gt;libpython.py&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Now you should get nice Python-aware debugging features no matter
+which Python you are debugging!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="rebuild-your-extensions-without-optimization"&gt;
+&lt;h2&gt;Rebuild your extensions without optimization&lt;/h2&gt;
+&lt;p&gt;If, when debugging, you are seeing missing stack frames or variables
+being displayed as &amp;quot;value optimized out&amp;quot;, you'll probably want to
+recompile your extension with optimizations turned off.  In the source
+directory for your project:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# Completely clear the build directory for good measure
+&amp;gt; rm -rf build
+&amp;gt; CFLAGS=&amp;quot;-O0 -g&amp;quot; CXXFLAGS=&amp;quot;-O0 -g&amp;quot; python setup.py install
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="use-a-debug-build-of-python"&gt;
+&lt;h2&gt;Use a debug build of Python&lt;/h2&gt;
+&lt;p&gt;I've found the above steps to be sufficient for diagnosing most
+problems with my own C and C++ Python extensions.  However, in the
+rare case where there is some tight interaction between the Python
+interpreter and the extension that is causing a problem, it can be
+helpful to run the extension in a &lt;a class="reference external" href="https://docs.python.org/devguide/setup.html#compiling-for-debugging"&gt;debug build of Python&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://github.com/yyuu/pyenv"&gt;pyenv&lt;/a&gt; provides a convenient way to
+build a debug Python.  Just install the version with the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-debug&lt;/span&gt;&lt;/tt&gt;
+suffix:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;gt; pyenv install 3.5.0-debug
+&lt;/pre&gt;
+&lt;p&gt;Unfortunately, extensions built for a regular Python are incompatible
+with a debug Python, so your extensions (and its entire stack of
+dependencies) will need to be rebuilt, which is why I only suggest
+this as a last resort.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="edits"&gt;
+&lt;h2&gt;Edits&lt;/h2&gt;
+&lt;p&gt;2015-12-03: Fixed errors in gdbinit script.  Fixed links to libpython.py&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="python"/><category term="python debugging gdb"/></entry><entry><title>VirtualBox on Mac OS X</title><link href="https://droettboom.com/blog/2013/08/29/virtualbox-on-mac-os-x/" rel="alternate"/><published>2013-08-29T09:33:00-04:00</published><updated>2013-08-29T09:33:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2013-08-29:/blog/2013/08/29/virtualbox-on-mac-os-x/</id><summary type="html">&lt;p&gt;I recently got a Mac Mini so I can start working on Macintosh-specific
+issues with matplotlib.  Thanks again to Hans Petter Langtangen, the
+Director of the Center for Biomedical Computing at &lt;a class="reference external" href="http://home.simula.no/~hpl"&gt;Simula&lt;/a&gt; for his gracious donation that
+supported the purchase.&lt;/p&gt;
+&lt;p&gt;One of the things I'd like to use this machine …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I recently got a Mac Mini so I can start working on Macintosh-specific
+issues with matplotlib.  Thanks again to Hans Petter Langtangen, the
+Director of the Center for Biomedical Computing at &lt;a class="reference external" href="http://home.simula.no/~hpl"&gt;Simula&lt;/a&gt; for his gracious donation that
+supported the purchase.&lt;/p&gt;
+&lt;p&gt;One of the things I'd like to use this machine for is to test
+installers in various environments -- a fresh install, or with
+MacPorts, or Fink etc. -- to make sure the installers include
+everything they need.  So I want to run Mac OS X in a virtual machine
+that I can reset on a regular basis to a known state.  This is now
+allowed by the licensing of OS X, as long as it's running on top of
+genuine Apple hardware, and you create no more than 5 instances.&lt;/p&gt;
+&lt;p&gt;It's surprisingly hard to find information on installing Mac OS X in a
+virtual machine.  Most of what Google finds is various hacks to run on
+non-Apple hardware.  I, instead, want to do this legally.&lt;/p&gt;
+&lt;p&gt;Unfortunately, the Mac Mini came with no installation media, so you
+can't just plug it in and install it in a virtual machine.  I thought,
+ok, no problem -- I'll just pop over to the App Store and download it.
+Unfortunately, to do that, Apple wanted to charge me $29.99 for
+something I already own.&lt;/p&gt;
+&lt;p&gt;So next I looked at the recovery partition.  Parallels is reportedly
+able to use the recovery partition directly to install in the virtual
+machine.  However, I want to use VirtualBox, since it is open source,
+what I'm familiar with on Linux, and, most importantly, because it can
+be automated by vagrant.  After trying in vain to point VirtualBox at
+the magic stuff in the recovery partition, I came upon a working
+solution.  The following steps were done with Mountain Lion, and I
+have no idea whether they are applicable to other releases.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Grab an external USB drive and plug it in.  I think it needs to be
+at least the size of a double-layer DVD, or 8.5 GB.  This process
+will erase everything on it.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Reboot into recovery mode, by holding down Command+R during boot.  (A word
+of advice to those new to Macs: wait until you hear the startup sound until
+you press the keys down, and hold them until the Apple logo disappears.
+Timing seems to be important here).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;I list of utilities will appear.  Open &amp;quot;Disk Manager&amp;quot; and
+repartition the external disk to have a &amp;quot;GUID&amp;quot; partition table with
+a single &amp;quot;HFS+&amp;quot; partition.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Exit &amp;quot;Disk Manager&amp;quot; and then go to &amp;quot;Install OS X&amp;quot;.  Install it to the
+external drive.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;When the installation is done, the system will reboot back into your &amp;quot;host&amp;quot;
+installation on the internal drive.  (I was surprised by this -- you may
+need to remove the USB drive to boot into the internal drive, but I didn't
+need to).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The result is a folder on the external drive called &amp;quot;OS X Install
+Data&amp;quot;.  Inside that folder is a disk image of the installer,
+&lt;cite&gt;InstallESD.dmg&lt;/cite&gt;.  Copy this to your internal hard disk.  You can
+then remove the external USB drive, we're done with it.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Unfortunately, there is still a small incompatibility with power
+management inside of VirtualBox that will cause the installer to
+hang during boot.  The kernel extension that handles CPU power
+management needs to be replaced.  I found the instructions for that
+&lt;a class="reference external" href="http://ntk.me/2012/09/07/os-x-on-os-x/"&gt;here&lt;/a&gt;.  I'm paraphrasing
+it here, and only including instructions for Mountain Lion.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Download &lt;a class="reference external" href="https://github.com/ntkme/InstallESD.dmg.tool"&gt;InstallESD.dmg.tool&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Download NullCPUPowerManagement.kext&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Run the following command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+./InstallESD.dmg.tool -i InstallESD.dmg -o Output.dmg -- NullCPUPowerManagement.kext
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;The &lt;cite&gt;Output.dmg&lt;/cite&gt; is now a patched installer image that can be used
+to install OS X in VirtualBox.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;In VirtualBox, create a new virtual machine and use its default
+settings for an OS X guest.  Then, open the settings for the machine
+and go to the Storage tab.  Add a new CD/DVD device to the IDE bus
+(it must be IDE: SATA did not work for me), and select the
+Output.dmg from the file dialog.  Check the &amp;quot;Live CD/DVD&amp;quot; box.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;You now should be able to boot into the installer and install OS X
+within VirtualBox.  When the installer is ready to reboot, go back
+to VirtualBox settings and &amp;quot;eject&amp;quot; the virtual DVD before restarting.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Hopefully this will help others out.&lt;/p&gt;
+</content><category term="mac"/></entry><entry><title>matplotlib lessons learned</title><link href="https://droettboom.com/blog/2013/03/25/matplotlib-lessons-learned/" rel="alternate"/><published>2013-03-25T09:47:00-04:00</published><updated>2013-03-25T09:47:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2013-03-25:/blog/2013/03/25/matplotlib-lessons-learned/</id><summary type="html">&lt;p&gt;Jake Vanderplass has a very thought-provoking essay about the &lt;a class="reference external" href="http://jakevdp.github.com/blog/2013/03/23/matplotlib-and-the-future-of-visualization-in-python/"&gt;future
+of visualization in Python&lt;/a&gt;.
+It's an exciting time for visualization in Python with so many new
+options exploding onto the scene, and Jake has provided a nice
+summary.  However, I don't think it presents a very current view of
+matplotlib …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Jake Vanderplass has a very thought-provoking essay about the &lt;a class="reference external" href="http://jakevdp.github.com/blog/2013/03/23/matplotlib-and-the-future-of-visualization-in-python/"&gt;future
+of visualization in Python&lt;/a&gt;.
+It's an exciting time for visualization in Python with so many new
+options exploding onto the scene, and Jake has provided a nice
+summary.  However, I don't think it presents a very current view of
+matplotlib, which is still alive and well with funding sources, and
+moving to &amp;quot;modern&amp;quot; things like web frontends and web services, and has
+nascent ongoing project related to &lt;a class="reference external" href="https://github.com/rougier/gl-agg"&gt;hardware acceleration&lt;/a&gt;.  Importantly, it has thousands
+of person hours of investment in all of the large to tiny problems
+that have been found along the way.&lt;/p&gt;
+&lt;div class="section" id="in-the-browser"&gt;
+&lt;h2&gt;In the browser&lt;/h2&gt;
+&lt;p&gt;One of the directions that new plotting projects are taking is to be
+more integrated in the web browser.  This has all of the advantages of
+cloud computing (zero install, distributed data), and integrates well
+with great projects like the IPython notebook.&lt;/p&gt;
+&lt;p&gt;matplotlib is already most of the way there.  matplotlib's git master
+has completely interactive and full featured plotting in the browser
+-- meaning it can do everything any of the other matplotlib backends
+can do -- by basically running something very similar to a VNC
+protocol between the server and the client. You can try it out today
+by building from git and using the WebAgg backend. Shortly, it will
+also be available as part of Google App Engine -- so we'll get some
+real experience running these things remotely in a real
+&amp;quot;Internet-enabled&amp;quot; mode. The integration work with IPython still needs
+to be done -- and I hope this can be a major focus of discussion at
+SciPy when I'm there.&lt;/p&gt;
+&lt;p&gt;The VNC-like approach was ultimately arrived at after many months of
+experimenting with approaches more based on JS and HTML5 and/or
+SVG. The main problem one runs into with those approaches is working
+with large datasets -- matplotlib has some very sophisticated designs
+to make working working with large data sets zippy and interactive
+(specifically path simplification, blitting of markers, dynamic down
+sampling of images) all of which are just really hard to implement
+efficiently in a browser. D3's Javascript demos feel very zippy and
+efficient, until you realize how canned they are, or how much they
+rely on very specific means to shuttle reduced data and from the
+browser.  There's a place for interactive canned graphics as part of
+web publishing, but it's much less useful for doing science on data
+for the first time.  But in general from these experiments, I've become
+rather skeptical of approaches that try to do too much in the
+browser. Even though matplotlib is on the &amp;quot;old&amp;quot; paradigm of running on
+a server (or a local desktop), the advantage of that approach is that
+we control the whole stack and can optimize the heck out of the places
+that need to be optimized. Browsers are much more of a black box in
+that regard.&lt;/p&gt;
+&lt;p&gt;I don't know if WebGL will offer some improvements here.  It's enough
+of a moving target that it should probably be re-examined on a regular
+basis.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="on-the-gpu"&gt;
+&lt;h2&gt;On the GPU&lt;/h2&gt;
+&lt;p&gt;And in the diametrically opposite direction, we have projects moving
+plotting onto the GPU.  Particularly interesting to me here is the
+&lt;a class="reference external" href="https://github.com/rougier/gl-agg"&gt;glagg&lt;/a&gt; project by Nicolas
+Rougier and others.  It's important to note for those not in the
+trenches that for high-quality 2D plotting on the GPU, things are much
+less straightforward than for 3D.  Graphics cards don't &amp;quot;just do&amp;quot;
+high-quality 2D rendering out of the box.  It requires the use of
+custom vertex shaders (which are frankly works of extreme brilliance
+and also an exercise somewhat in putting round pegs in square holes
+and living to tell about it).  Unfortunately, these things require
+rather recent graphics hardware and drivers and a fair bit of patience
+to get up and running.  Things will get easier over time, but at the
+moment, a 100% software implementation still can't be beat for
+portability and maximum accessibility for less technically-inclined
+users.  But I look forward to where all of this is going.&lt;/p&gt;
+&lt;p&gt;Real benchmarking on real data needs to be performed to determine just
+how much faster these approaches will be for 2D plotting.  (For 3D,
+which I discuss below, I think the advantages of hardware are more
+apparent).&lt;/p&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;As a public service announcement, anyone looking for performance out
+of matplotlib should be using the Agg backend -- it's the only one
+with all optimizations available.  The Mac OS-X Quartz backend is
+built on a closed source rendering library with some puzzling and
+surprising performance characteristics.  Many of the attempts to
+speed up that backend involve workarounds for a black box that is
+not well understood.  For the Agg-based backends, however, we
+control the stack from top-to-bottom and are able to optimize for
+real-world scientific plotting scenarios.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="in-3-dimensions"&gt;
+&lt;h2&gt;In 3-dimensions&lt;/h2&gt;
+&lt;p&gt;matplotlib's original focus has always been on 2D.  Despite this,
+notably Benjamin Root and others continue to put a lot of effort into
+matplotlib's 3D extensions, and they fill a niche for many users who
+want clean and crisp vector 3D for print, and it's improving all the
+time.  There are, of course, fundamental architectural problems with
+3D in matplotlib (most importantly the lack of a proper z-ordering)
+that limit what can be done.  That should be fixable with a few
+well-placed C/C++ extensions -- I'm not certain that we need go whole
+hog to the GPU to fix that, but that's certainly the obvious and
+well-trodden solution.  I am concerned that too many of the new 3D
+projects seem to prioritize interactivity and hardware tricks at the
+expense of static quality.  For this reason, matplotlib may continue
+to serve for some time as a high-quality print &amp;quot;backend&amp;quot; for some of
+these other 3-D based projects.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="interfaces"&gt;
+&lt;h2&gt;Interfaces&lt;/h2&gt;
+&lt;p&gt;Another interesting direction of experimentation is in the area of
+user interface and API.&lt;/p&gt;
+&lt;p&gt;I think matplotlib owes a lot of its success to its shameless
+&amp;quot;embracing and extending&amp;quot; of the Matlab graphing API.  Having taught
+matplotlib a few times to new users, I'm always impressed by how
+quickly new users pick it up.&lt;/p&gt;
+&lt;p&gt;The thing that's a but cruftier and full of inconsistencies is
+matplotlib's Object-Oriented interface.  Things there often follow the
+pattern that was most easy to implement rather than what would be the
+most clean from the outside.  It's probably due time to start
+re-evaluating some of those API's and breaking backward compatibility
+for the sake of more consistency going forward.&lt;/p&gt;
+&lt;p&gt;The &lt;a class="reference external" href="http://www.cs.uic.edu/~wilkinson/TheGrammarOfGraphics/GOG.html"&gt;Grammar of Graphics&lt;/a&gt;
+syntax from the R world is really interesting, and I think fills a
+middle ground.  It's more powerful (and I think a little more complex
+to learn at first) than the Matlab interface, but it has the nice
+property of self-consistency that once you learn a few things you can
+easily guess at how to do many others.&lt;/p&gt;
+&lt;p&gt;Peter Wang's &lt;a class="reference external" href="https://github.com/continuumio/bokeh"&gt;Bokeh&lt;/a&gt; project
+aims to bring Grammar of Graphics to Python, which I think is very
+cool.  Note however, that even there, Bokeh includes a matlab-like
+interface, as does another plotting project &lt;a class="reference external" href="https://github.com/rossant/galry"&gt;Galry&lt;/a&gt;, so mlab is by no means dead.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="doomed-to-repeat"&gt;
+&lt;h2&gt;Doomed to repeat&lt;/h2&gt;
+&lt;p&gt;There are a lot of ways in which matplotlib can be improved.  I
+encourage everyone to look at our &lt;a class="reference external" href="https://github.com/matplotlib/matplotlib/wiki"&gt;MEPS&lt;/a&gt; to see some ongoing
+projects that are being discussed or worked on.  There are some large,
+heroic and important projects there to bring matplotlib forward.&lt;/p&gt;
+&lt;p&gt;But I think more interestingly for this blog post is to focus on some
+of the really low-level early architectural decisions that have
+limited or made it difficult to move matplotlib forward.  Importantly,
+these aren't issues that I'm seeing discussed very often, but they are
+things I would try to tackle up front if I ever get a case of
+&amp;quot;2.0-itis&amp;quot; and were starting fresh today.  Hopefully these injuries of
+experience can inform new projects -- or they may inspire someone with
+loads of time to take on refactoring matplotlib.  It would not be
+impossible to make these changes to matplotlib, but it would take a
+concerted long-term effort and the ability to break some backward
+compatibility for the common good.&lt;/p&gt;
+&lt;div class="section" id="generic-tree-manipulations"&gt;
+&lt;h3&gt;Generic tree manipulations&lt;/h3&gt;
+&lt;p&gt;matplotlib plots are more-or-less tree structures of objects that are
+&amp;quot;run&amp;quot; to draw things on the screen.  (It isn't strictly a tree, as
+some cross-referencing is required for things like referring to clip
+paths etc.)  For example, the figure has any number of axes, each of
+which have lines plotted on them.  Drawing involves starting at the
+figure and visiting each of its axes and each of its lines.  All very
+straightforward.  But there is no way to traverse that tree in a
+generic way to perform manipulations on it.&lt;/p&gt;
+&lt;p&gt;For example, you might want to have a plot with a number of
+different-colored lines that you want to make ready for
+black-and-white publication by changing the lines to have different
+dash patterns.  Or, you might want to go through all of the text and
+change the font.  Or, as much as it personally wouldn't fit my
+workflow, many people would like a graphical editor that would allow
+one to traverse the tree of objects in the plot and change properties
+on them.  There's currently no way to do this in a generic way that
+would work on any plot with any kind of object in it.&lt;/p&gt;
+&lt;p&gt;I'm thinking what is needed is something like the much-maligned
+&amp;quot;Document Object Model (DOM)&amp;quot; is needed (if I say &amp;quot;ElementTree&amp;quot;
+instead, is that more appealing to Pythonistas?)  That way, one could
+traverse this tree in a generic fashion and do all kinds of things
+without needing to be aware of what specifically is in the plot.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="type-checking-styles-properties-traits"&gt;
+&lt;h3&gt;Type-checking, styles, properties, traits&lt;/h3&gt;
+&lt;p&gt;matplotlib predates properties and traits and other things of that
+ilk, so it, not unreasonably, uses &lt;cite&gt;get_&lt;/cite&gt; and &lt;cite&gt;set_&lt;/cite&gt; methods for most
+things.  Beyond the syntactic implications of this (which don't bother
+me as much as some), they are rather inconsistent.  Some are available
+as keyword arguments to constructors and plotting methods, but it's
+inconsistent because some must be manually handled by the code while
+others are handled automatically.  Some type-check their arguments
+immediately, whereas others will blow up on invalid input much later
+in some deeply nested backtrace.  Some are mutable and cause an update
+of the plot when changed.  Some seem mutable, but changing them has no
+effect.  Traits (such as Enthought Traits or something else in that
+space) would be a great fit for this.  It's been examined a few times,
+and while the idea seems to be a good fit, the implementation was
+always the stumbling block.  But it's high time to look at this again.&lt;/p&gt;
+&lt;p&gt;Combining this with the tree manipulation suggestion above, we'd be
+able to do really powerful things like CSS-style styling of plots.&lt;/p&gt;
+&lt;p&gt;(Didn't I just say above that web browsers weren't well suited, yet
+I'm stealing some fundamentals of their design here...?)&lt;/p&gt;
+&lt;p&gt;Related to the above, matplotlib's handling of colors and
+alpha-blending is all over the map.  There needs to be a cleanup
+effort to make handling consistent throughout.  Once that's done, the
+way forward should be clear to manage CMYK colors internally for
+formats that support them (e.g. PDF).  Ditto on other properties like
+line styles and marker styles.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="projections-and-ticking"&gt;
+&lt;h3&gt;Projections and ticking&lt;/h3&gt;
+&lt;p&gt;Ticking is the process by which the positions of the grid lines, ticks
+and labels are determined.  There are a number of third-party projects
+that build new projections on top of matplotlib (&lt;a class="reference external" href="http://matplotlib.org/basemap/"&gt;basemap&lt;/a&gt;, &lt;a class="reference external" href="http://leejjoon.github.com/pywcsgrid2/"&gt;pywcsgrid2&lt;/a&gt;, &lt;a class="reference external" href="http://scitools.org.uk/cartopy/"&gt;cartopy&lt;/a&gt; to name a few).  Unfortunately,
+they can't really take advantage of the many (and subtly difficult)
+ticking algorithms in matplotlib because matplotlib's tickers are so
+firmly grounded in the rectilinear world.  matplotlib needs to improve
+its tickers to be more generic and more usable when the grid is
+rotated or warped in a myriad of ways so that all of this duplication
+of effort can be reduced.&lt;/p&gt;
+&lt;p&gt;Related to this, matplotlib have transformations (which determine how
+the data is mapped to the Cartesian space on screen), tickers (which
+determine the positions of grid lines), formatters (which determine
+how the tick's text label is rendered) and locators (which choose
+pleasant-looking bounds for the data), all of which work in tandem to
+produce the labels, ticks and gridlines, but which have no
+relationship to each other.  It should be easier to relate these
+things together, because you usually want a set that works well
+together.  Phil Elson has done some work in this direction, but
+there's still more that could be done.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="higher-dimensionality"&gt;
+&lt;h3&gt;Higher dimensionality&lt;/h3&gt;
+&lt;p&gt;matplotlib's 3D support feels tacked on structurally.  It would be
+better if more parts were agnostic to the dimensionality of the data.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="may-you-live-in-interesting-times"&gt;
+&lt;h2&gt;May you live in interesting times&lt;/h2&gt;
+&lt;p&gt;It's really exciting to watch all that's going on, and thanks to Jake
+Vanderplass for getting this discussion rolling.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="matplotlib"/><category term="matplotlib"/></entry><entry><title>Matplotlib in the browser: It's coming</title><link href="https://droettboom.com/blog/2012/10/11/matplotlib-in-the-browser-its-coming/" rel="alternate"/><published>2012-10-11T14:35:00-04:00</published><updated>2012-10-11T14:35:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-10-11:/blog/2012/10/11/matplotlib-in-the-browser-its-coming/</id><summary type="html">&lt;blockquote class="pull-quote"&gt;
+UPDATE: I am now sharing my code in the
+&lt;a class="reference external" href="https://github.com/mdboom/mpl_browser_experiments"&gt;mdboom/mpl_browser_experiments&lt;/a&gt; github
+repository, rather than in a gist.&lt;/blockquote&gt;
+&lt;p&gt;It's occurred to me recently that in my previous blog posts &lt;a class="reference external" href="http://mdboom.github.com/blog/2012/08/07/client-side-rendering-in-matplotlib/"&gt;Part II&lt;/a&gt;
+and &lt;a class="reference external" href="http://mdboom.github.com/blog/2012/08/06/matplotlib-client-side/"&gt;Part I&lt;/a&gt;,
+I was going about the problem all wrong.  Getting the plotting logic
+running in the browser …&lt;/p&gt;</summary><content type="html">&lt;blockquote class="pull-quote"&gt;
+UPDATE: I am now sharing my code in the
+&lt;a class="reference external" href="https://github.com/mdboom/mpl_browser_experiments"&gt;mdboom/mpl_browser_experiments&lt;/a&gt; github
+repository, rather than in a gist.&lt;/blockquote&gt;
+&lt;p&gt;It's occurred to me recently that in my previous blog posts &lt;a class="reference external" href="http://mdboom.github.com/blog/2012/08/07/client-side-rendering-in-matplotlib/"&gt;Part II&lt;/a&gt;
+and &lt;a class="reference external" href="http://mdboom.github.com/blog/2012/08/06/matplotlib-client-side/"&gt;Part I&lt;/a&gt;,
+I was going about the problem all wrong.  Getting the plotting logic
+running in the browser, while perhaps ideal, was full of pitfalls.
+The browsers all render things in different ways and have different
+performance characteristics.  Large data structures in Javascript just
+start to fall over after a certain point.&lt;/p&gt;
+&lt;p&gt;One effective way to deal with the large data structure problem is to
+just not send them to the browser at all, but instead, send rendered
+images.  While the size of the data scientists will want to process
+with Numpy and matplotlib is growing all the time, the size of the
+images being rendered have natural limits based on the resolution of
+our displays. (Retina displays have recently bumped this up, but even
+then, display resolution increases slowly relative to RAM and disk
+space).  So while for simple plots, sending and using the data wins,
+for anything beyond a reasonable amount of complexity, sending
+rendering images beats it (in terms of bandwidth) every time.&lt;/p&gt;
+&lt;p&gt;The other advantage of this approach is that it will work &lt;em&gt;exactly&lt;/em&gt;
+like regular matplotlib.  All of the effort and work that has already
+gone into matplotlib to make it as feature-rich and pixel-perfect as
+it is will apply immediately.&lt;/p&gt;
+&lt;p&gt;So I started to look at how we could just pipe what we already have --
+a high-quality, fast, and extensive rendering framework based on &lt;a class="reference external" href="www.antigrain.com"&gt;Agg&lt;/a&gt; -- into the browser.&lt;/p&gt;
+&lt;div class="section" id="experiments-with-vnc"&gt;
+&lt;h2&gt;Experiments with VNC&lt;/h2&gt;
+&lt;p&gt;An obvious pre-existing hammer on the shelf was &lt;cite&gt;VNC
+&amp;lt;www.realvnc.com&amp;gt;&lt;/cite&gt;.  There are free servers available for all of the
+big platforms, and there is, believe it or not, a client written
+entirely in Javascript that runs in the browser: &lt;a class="reference external" href="http://kanaka.github.com/noVNC/"&gt;noVNC&lt;/a&gt;.  After a little tinkering (I'll
+spare you the details), it's possible to share a single GUI window in
+the matplotlib kernel with a browser.  And it works, more or less,
+although a little slowly.&lt;/p&gt;
+&lt;p&gt;There are few problems with using VNC (and this mostly applies to its
+competitor NX as well):&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;VNC servers hook directly into the GUI technology of your
+platform, so each platform handles setting up a server rather
+differently.  I'm always loathe to reach for solutions that
+involve a lot of platform-specific differences -- it becomes a
+nightmare to support.&lt;/li&gt;
+&lt;li&gt;There's a lot of unnecessary moving pieces.  On X11, for
+example, the VNC wants to be an entire X server, with a window
+manager etc.  The window being shared, of course, has to be
+implemented in some GUI framework or other.  That's a lot of
+extra stuff to install on a headless server that we don't really
+need.&lt;/li&gt;
+&lt;li&gt;The &lt;cite&gt;noVNC&lt;/cite&gt; client has to interpret the binary VNC protocol &lt;em&gt;in
+Javascript&lt;/em&gt;.  Joel Martin and the rest of the team are total
+rockstars and they've pulled off something very impressive.  But
+at the end of the day, it's not a great fit, and it wastes a lot
+of cycles.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So VNC almost gets us there, and the fact that it works &amp;quot;almost well
+enough&amp;quot; gave me confidence that a more &amp;quot;conduit&amp;quot;-based approach would
+work.  So I got to thinking about what the bare minimum thing is that
+could work.&lt;/p&gt;
+&lt;p&gt;The fact is that VNC, at least as it was being used in the above
+context, is just sending events from the keyboard and mouse from the
+client, and getting delta images from the server.  It has a rather
+sophisticated way of compressing those delta images, but at the end of
+the day, that's all it really does for us, and all we really need.&lt;/p&gt;
+&lt;p&gt;It turns out that creating delta images in PNG doesn't work too badly.
+The empty pixels compress away rather well, and the compression and
+decompression can be handled in C at both ends of the pipe.  That is,
+browsers know how to decompress PNGs inherently -- they don't need to
+run slow and complex Javascript to do so, so while it may not be the
+optimal protocol, it's a good choice in a practical sense.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="a-proof-of-concept"&gt;
+&lt;h2&gt;A proof of concept&lt;/h2&gt;
+&lt;p&gt;So &lt;a class="reference external" href="https://github.com/mdboom/mpl_browser_experiments"&gt;in this repository&lt;/a&gt;, I present a
+proof-of-concept for this approach.  I have some hideously rough and
+undocumented code that, given a matplotlib figure, serves it
+interactively to a web browser.  It requires only matplotlib and
+&lt;a class="reference external" href="http://www.tornadoweb.org/"&gt;Tornado&lt;/a&gt; (which you probably already
+have if you already have a recent IPython).  It's obviously a long way
+from here to something that's a true matplotlib backend and
+well-integrated with IPython notebook.  This code in no way represents
+the final API.  I also don't do a lot of network programming, so I may
+be handling the AJAXy things suboptimally.  However, I'd appreciate
+testing of this approach on different platforms and browsers to just
+prove its feasibility before putting in too much of that follow-on
+work.&lt;/p&gt;
+&lt;p&gt;To use it, just create a matplotlib figure, with whatever you want,
+and pass it to &lt;tt class="docutils literal"&gt;serve_figure.serve_figure()&lt;/tt&gt;.  For example, take the
+quadmesh example (something that would be really hard to implement in
+HTML5 canvas) and serve it:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+import serve_figure
+
+import numpy as np
+from numpy import ma
+from matplotlib import pyplot as plt
+
+n = 12
+x = np.linspace(-1.5,1.5,n)
+y = np.linspace(-1.5,1.5,n*2)
+X,Y = np.meshgrid(x,y);
+Qx = np.cos(Y) - np.cos(X)
+Qz = np.sin(Y) + np.sin(X)
+Qx = (Qx + 1.1)
+Z = np.sqrt(X**2 + Y**2)/5;
+Z = (Z - Z.min()) / (Z.max() - Z.min())
+
+# The color array can include masked values:
+Zm = ma.masked_where(np.fabs(Qz) &amp;lt; 0.5*np.amax(Qz), Z)
+
+fig = plt.figure()
+ax = fig.add_subplot(121)
+ax.set_axis_bgcolor(&amp;quot;#bdb76b&amp;quot;)
+ax.pcolormesh(Qx,Qz,Z, shading='gouraud')
+ax.set_title('Without masked values')
+
+ax = fig.add_subplot(122)
+ax.set_axis_bgcolor(&amp;quot;#bdb76b&amp;quot;)
+col = ax.pcolormesh(Qx,Qz,Zm,shading='gouraud')
+ax.set_title('With masked values')
+
+serve_figure.serve_figure(fig, port=8888)
+&lt;/pre&gt;
+&lt;p&gt;Open up your webbrowser to &lt;cite&gt;http://127.0.0.1:8888&lt;/cite&gt; and you should
+(hopefully) be in business.  Open up a second browser window (whether
+locally or on another machine) and note that the two plots are
+automatically synchronized.  The &amp;quot;data cursor&amp;quot; (that displays the
+current location of the mouse cursor in data coordinates) also works.&lt;/p&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="" src="http://mdboom.github.com/images/firefox.png" /&gt;
+&lt;p class="caption"&gt;Matplotlib running in Firefox&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Some back-of-the-napkin thoughts about performance: The average size
+of each frame at the default resolution is around 16 kbytes.  On a
+standard 1MB DSL connection, we should be able to pipe 7000 of those
+per second, so it should be fine in terms of bandwidth.  Of course,
+there are other factors, such as the latency of the network and the
+CPU time necessary to decompress the PNG files etc. that are harder to
+take account of.  This will require some real-world testing to really
+get a sense of how well it works.&lt;/p&gt;
+&lt;p&gt;There's a lot of finesse to follow.  For example, we should be able to
+shrink the bandwidth by another 20% by using a 1-bit alpha channel.
+The cursor shape doesn't ever change like it does in a regular
+matplotlib window.  It should be possible (though not yet) to support
+the interactive callbacks in matplotlib to handle the mouse events in
+arbitrary ways inside of the server.  In principle, there are very few
+limitations to this approach, and it has the potential to be a true
+peer to the existing backends.&lt;/p&gt;
+&lt;p&gt;Watch the matplotlib and IPython projects -- pull requests will be
+coming soon.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="matplotlib"/></entry><entry><title>Amazon MP3 ends their support for Linux</title><link href="https://droettboom.com/blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/" rel="alternate"/><published>2012-09-11T11:40:00-04:00</published><updated>2012-09-11T11:40:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-09-11:/blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/</id><summary type="html">&lt;p&gt;I've bought digital music from Amazon for almost as long as they've
+been in that business.  Their prices are very competitive, the MP3's
+are dog-standard and DRM-free so they work on every device imaginable,
+and, until recently, they have supported Linux.&lt;/p&gt;
+&lt;p&gt;Admittedly, they haven't supported Linux well for some time …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I've bought digital music from Amazon for almost as long as they've
+been in that business.  Their prices are very competitive, the MP3's
+are dog-standard and DRM-free so they work on every device imaginable,
+and, until recently, they have supported Linux.&lt;/p&gt;
+&lt;p&gt;Admittedly, they haven't supported Linux well for some time.  Their
+own downloading app (when it was available) had fallen into disrepair
+and didn't work on most modern Linux distributions.  However, the
+simple, yet effective, &lt;a class="reference external" href="http://code.google.com/p/clamz/"&gt;clamz&lt;/a&gt;
+filled that void quite nicely.&lt;/p&gt;
+&lt;p&gt;Now, however, when you try to download more than one file at a time,
+you're greeted with this message:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+On Linux systems, Cloud Player only supports downloading songs one
+at a time. To download your music, deselect all checkboxes, select
+the checkbox for the song you want to download, then click the
+&amp;quot;Download&amp;quot; button.
+&lt;/pre&gt;
+&lt;p&gt;Changing the User Agent string and/or deleting cookies doesn't seem to
+get over the wall.  Other clamz users don't appear to have &lt;a class="reference external" href="http://code.google.com/p/clamz/issues/detail?id=35"&gt;any
+solutions&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;When I contacted Amazon customer support to confirm that there was
+truly no workaround, the reply was:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+I am sorry to know that you are not able to download multiple
+songs from the cloud player. To download multiple songs you will
+need the Amazon MP3 downloader. However since you are using a
+Linux operating system, you will need to download one song at a
+time from the cloud player.
+&lt;/pre&gt;
+&lt;p&gt;Indeed, we have always been at war with Eastasia.  And you've never
+been able to purchase and download MP3's from Amazon on a Linux box.
+The hundreds of dollars I've spent doing just that certainly don't
+mean anything.  Thankfully, since it's all DRM-free they can't take
+away what I already have.&lt;/p&gt;
+&lt;p&gt;Sorry, Amazon, but I'm not a clicking monkey.  I'll need to go
+elsewhere.  Can anyone else recommend another DRM-free service that
+doesn't require jumping through so many hoops to download purchases?&lt;/p&gt;
+</content><category term="music"/></entry><entry><title>John Hunter</title><link href="https://droettboom.com/blog/2012/08/31/john-hunter/" rel="alternate"/><published>2012-08-31T10:22:00-04:00</published><updated>2012-08-31T10:22:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-31:/blog/2012/08/31/john-hunter/</id><summary type="html">&lt;p&gt;We have lost one of the greats of our community.&lt;/p&gt;
+&lt;p&gt;I first met John Hunter when he came to give a presentation about
+matplotlib at the Space Telescope Science Institute in 2004 (or
+thereabouts).  I remember being blown away by how capable matplotlib
+was (even then), and stunned by John's …&lt;/p&gt;</summary><content type="html">&lt;p&gt;We have lost one of the greats of our community.&lt;/p&gt;
+&lt;p&gt;I first met John Hunter when he came to give a presentation about
+matplotlib at the Space Telescope Science Institute in 2004 (or
+thereabouts).  I remember being blown away by how capable matplotlib
+was (even then), and stunned by John's drive to build it completely
+outside of what was paying the bills.&lt;/p&gt;
+&lt;p&gt;Years later, when I started working at STScI in 2007, one of my first
+tasks was to add some new features to matplotlib.  Little did I know,
+it would become my passion as well.  I was a little intimidated to be
+working on something so entrenched and widely used.  But John somehow
+instilled confidence in me with his support of what I was doing, even
+as I was ripping apart old assumptions in the code and turning it over
+anew.  Through all the e-mails, conference calls and chance conference
+meetings with John since, he has been the most encouraging mentor and
+a prime example of open source stewardship.  I should be lucky to find
+even a fraction of the enthusiasm, skill and leadership that John had.&lt;/p&gt;
+&lt;p&gt;Equally impressive has been watching so many of us Scientific Python
+types, separated by geography and institutional affiliations, come
+together in supporting each other at a time like this.  Sometimes it
+really is more than just code.&lt;/p&gt;
+&lt;p&gt;If matplotlib has been useful to you in any way, please give
+generously to the &lt;a class="reference external" href="http://numfocus.org/johnhunter/"&gt;John Hunter Memorial Fund&lt;/a&gt;.&lt;/p&gt;
+</content><category term="matplotlib"/></entry><entry><title>Client-side Rendering in Matplotlib, Part II: The language blender</title><link href="https://droettboom.com/blog/2012/08/07/client-side-rendering-in-matplotlib/" rel="alternate"/><published>2012-08-07T13:56:00-04:00</published><updated>2012-08-07T13:56:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-07:/blog/2012/08/07/client-side-rendering-in-matplotlib/</id><summary type="html">&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;EDIT 2012-08-08: Added benchmarks in Firefox in addition to Chrome&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;In the &lt;a class="reference external" href="http://mdboom.github.com/blog/2012/08/06/matplotlib-client-side/"&gt;last post&lt;/a&gt;,
+I outlined some of the architectural difficulties bringing
+matplotlib's interactivity to the browser.  In short, there's a big
+chunk of code that lies between building the tree of artists and
+rendering them to the screen …&lt;/p&gt;</summary><content type="html">&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;EDIT 2012-08-08: Added benchmarks in Firefox in addition to Chrome&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;In the &lt;a class="reference external" href="http://mdboom.github.com/blog/2012/08/06/matplotlib-client-side/"&gt;last post&lt;/a&gt;,
+I outlined some of the architectural difficulties bringing
+matplotlib's interactivity to the browser.  In short, there's a big
+chunk of code that lies between building the tree of artists and
+rendering them to the screen that needs to run either in the Python
+interpreter, as it does now, or inside of the web browser to support
+interactive web applications.  It would be great to avoid having two
+code bases, one in Python and one in Javascript, that would need to be
+kept in sync.  Writing code for both contexts from a single code base
+may turn out to be a pipe dream, but bear with me as I explore tools
+that might help.&lt;/p&gt;
+&lt;p&gt;Also, when trying to grok the discussion here and understanding the
+architectural challenges of matplotlib, it may be helpful to read the
+matplotlib chapter by John Hunter and yours truly from &lt;a class="reference external" href="http://www.aosabook.org/en/index.html"&gt;Architecture
+of Open Source Applications, Volume II&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="section" id="tools"&gt;
+&lt;h2&gt;Tools&lt;/h2&gt;
+&lt;p&gt;There are a few interesting projects that help bridge the gap between
+Python and Javascript.&lt;/p&gt;
+&lt;div class="section" id="pyjs"&gt;
+&lt;h3&gt;PyJs&lt;/h3&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://www.pyjs.org"&gt;PyJs&lt;/a&gt; (formerly called Pyjamas) is a
+Python-to-Javascript converter.  It also includes an environment much
+like Google Web Toolkits for developing rich client-side applications
+in Python, but those features are probably not useful here.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="skulpt"&gt;
+&lt;h3&gt;Skulpt&lt;/h3&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://www.skulpt.org"&gt;Skulpt&lt;/a&gt; is a Python interpreter written in
+Javascript.  It can compile and run Python code entirely within the
+web browser.  In terms of language features, it doesn't seem as mature
+as PyJs, but the fact that it has no dependencies other than a couple
+of Javascript files may be an advantage in terms of deployment.  An
+obvious shortcoming of both Skulpt and PyJs is the lack of support for
+Numpy -- none of the existing matplotlib Python code, which depends so
+heavily on Numpy, would work in that context.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="pyv8"&gt;
+&lt;h3&gt;PyV8&lt;/h3&gt;
+&lt;p&gt;Unlike the other two, which allow Python to run in the browser, &lt;a class="reference external" href="http://code.google.com/p/pyv8/"&gt;PyV8&lt;/a&gt; allows Javascript to run inside of
+the Python interpreter.  It is a wrapper around Google's open source
+V8 Javascript engine and allows sharing objects between Python and
+Javascript somewhat transparently.  If the drawing code were to be
+rewritten in Javascript, it could then, theoretically, be used both
+from Python on the desktop and inside the web browser.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="playing-around"&gt;
+&lt;h2&gt;Playing around&lt;/h2&gt;
+&lt;p&gt;As a first pass playing with these tools, I've created a new project
+on github &lt;a class="reference external" href="https://github.com/mdboom/py-js-blending-experiments"&gt;py-js-blending-experiments&lt;/a&gt;.  I've
+started by writing a very simple benchmark that does a simple 2D
+affine transformation, in pure Python, Python with Numpy, Javascript
+and C.  This test, while a real-world bottleneck from the real-world
+matplotlib, is probably too simple to read too much into the results.
+A real test would involve classes with complex interactions between
+them, to show how the same flexible system of transformations,
+tickers, formatters etc. would work, and would take into account the
+penalty of stepping over the gap between Python and Javascript.  But
+all that will have to wait for a future blog post.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-benchmarks"&gt;
+&lt;h2&gt;The benchmarks&lt;/h2&gt;
+&lt;p&gt;The benchmarks compare a number of different possible approaches.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;Pure Python&lt;/strong&gt;: This is just a simple pure Python implementation.
+&lt;a class="reference external" href="https://raw.github.com/mdboom/py-js-blending-experiments/master/transform.py"&gt;transform.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pure Javascript&lt;/strong&gt;: A hand-written JavaScript implementation.
+&lt;a class="reference external" href="https://raw.github.com/mdboom/py-js-blending-experiments/master/transform.js"&gt;transform.js&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Numpy&lt;/strong&gt;: An implementation using vectorized Numpy operations.
+&lt;a class="reference external" href="https://raw.github.com/mdboom/py-js-blending-experiments/master/transform_numpy.py"&gt;transform_numpy.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;C extension&lt;/strong&gt;: A hand-written C extension.
+&lt;a class="reference external" href="https://raw.github.com/mdboom/py-js-blending-experiments/master/transform.c"&gt;transform.c&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Skulpt&lt;/strong&gt;: Taking the pure Python implementation above, but running through
+Skulpt to get it to run inside of the browser.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PyJs&lt;/strong&gt;: Compiling the pure Python implementation above to
+Javascipt using PyJs, and then running the result in the browser.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PyV8&lt;/strong&gt;: Running the hand-written Javascript implementation above
+inside of PyV8.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="results"&gt;
+&lt;h3&gt;Results&lt;/h3&gt;
+&lt;p&gt;The following results are on a quad-core Intel Core i5-2520M CPU &amp;#64;
+2.50GHz running Fedora Linux 17.  Python 2.7.3, Numpy 1.6.1, Google
+Chrome 21.0.1180.57 beta and Firefox 14.0.1 were used.  The benchmark
+is performing a 2D affine transformation on 128,000 points.  Note that
+the timings in the web browser are quite variable.  I've included the
+average and independent results of 5 runs.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+=========================== ================== ==================================
+Benchmark                   avg. time (in ms)  times
+=========================== ================== ==================================
+Pure Python                 94                 95, 96, 93, 96, 92
+Pure Javascript Chrome      40                 41, 29, 59, 33, 42
+Pure Javascript Firefox     15                 8, 7, 25, 20, 16
+Numpy                       6                  7, 6, 6, 6, 6
+C                           2                  2, 2, 2, 2, 2
+Skulpt Chrome               686                700, 691, 676, 691, 676
+Skulpt Firefox              1052               1027, 1052, 1062, 1060, 1061
+PyJs Chrome                 2197               2156, 2218, 2176, 2187, 2251
+PyJs Firefox                658                644, 687, 630, 680, 674
+PyV8                        38                 38, 38, 38, 37, 37
+=========================== ================== ==================================
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;So what can we conclude?  Remember what I said about not reading too
+much into these results?  Well, I'm going to do it anyway with an
+enormous caveat.&lt;/p&gt;
+&lt;p&gt;There is considerable overhead when trying to shoehorn Python into the
+browser (comparing Skulpt and PyJs to Pure Javascript).  I personally
+am surprised by how much more successful the Python interpreter
+approach is vs. the Python to Javascript conversion approach, though
+that may be due to the relative incompleteness of Skulpt.  (&lt;em&gt;EDIT:
+Though the Firefox results tell the opposite story&lt;/em&gt;). It's pretty
+clear where the overhead of PyJs comes from.  The line:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+X = a*x + c*y + e
+&lt;/pre&gt;
+&lt;p&gt;converts to:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+X = $p['__op_add']($add3=$p['__op_add']($add1=(typeof ($mul1=a)==typeof ($mul2=x) &amp;amp;&amp;amp; typeof $mul1=='number'?
+    $mul1*$mul2:
+    $p['op_mul']($mul1,$mul2)),$add2=(typeof ($mul3=c)==typeof ($mul4=y) &amp;amp;&amp;amp; typeof $mul3=='number'?
+    $mul3*$mul4:
+    $p['op_mul']($mul3,$mul4))),$add4=e);
+&lt;/pre&gt;
+&lt;p&gt;You can see how basic numeric operators in Python don't translate
+directly to those in Javascript, so it's forced to do something a
+whole lot more dynamic, including typechecking within every loop
+iteration.  I pity the fool Javascript engine that tries to optimize
+that.&lt;/p&gt;
+&lt;p&gt;Not surprisingly, the PyV8 engine performs comparably to the V8 engine
+embedded in Google Chrome, which also beats pure Python by at least a
+factor of 2.  We could do rather well implementing this core in
+Javascript.&lt;/p&gt;
+&lt;p&gt;Numpy and C extensions, of course, beat everything handily for this
+very numerically-biased benchmark.&lt;/p&gt;
+&lt;p&gt;Where does that leave us?  Who knows...  Interesting ride, though.
+Stay tuned and leave comments...  There's more to hack away at.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="matplotlib"/><category term="matplotlib"/></entry><entry><title>Client-side rendering in matplotlib, Part I: Defining the problem</title><link href="https://droettboom.com/blog/2012/08/06/matplotlib-client-side/" rel="alternate"/><published>2012-08-06T16:16:00-04:00</published><updated>2012-08-06T16:16:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-06:/blog/2012/08/06/matplotlib-client-side/</id><summary type="html">&lt;p&gt;One of the big challenges that matplotlib faces as it enters its
+second decade is moving from a desktop app to the web browser
+client/server paradigm.  This need has been known for a few years at
+least: SAGE and the IPython notebook are rich web clients and powerful
+ways …&lt;/p&gt;</summary><content type="html">&lt;p&gt;One of the big challenges that matplotlib faces as it enters its
+second decade is moving from a desktop app to the web browser
+client/server paradigm.  This need has been known for a few years at
+least: SAGE and the IPython notebook are rich web clients and powerful
+ways to interact with Python, however, their plotting is still
+necessarily limited by matplotlib's design to rendering a static
+image.  John Hunter concluded his keynote at SciPy 2012 arguing that
+this was the single biggest challenge to matplotlib's relevance today.&lt;/p&gt;
+{% video http://veyepar.nextdayvideo.com/site_media/static/veyepar//enthought/scipy_2012/mp4/matplotlib_lessons_middle_age.mp4 %}&lt;p&gt;The performance of JavaScript and graphics in web browsers is no
+longer an issue.  At least on a gut level, it appears to compete well
+with anything matplotlib is able to do with its Python bindings to
+traditional desktop GUI toolkits.  See &lt;a class="reference external" href="http://d3js.org/"&gt;d3&lt;/a&gt; and
+&lt;a class="reference external" href="http://code.google.com/p/webgl-surface-plot/"&gt;webgl-surface-plot&lt;/a&gt;
+for some examples of great, high-performance plotting coming out of
+the JavaScript community.  The problem with those libraries is they
+don't integrate well with Python data processing, they are harder to
+modify and extend and, let's be honest, just generally lack the
+Pythonic features that have made matplotlib so popular.&lt;/p&gt;
+&lt;p&gt;When trying to determine how to pull matplotlib kicking and screaming
+into this Brave New World, let's assume that the network bottleneck
+between the server (e.g. an IPython kernel) and the client (i.e. the
+web browser) is too high to simply send images over repeatedly.  It
+would be awfully nice, if we're going to do all this work anyway, to
+allow for interacting with a server that may be over a slow and
+high-latency internet connection on the other side of the globe.  The
+only way to make interactivity bearable in that scenario is to put
+some actual plotting smarts into the client.&lt;/p&gt;
+&lt;p&gt;For the purposes of this discussion, we should define what
+interactivity means.  I think it basically amounts to:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;data cursor (i.e. getting the current position of the mouse in
+data coordinates)&lt;/li&gt;
+&lt;li&gt;panning and zooming&lt;/li&gt;
+&lt;li&gt;adjusting the edges of the axes within the figure&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Other interactive features, such as a &amp;quot;back&amp;quot; button or &amp;quot;apply tight
+layout&amp;quot; button have an &amp;quot;activate and return&amp;quot; interaction, rather than
+real time interaction, so can probably be handled with a round-trip to
+the server and thus aren't really considered here.&lt;/p&gt;
+&lt;p&gt;It's well known that matplotlib has a number of backends that handle
+drawing to specific GUI frameworks or file formats.  The matplotlib
+&amp;quot;core&amp;quot; understands how to build and generate plots, and then sends
+low-level drawing commands to the currently selected backend.  In
+order to reduce code duplication, there is a solid wall between the
+core and the backends, and we're constantly trying to minimize the
+amount of code required to write a backend.  The advantage of this is
+not just to reduce the number of lines of code, but to ensure
+consistency between the backends, so that when you render a streamplot
+with hatching and custom markers to a PDF file, it looks the same as
+when you render it to an SVG.&lt;/p&gt;
+&lt;p&gt;So why can't we just add a new &amp;quot;webbrowser&amp;quot; backend?  The problem is
+that the backends are too low-level.  They know where the shapes and
+the text are, but they know nothing how they relate to one another,
+how the data scales from its native data coordinates to the
+coordinates of the screen, and how to best add ticks and other
+annotations to the graph.  All of that information would be required
+for any sort of interactivity.&lt;/p&gt;
+&lt;p&gt;To even begin to tackle this, we need to move from the current two-way
+split of the plotting core and rendering backends to a three-way split
+into the phases of outputting a plot:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;&lt;strong&gt;Build&lt;/strong&gt;: This phase is where the various Artist objects that
+make up the plot are created and related to one another.  This is
+where most of the domain-specific code about particular types of
+plots lives.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Drawing&lt;/strong&gt;: Given those Artists and view limits for the axes,
+figures out how to scale them, and where to place the ticks,
+labels and other pieces of text.  This phase also includes
+decimating or downscaling the data for display, since how to do
+so is dependent on the limits.  Newer features such as &amp;quot;tight
+limits&amp;quot; also need to happen during this phase.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Rendering&lt;/strong&gt;: Converts a series of simple commands from the drawing
+phase into the native commands understood by a particular GUI
+framework or file format.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In normal interactive use, the &lt;strong&gt;Build&lt;/strong&gt; phase happens once, but the
+&lt;strong&gt;Drawing&lt;/strong&gt; and &lt;strong&gt;Rendering&lt;/strong&gt; phases happen in a continuous loop as
+the figure is panned, zoomed and resized.&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;Drawing&lt;/strong&gt; phase comprises a great deal of Python and C++ code
+&lt;a class="footnote-reference" href="#footnote-1" id="footnote-reference-1"&gt;[1]&lt;/a&gt;, much of it at the heart of what matplotlib is.  The big pieces
+are:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Ticking (i.e. deciding where the numeric values and gridlines
+should go) is a surprisingly involved task, and matplotlib's
+ticking is very flexible, supporting many different scales (such
+as log scale) and formats (controlling the precision of the
+values, for example).  Because of this, the &lt;strong&gt;Drawing&lt;/strong&gt; phase
+is dependent on matplotlib's transformation infrastructure.&lt;/li&gt;
+&lt;li&gt;Simplification and downsampling is performed on-the-fly as the
+data is zoomed to reduce unnecessary drawing and make the
+interactivity much snappier.  Of course, when it comes to large
+data there are other issues about the network bandwidth and the
+memory efficiency of the data representation within the browser
+that may be limiting relative to what matplotlib can do now.&lt;/li&gt;
+&lt;li&gt;Text layout, including math text layout, is done at this stage,
+because the size of the text relative to other items can not
+be known until draw time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It's obvious that the &lt;strong&gt;Build&lt;/strong&gt; phase can remain on the server.  And
+the &lt;strong&gt;Rendering&lt;/strong&gt; phase can remain on the server for the native GUI
+backends and the file formats.  We may need to write a &amp;quot;web browser&amp;quot;
+backend, but that could be written in pure JavaScript if necessary.
+It's that big &lt;strong&gt;Drawing&lt;/strong&gt; piece in the middle that has to exist
+sometimes on the server and sometimes on the client.  Ideally, this
+code would not be duplicated, run both in CPython and in the web
+browser (depending on usage) and remain as flexible and easy to read
+as the Python code we already have.  Are you starting to understand
+why this is a hard problem yet?&lt;/p&gt;
+&lt;p&gt;I hope to follow this blog post up with some experiments into various
+possible solutions over the upcoming days and weeks.  In the meantime,
+I encourage all the comments and help on this I can get.&lt;/p&gt;
+&lt;hr class="docutils" /&gt;
+&lt;table class="docutils footnote" frame="void" id="footnote-1" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;It's easy enough to see what code is required for the drawing
+phase by using &lt;cite&gt;coverage.py&lt;/cite&gt; and turning it on at the start of
+&lt;cite&gt;Figure.draw&lt;/cite&gt; and turning it off again at the end.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</content><category term="matplotlib"/><category term="matplotlib"/></entry></feed>
