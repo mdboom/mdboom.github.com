@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="http://droettboom.com/" rel="alternate"></link><link href="http://droettboom.com/feeds/all.atom.xml" rel="self"></link><id>http://droettboom.com/</id><updated>2025-07-13T00:00:00-04:00</updated><entry><title>How to think about LLMs for OSS development</title><link href="http://droettboom.com/blog/2025/07/13/how-to-think-about-llms-for-oss-development/" rel="alternate"></link><published>2025-07-13T00:00:00-04:00</published><updated>2025-07-13T00:00:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2025-07-13:/blog/2025/07/13/how-to-think-about-llms-for-oss-development/</id><summary type="html">&lt;p class="first last"&gt;A talk I gave at PyCon Colombia 2025&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog</title><link href="https://droettboom.com/" rel="alternate"/><link href="https://droettboom.com/feeds/all.atom.xml" rel="self"/><id>https://droettboom.com/</id><updated>2025-07-13T00:00:00-04:00</updated><entry><title>How to think about LLMs for OSS development</title><link href="https://droettboom.com/blog/2025/07/13/how-to-think-about-llms-for-oss-development/" rel="alternate"/><published>2025-07-13T00:00:00-04:00</published><updated>2025-07-13T00:00:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2025-07-13:/blog/2025/07/13/how-to-think-about-llms-for-oss-development/</id><summary type="html">&lt;p class="first last"&gt;A talk I gave at PyCon Colombia 2025&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;&lt;em&gt;In July, I had the honor of giving a keynote talk at PyCon Colombia 2025.  This isn't exactly what I said on stage, but it is the script I was working from.  Since some people prefer to read rather than watch a long video, I thought I would share it.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;The full title of this talk is:
 &amp;quot;How to Think About Large Language Models for
@@ -141,7 +141,7 @@ The copyright claims on the output of the models may be problematic. Can we find
 &lt;p&gt;&lt;strong&gt;Conclusion:&lt;/strong&gt; And I think that’s as good a segway as any to go forth to the conference and meet and chat in the hallway about the possibilities here.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Gracias por escuchar y buena suerte!&lt;/em&gt;&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="misc"></category></entry><entry><title>Profiling WebAssembly</title><link href="http://droettboom.com/blog/2018/04/11/profiling-webassembly/" rel="alternate"></link><published>2018-04-11T00:00:00-04:00</published><updated>2018-04-11T00:00:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-04-11:/blog/2018/04/11/profiling-webassembly/</id><summary type="html">&lt;p class="first last"&gt;Tips for profiling WebAssembly&lt;/p&gt;
+</content><category term="misc"/></entry><entry><title>Profiling WebAssembly</title><link href="https://droettboom.com/blog/2018/04/11/profiling-webassembly/" rel="alternate"/><published>2018-04-11T00:00:00-04:00</published><updated>2018-04-11T00:00:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-04-11:/blog/2018/04/11/profiling-webassembly/</id><summary type="html">&lt;p class="first last"&gt;Tips for profiling WebAssembly&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Tips for profiling WebAssembly&lt;/p&gt;
 &lt;p&gt;I couldn't find a comprehensive guide to profiling WebAssembly, so I thought I'd
 share my own limited experience here. In my &lt;a class="reference external" href="/blog/2018/04/04/python-in-the-browser/"&gt;last post&lt;/a&gt;, I talked about benchmarking a
@@ -231,7 +231,7 @@ code. The grey bars are the timings before this change, and blue bars are the
 timings after this change.&lt;/p&gt;
 &lt;p&gt;More details about this changes are in the &lt;a class="reference external" href="https://github.com/kripken/emscripten/pull/6437"&gt;pull request&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="mozilla"></category><category term="python"></category><category term="data science"></category></entry><entry><title>Scientific Python in the Browser</title><link href="http://droettboom.com/blog/2018/04/04/python-in-the-browser/" rel="alternate"></link><published>2018-04-04T00:00:00-04:00</published><updated>2018-04-11T00:00:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-04-04:/blog/2018/04/04/python-in-the-browser/</id><summary type="html">&lt;p class="first last"&gt;An early report on getting the scientific Python stack compiled to WebAssembly.&lt;/p&gt;
+</content><category term="mozilla"/><category term="python"/><category term="data science"/></entry><entry><title>Scientific Python in the Browser</title><link href="https://droettboom.com/blog/2018/04/04/python-in-the-browser/" rel="alternate"/><published>2018-04-04T00:00:00-04:00</published><updated>2018-04-11T00:00:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-04-04:/blog/2018/04/04/python-in-the-browser/</id><summary type="html">&lt;p class="first last"&gt;An early report on getting the scientific Python stack compiled to WebAssembly.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; An early report on getting the scientific Python stack compiled to WebAssembly.&lt;/p&gt;
 &lt;div class="section" id="data-science-in-the-browser"&gt;
 &lt;h2&gt;Data Science in the Browser&lt;/h2&gt;
@@ -392,7 +392,7 @@ stack in the browser. I'm pretty new to WebAssembly and I'd love any help,
 advice or comments to make this better.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</content><category term="mozilla"></category><category term="python"></category><category term="data science"></category></entry><entry><title>Jupyter notebooks and version control</title><link href="http://droettboom.com/blog/2018/01/18/diffable-jupyter-notebooks/" rel="alternate"></link><published>2018-01-18T00:00:00-05:00</published><updated>2018-01-18T00:00:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-01-18:/blog/2018/01/18/diffable-jupyter-notebooks/</id><summary type="html">&lt;p class="first last"&gt;Presents an experimental alternative file format for Jupyter notebooks that plays nicer with version control.&lt;/p&gt;
+</content><category term="mozilla"/><category term="python"/><category term="data science"/></entry><entry><title>Jupyter notebooks and version control</title><link href="https://droettboom.com/blog/2018/01/18/diffable-jupyter-notebooks/" rel="alternate"/><published>2018-01-18T00:00:00-05:00</published><updated>2018-01-18T00:00:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2018-01-18:/blog/2018/01/18/diffable-jupyter-notebooks/</id><summary type="html">&lt;p class="first last"&gt;Presents an experimental alternative file format for Jupyter notebooks that plays nicer with version control.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Presents an experimental alternative file format for Jupyter notebooks that plays nicer with version control.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;UPDATE: 2018-04-11:&lt;/strong&gt; Matthias Bussonnier pointed out on Twitter he did something &lt;a class="reference external" href="https://matthiasbussonnier.com/posts/05-YAML%20Notebook.html"&gt;very similar quite some time ago&lt;/a&gt;.  Given the interest, what can we do to push this along so it's an obvious choice for Jupyter users?&lt;/p&gt;
 &lt;div class="section" id="the-problem"&gt;
@@ -519,7 +519,7 @@ Please leave comments, suggestions and questions below.&lt;/p&gt;
 &lt;h2&gt;Acknowledgements&lt;/h2&gt;
 &lt;p&gt;This work was supported by &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;moz://a&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="mozilla"></category><category term="jupyter"></category><category term="python"></category><category term="data science"></category></entry><entry><title>Debugging Python C/C++ extensions in gdb</title><link href="http://droettboom.com/blog/2015/11/20/gdb-python-extensions/" rel="alternate"></link><published>2015-11-20T16:16:00-05:00</published><updated>2015-11-20T16:16:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2015-11-20:/blog/2015/11/20/gdb-python-extensions/</id><summary type="html">&lt;p&gt;&lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; has fantastic support for debugging Python/C extensions.  It
+</content><category term="mozilla"/><category term="jupyter"/><category term="python"/><category term="data science"/></entry><entry><title>Debugging Python C/C++ extensions in gdb</title><link href="https://droettboom.com/blog/2015/11/20/gdb-python-extensions/" rel="alternate"/><published>2015-11-20T16:16:00-05:00</published><updated>2015-11-20T16:16:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2015-11-20:/blog/2015/11/20/gdb-python-extensions/</id><summary type="html">&lt;p&gt;&lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; has fantastic support for debugging Python/C extensions.  It
 understands how to print the contents of &lt;cite&gt;PyObject *&lt;/cite&gt; variables using
 their Python-side representation, and can even print Python
 tracebacks.&lt;/p&gt;
@@ -651,7 +651,7 @@ this as a last resort.&lt;/p&gt;
 &lt;h2&gt;Edits&lt;/h2&gt;
 &lt;p&gt;2015-12-03: Fixed errors in gdbinit script.  Fixed links to libpython.py&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="python"></category><category term="python debugging gdb"></category></entry><entry><title>VirtualBox on Mac OS X</title><link href="http://droettboom.com/blog/2013/08/29/virtualbox-on-mac-os-x/" rel="alternate"></link><published>2013-08-29T09:33:00-04:00</published><updated>2013-08-29T09:33:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2013-08-29:/blog/2013/08/29/virtualbox-on-mac-os-x/</id><summary type="html">&lt;p&gt;I recently got a Mac Mini so I can start working on Macintosh-specific
+</content><category term="python"/><category term="python debugging gdb"/></entry><entry><title>VirtualBox on Mac OS X</title><link href="https://droettboom.com/blog/2013/08/29/virtualbox-on-mac-os-x/" rel="alternate"/><published>2013-08-29T09:33:00-04:00</published><updated>2013-08-29T09:33:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2013-08-29:/blog/2013/08/29/virtualbox-on-mac-os-x/</id><summary type="html">&lt;p&gt;I recently got a Mac Mini so I can start working on Macintosh-specific
 issues with matplotlib.  Thanks again to Hans Petter Langtangen, the
 Director of the Center for Biomedical Computing at &lt;a class="reference external" href="http://home.simula.no/~hpl"&gt;Simula&lt;/a&gt; for his gracious donation that
 supported the purchase.&lt;/p&gt;
@@ -742,7 +742,7 @@ to VirtualBox settings and &amp;quot;eject&amp;quot; the virtual DVD before rest
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Hopefully this will help others out.&lt;/p&gt;
-</content><category term="mac"></category></entry><entry><title>matplotlib lessons learned</title><link href="http://droettboom.com/blog/2013/03/25/matplotlib-lessons-learned/" rel="alternate"></link><published>2013-03-25T09:47:00-04:00</published><updated>2013-03-25T09:47:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2013-03-25:/blog/2013/03/25/matplotlib-lessons-learned/</id><summary type="html">&lt;p&gt;Jake Vanderplass has a very thought-provoking essay about the &lt;a class="reference external" href="http://jakevdp.github.com/blog/2013/03/23/matplotlib-and-the-future-of-visualization-in-python/"&gt;future
+</content><category term="mac"/></entry><entry><title>matplotlib lessons learned</title><link href="https://droettboom.com/blog/2013/03/25/matplotlib-lessons-learned/" rel="alternate"/><published>2013-03-25T09:47:00-04:00</published><updated>2013-03-25T09:47:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2013-03-25:/blog/2013/03/25/matplotlib-lessons-learned/</id><summary type="html">&lt;p&gt;Jake Vanderplass has a very thought-provoking essay about the &lt;a class="reference external" href="http://jakevdp.github.com/blog/2013/03/23/matplotlib-and-the-future-of-visualization-in-python/"&gt;future
 of visualization in Python&lt;/a&gt;.
 It's an exciting time for visualization in Python with so many new
 options exploding onto the scene, and Jake has provided a nice
@@ -975,7 +975,7 @@ better if more parts were agnostic to the dimensionality of the data.&lt;/p&gt;
 &lt;p&gt;It's really exciting to watch all that's going on, and thanks to Jake
 Vanderplass for getting this discussion rolling.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="matplotlib"></category><category term="matplotlib"></category></entry><entry><title>Matplotlib in the browser: It's coming</title><link href="http://droettboom.com/blog/2012/10/11/matplotlib-in-the-browser-its-coming/" rel="alternate"></link><published>2012-10-11T14:35:00-04:00</published><updated>2012-10-11T14:35:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-10-11:/blog/2012/10/11/matplotlib-in-the-browser-its-coming/</id><summary type="html">&lt;blockquote class="pull-quote"&gt;
+</content><category term="matplotlib"/><category term="matplotlib"/></entry><entry><title>Matplotlib in the browser: It's coming</title><link href="https://droettboom.com/blog/2012/10/11/matplotlib-in-the-browser-its-coming/" rel="alternate"/><published>2012-10-11T14:35:00-04:00</published><updated>2012-10-11T14:35:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-10-11:/blog/2012/10/11/matplotlib-in-the-browser-its-coming/</id><summary type="html">&lt;blockquote class="pull-quote"&gt;
 UPDATE: I am now sharing my code in the
 &lt;a class="reference external" href="https://github.com/mdboom/mpl_browser_experiments"&gt;mdboom/mpl_browser_experiments&lt;/a&gt; github
 repository, rather than in a gist.&lt;/blockquote&gt;
@@ -1136,7 +1136,7 @@ peer to the existing backends.&lt;/p&gt;
 &lt;p&gt;Watch the matplotlib and IPython projects -- pull requests will be
 coming soon.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="matplotlib"></category></entry><entry><title>Amazon MP3 ends their support for Linux</title><link href="http://droettboom.com/blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/" rel="alternate"></link><published>2012-09-11T11:40:00-04:00</published><updated>2012-09-11T11:40:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-09-11:/blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/</id><summary type="html">&lt;p&gt;I've bought digital music from Amazon for almost as long as they've
+</content><category term="matplotlib"/></entry><entry><title>Amazon MP3 ends their support for Linux</title><link href="https://droettboom.com/blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/" rel="alternate"/><published>2012-09-11T11:40:00-04:00</published><updated>2012-09-11T11:40:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-09-11:/blog/2012/09/11/amazon-mp3-ends-their-support-for-linux/</id><summary type="html">&lt;p&gt;I've bought digital music from Amazon for almost as long as they've
 been in that business.  Their prices are very competitive, the MP3's
 are dog-standard and DRM-free so they work on every device imaginable,
 and, until recently, they have supported Linux.&lt;/p&gt;
@@ -1177,7 +1177,7 @@ away what I already have.&lt;/p&gt;
 &lt;p&gt;Sorry, Amazon, but I'm not a clicking monkey.  I'll need to go
 elsewhere.  Can anyone else recommend another DRM-free service that
 doesn't require jumping through so many hoops to download purchases?&lt;/p&gt;
-</content><category term="music"></category></entry><entry><title>John Hunter</title><link href="http://droettboom.com/blog/2012/08/31/john-hunter/" rel="alternate"></link><published>2012-08-31T10:22:00-04:00</published><updated>2012-08-31T10:22:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-31:/blog/2012/08/31/john-hunter/</id><summary type="html">&lt;p&gt;We have lost one of the greats of our community.&lt;/p&gt;
+</content><category term="music"/></entry><entry><title>John Hunter</title><link href="https://droettboom.com/blog/2012/08/31/john-hunter/" rel="alternate"/><published>2012-08-31T10:22:00-04:00</published><updated>2012-08-31T10:22:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-31:/blog/2012/08/31/john-hunter/</id><summary type="html">&lt;p&gt;We have lost one of the greats of our community.&lt;/p&gt;
 &lt;p&gt;I first met John Hunter when he came to give a presentation about
 matplotlib at the Space Telescope Science Institute in 2004 (or
 thereabouts).  I remember being blown away by how capable matplotlib
@@ -1203,7 +1203,7 @@ together in supporting each other at a time like this.  Sometimes it
 really is more than just code.&lt;/p&gt;
 &lt;p&gt;If matplotlib has been useful to you in any way, please give
 generously to the &lt;a class="reference external" href="http://numfocus.org/johnhunter/"&gt;John Hunter Memorial Fund&lt;/a&gt;.&lt;/p&gt;
-</content><category term="matplotlib"></category></entry><entry><title>Client-side Rendering in Matplotlib, Part II: The language blender</title><link href="http://droettboom.com/blog/2012/08/07/client-side-rendering-in-matplotlib/" rel="alternate"></link><published>2012-08-07T13:56:00-04:00</published><updated>2012-08-07T13:56:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-07:/blog/2012/08/07/client-side-rendering-in-matplotlib/</id><summary type="html">&lt;div class="admonition note"&gt;
+</content><category term="matplotlib"/></entry><entry><title>Client-side Rendering in Matplotlib, Part II: The language blender</title><link href="https://droettboom.com/blog/2012/08/07/client-side-rendering-in-matplotlib/" rel="alternate"/><published>2012-08-07T13:56:00-04:00</published><updated>2012-08-07T13:56:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-07:/blog/2012/08/07/client-side-rendering-in-matplotlib/</id><summary type="html">&lt;div class="admonition note"&gt;
 &lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
 &lt;p class="last"&gt;EDIT 2012-08-08: Added benchmarks in Firefox in addition to Chrome&lt;/p&gt;
 &lt;/div&gt;
@@ -1358,7 +1358,7 @@ very numerically-biased benchmark.&lt;/p&gt;
 &lt;p&gt;Where does that leave us?  Who knows...  Interesting ride, though.
 Stay tuned and leave comments...  There's more to hack away at.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="matplotlib"></category><category term="matplotlib"></category></entry><entry><title>Client-side rendering in matplotlib, Part I: Defining the problem</title><link href="http://droettboom.com/blog/2012/08/06/matplotlib-client-side/" rel="alternate"></link><published>2012-08-06T16:16:00-04:00</published><updated>2012-08-06T16:16:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-06:/blog/2012/08/06/matplotlib-client-side/</id><summary type="html">&lt;p&gt;One of the big challenges that matplotlib faces as it enters its
+</content><category term="matplotlib"/><category term="matplotlib"/></entry><entry><title>Client-side rendering in matplotlib, Part I: Defining the problem</title><link href="https://droettboom.com/blog/2012/08/06/matplotlib-client-side/" rel="alternate"/><published>2012-08-06T16:16:00-04:00</published><updated>2012-08-06T16:16:00-04:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2012-08-06:/blog/2012/08/06/matplotlib-client-side/</id><summary type="html">&lt;p&gt;One of the big challenges that matplotlib faces as it enters its
 second decade is moving from a desktop app to the web browser
 client/server paradigm.  This need has been known for a few years at
 least: SAGE and the IPython notebook are rich web clients and powerful
@@ -1488,4 +1488,4 @@ phase by using &lt;cite&gt;coverage.py&lt;/cite&gt; and turning it on at the sta
 &lt;cite&gt;Figure.draw&lt;/cite&gt; and turning it off again at the end.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-</content><category term="matplotlib"></category><category term="matplotlib"></category></entry></feed>
+</content><category term="matplotlib"/><category term="matplotlib"/></entry></feed>
