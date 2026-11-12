@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog - python</title><link href="http://droettboom.com/" rel="alternate"></link><link href="http://droettboom.com/feeds/python.atom.xml" rel="self"></link><id>http://droettboom.com/</id><updated>2015-11-20T16:16:00-05:00</updated><entry><title>Debugging Python C/C++ extensions in gdb</title><link href="http://droettboom.com/blog/2015/11/20/gdb-python-extensions/" rel="alternate"></link><published>2015-11-20T16:16:00-05:00</published><updated>2015-11-20T16:16:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2015-11-20:/blog/2015/11/20/gdb-python-extensions/</id><summary type="html">&lt;p&gt;&lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; has fantastic support for debugging Python/C extensions.  It
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Boom! Michael Droettboom's blog - python</title><link href="https://droettboom.com/" rel="alternate"/><link href="https://droettboom.com/feeds/python.atom.xml" rel="self"/><id>https://droettboom.com/</id><updated>2015-11-20T16:16:00-05:00</updated><entry><title>Debugging Python C/C++ extensions in gdb</title><link href="https://droettboom.com/blog/2015/11/20/gdb-python-extensions/" rel="alternate"/><published>2015-11-20T16:16:00-05:00</published><updated>2015-11-20T16:16:00-05:00</updated><author><name>Michael Droettboom</name></author><id>tag:droettboom.com,2015-11-20:/blog/2015/11/20/gdb-python-extensions/</id><summary type="html">&lt;p&gt;&lt;tt class="docutils literal"&gt;gdb&lt;/tt&gt; has fantastic support for debugging Python/C extensions.  It
 understands how to print the contents of &lt;cite&gt;PyObject *&lt;/cite&gt; variables using
 their Python-side representation, and can even print Python
 tracebacks.&lt;/p&gt;
@@ -131,4 +131,4 @@ this as a last resort.&lt;/p&gt;
 &lt;h2&gt;Edits&lt;/h2&gt;
 &lt;p&gt;2015-12-03: Fixed errors in gdbinit script.  Fixed links to libpython.py&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="python"></category><category term="python debugging gdb"></category></entry></feed>
+</content><category term="python"/><category term="python debugging gdb"/></entry></feed>
