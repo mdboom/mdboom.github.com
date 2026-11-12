@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#193529" />
+    <title>Heritage Big Wheel</title>
+    <script type="module" crossorigin src="/assets/index-AktfQCJ5.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DELcV_m2.css">
+  </head>
+  <body>
+    <div id="game"></div>
+    <div class="hud">
+      <header>
+        <div class="eyebrow">A LITTLE RIDE IN NORTH VANCOUVER</div>
+        <h1>Heritage <em>Big Wheel</em></h1>
+        <p>Heritage Boulevard · an imagined neighborhood</p>
+      </header>
+      <div class="bottom">
+        <section class="instruments" aria-label="Ride information">
+          <div class="speed"><span id="speed">0</span><small> km/h</small></div>
+          <div class="readout"><span>YOUR RIDE</span><strong id="distance">0 m</strong></div>
+          <div class="readout"><span>SURFACE</span><strong id="surface">Pavement</strong></div>
+        </section>
+        <section class="controls">
+          <div>Alternate <kbd>J</kbd> <kbd>L</kbd> to pedal · <strong id="pedal-hint">Start with J or L</strong></div>
+          <div><kbd>A</kbd> <kbd>D</kbd> steer <kbd>SPACE</kbd> brake</div>
+          <div><kbd>C</kbd> camera <button id="camera" type="button" aria-pressed="false">Rider view</button> <kbd>R</kbd> reset <button id="reset" type="button">Reset ride</button></div>
+          <div>Controller: alternate LT / RT · stick steer · B / ○ brake · Y / △ camera</div>
+          <div id="controller-status" role="status">Controller: press any button to connect</div>
+        </section>
+      </div>
+      <aside class="minimap" aria-label="Road map">
+        <div>HERITAGE BLVD <span>N ↑</span></div>
+        <canvas id="map" width="180" height="180"></canvas>
+      </aside>
+      <div class="credit">Road © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap contributors</a> · Terrain: <a href="https://www2.gov.bc.ca/gov/content/data/policy-standards/data-policies/open-data/open-government-licence-bc" target="_blank" rel="noreferrer">Open Government Licence – British Columbia</a></div>
+    </div>
+    <div id="error" role="alert" hidden></div>
+  </body>
+</html>
